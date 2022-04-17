@@ -36,7 +36,14 @@ namespace Messenger.Hubs
 
             _connections[Context.ConnectionId] = userConnection;
 
-            await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", _botUser, $"{userConnection.User} has joined {userConnection.Room}");
+            await Clients.Group(userConnection.Room).SendAsync(
+                "ReceiveMessage",
+                new Message
+                {
+                    Text = $"{userConnection.User} has joined {userConnection.Room}",
+                    User = _botUser,
+                    TimeSent = DateTime.Now.ToString("HH:mm"),
+                });
 
             await SendUsersConnected(userConnection.Room);
         }
@@ -45,7 +52,14 @@ namespace Messenger.Hubs
         {
             if (_connections.TryGetValue(Context.ConnectionId, out UserConnection userConnection))
             {
-                await Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", userConnection.User, message);
+                await Clients.Group(userConnection.Room).SendAsync(
+                    "ReceiveMessage",
+                    new Message
+                    {
+                        Text = message,
+                        User = userConnection.User,
+                        TimeSent = DateTime.Now.ToString("HH:mm"),
+                    });
             }
         }
 
