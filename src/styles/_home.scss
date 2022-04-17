@@ -1,8 +1,58 @@
 .home-page {
+    flex: 1;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    .message-chat {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        .chat {
+            background-color: #36393F;
+            width: 100%;
+            .message-container {
+                padding: 10px;
+                height: 93vh;
+                overflow: auto;
+                background-color: #36393F;
+                .user-message {
+                    text-align: right;
+                    padding-right: 5px;
+                    font-size: 18px;
+                }
+                .friend-message {
+                    text-align: left;
+                }
+            }
+            .send-message-form {
+                padding: 10px 5px;
+                display: flex;
+                
+                column-gap: 6px;
+                input {
+                    color: #B9BBBE;
+                    padding: 5px;
+                    font-size: 18px;
+                    flex: 1;
+                    background-color: #2F3136;
+                    border: 0;
+                    border-radius: 4px;
+                }
+                button {
+                    width: 15%;
+                }
+            }
+        }
+        
+        .leave-room {
+            background-color: #2F3136;
+            color: #B9BBBE;
+            text-align: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px 5px;
+        }
+    }
 }
 Form Button {
     width: 100%;
@@ -15,42 +65,33 @@ hr.line {
 
 .lobby {
     width: 400px;
-}
-
-.chat {
-    display: grid;
-}
-
-.leave-room {
-    text-align: right;
-    margin-bottom: 4px;
+    .lobby-inputs {
+        display: flex;
+        flex-direction: column;
+        row-gap: 6px;
+        input {
+            padding: 4px 8px;
+            border: 0;
+            border-radius: 2px;
+            background-color: #cacaca;
+            &:focus {
+                outline: 2px solid rgb(50, 186, 86);
+                border-radius: 2px;
+                background-color:white;
+            }
+        }
+        &:last-of-type {
+            margin-bottom: 12px;
+        }
+    }
 }
 
 .user-list {
     float: left;
-    background-color: #313131;
-    color:white;
-    width: 200px;
-    height: 440px;
-    margin-right: 4px;
-}
-
-.message-container {
-    height: 400px;    
-    background-color: white;
-    overflow: auto;
-    border-radius: 5px;
-    margin-bottom: 2px;
-}
-
-.user-message {
-    text-align: right;
-    padding-right: 5px;
-    font-size: 18px;
-}
-
-.friend-message {
-    text-align: left;
+    background-color: #2F3136;
+    color:#d2d2d3;
+    border-left: 2px solid #202225;
+    padding: 10px 5px;
 }
 
 .message {
@@ -58,13 +99,14 @@ hr.line {
     margin: 0px auto 0px auto;
     padding: 5px;
     font-size: 18px;
-    color:white;
-    border-radius: 20px;
-    margin-top: 3px;
+    color:#d2d2d3;
+    background-color: #313131;
+    border-radius: 10px;
+    margin-top: 15px;
 }
 
 .from-user {
     font-size: small;
-    margin-bottom: 3px;
+    color:#8c8c8d;
     margin-right: 5px;
 }

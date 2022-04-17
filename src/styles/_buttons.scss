@@ -1,0 +1,21 @@
+.button {
+    outline: 0;
+    border: 0;
+    font-size: 20px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: rgb(213, 213, 213);
+    &:disabled {
+        color: rgb(159, 159, 159);
+    }
+}
+.decline-button {
+    background-color: rgb(171, 7, 7);
+}
+.confirm-button {
+    background-color: #198754;
+}
+.send-button {
+    background-color: transparent;
+    border: 2px solid rgb(29, 29, 29);
+}

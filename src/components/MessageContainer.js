@@ -14,7 +14,7 @@ const MessageContainer = ({ messages }) => {
         {
             messages.map((m, index) =>
                 <div key={index} className={ m.user === localStorage.userName ? "user-message" : "friend-message"}>
-                    <div className='message bg-primary'>{m.text}</div>
+                    <div className='message '>{m.text}</div>
                     <div className='from-user'>{m.user} {m.timeSent}</div>
                 </div>
         )}

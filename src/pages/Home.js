@@ -59,7 +59,6 @@ const Home = () => {
 
     return (
         <div className="page home-page">
-            <h2>Messenger</h2>
             {
                 !connection ? (
                     <Lobby joinRoom={joinRoom} />

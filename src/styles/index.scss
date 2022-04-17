@@ -1,13 +1,25 @@
-@import "_variables.scss";
+@import "_variables";
 @import "./links";
+@import "_buttons.scss";
 @import "./layout";
-@import "_navigation.scss";
+@import "_navigation";
 @import "_home.scss";
-@import "_notFound.scss";
+@import "_notFound";
+
+input {
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 4px;
+    &:focus {
+        outline: 0px;
+        border-radius: 0px;
+    }
+}
 
 html {
     height: 100%;
     body {
+        background-color: #36393F;
         height: 100%;
         #root {
             height: 100%;
@@ -26,5 +38,5 @@ h2 {
 }
 
 h6 {
-    color: greenyellow;
+    color: #12b8de;
 }

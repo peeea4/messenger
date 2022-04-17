@@ -1,24 +1,27 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import MyButton from './MyButton';
 
 const Lobby = ({ joinRoom }) => {
     const [user, setUser] = useState();
     const [room, setRoom] = useState();
-    return <Form className='lobby'
-        onSubmit={e => {
-            e.preventDefault();
-            joinRoom(user, room);
-        }} >
-        <Form.Group>
-            <Form.Control placeholder="Personal name" onChange={e => {
-                setUser(e.target.value)
-                localStorage.setItem("userName", `${e.target.value}`);
-                console.log(localStorage);
-            }} />
-            <Form.Control placeholder="Room name" onChange={e => setRoom(e.target.value)} />
-        </Form.Group>
-        <Button variant="success" type="submit" disabled={!user || !room}>Join</Button>
-    </Form>
+    return (
+        <form className='lobby'
+            onSubmit={e => {
+                e.preventDefault();
+                joinRoom(user, room);
+            }}>
+            <div className="lobby-inputs">
+                <input placeholder="Personal name" onChange={e => {
+                    setUser(e.target.value)
+                    localStorage.setItem("userName", `${e.target.value}`);
+                    console.log(localStorage);
+                }} />
+                <input placeholder="Room name" onChange={e => setRoom(e.target.value)} />
+            </div>
+            <MyButton className="confirm-button button" disabled={!user || !room}>Join</MyButton>
+        </form>
+    )
+
 }
 
 export default Lobby;

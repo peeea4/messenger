@@ -1,22 +1,18 @@
-import { Button, FormControl, InputGroup, Form } from 'react-bootstrap'
 import { useState } from 'react'
+import MyButton from './MyButton'
 
 const SendMessageForm = ({ sendMessage }) => {
     const [message, setMessage] = useState('')
-    return <Form
+    return <form className="send-message-form"
         onSubmit={e => {
             e.preventDefault();
             sendMessage(message);
             setMessage('');
         }}>
-        <InputGroup>
-            <FormControl type="user" placeholder="message..."
+        <input type="user" placeholder="message..."
                 onChange={e => setMessage(e.target.value)} value={message} />
-            <InputGroup>
-                <Button variant="primary" type="submit" disabled={!message}>Send</Button>
-            </InputGroup>
-        </InputGroup>
-    </Form>
+        <MyButton className="send-button button" disabled={!message}>Send</MyButton>
+    </form>
 
 }
 export default SendMessageForm;

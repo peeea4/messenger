@@ -1,5 +1,8 @@
 .navigation {
-    background-color: rgb(159, 159, 159);
+    background-color: #202225;
     display: flex;
     flex-direction: column;
+    a {
+        padding: 10px;
+    }
 }
