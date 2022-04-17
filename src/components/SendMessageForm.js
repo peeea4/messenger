@@ -3,7 +3,6 @@ import { useState } from 'react'
 
 const SendMessageForm = ({ sendMessage }) => {
     const [message, setMessage] = useState('')
-
     return <Form
         onSubmit={e => {
             e.preventDefault();
@@ -13,9 +12,9 @@ const SendMessageForm = ({ sendMessage }) => {
         <InputGroup>
             <FormControl type="user" placeholder="message..."
                 onChange={e => setMessage(e.target.value)} value={message} />
-            <InputGroup.Append>
+            <InputGroup>
                 <Button variant="primary" type="submit" disabled={!message}>Send</Button>
-            </InputGroup.Append>
+            </InputGroup>
         </InputGroup>
     </Form>
 
