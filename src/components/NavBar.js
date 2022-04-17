@@ -1,13 +1,14 @@
-import { NavLink } from 'react-router-dom';
-
-const setActive = ({isActive}) => isActive ? "opened-page link" : "link";
+import CustomLink  from './CustomLink';
+import logo from "../icons/Logo.png"
 
 const NavBar = () => {
+    const imgLogo = "../public/icons"
+    console.log(logo)
     return (
         <nav className="navigation">
-            <NavLink to="/" className={setActive}>Главная</NavLink>
-            <NavLink to="/about" className={setActive}>Про нас</NavLink>
-            <NavLink to="/contact" className={setActive}>Контакты</NavLink>
+            <CustomLink to="/"><img src={logo}/></CustomLink>
+            <CustomLink to="/about">Про нас</CustomLink>
+            <CustomLink to="/contact">Контакты</CustomLink>
         </nav>
     )
 }

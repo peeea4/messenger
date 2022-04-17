@@ -14,7 +14,7 @@ const Home = () => {
     const joinRoom = async (user, room) => {
         try {
             const connection = new HubConnectionBuilder()
-                .withUrl('http://localhost:3000/chat')
+                .withUrl(`https://localhost:44344/chat`)
                 .configureLogging(LogLevel.Information)
                 .build()
 
@@ -58,7 +58,7 @@ const Home = () => {
 
     return (
         <div className="page home-page">
-            <h2>My Chat</h2>
+            <h2>Messenger</h2>
             {
                 !connection ? (
                     <Lobby joinRoom={joinRoom} />

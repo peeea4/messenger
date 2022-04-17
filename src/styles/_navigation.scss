@@ -1,8 +1,5 @@
 .navigation {
-    height: 10%;
     background-color: rgb(159, 159, 159);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
+    flex-direction: column;
 }
