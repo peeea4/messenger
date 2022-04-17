@@ -11,11 +11,12 @@ const MessageContainer = ({ messages }) => {
     }, [messages]);
 
     return <div ref={messageRef} className='message-container' >
-        {messages.map((m, index) =>
-            <div key={index} className='user-message'>
-                <div className='message bg-primary'>{m.message}</div>
-                <div className='from-user'>{m.user}</div>
-            </div>
+        {
+            messages.map((m, index) =>
+                <div key={index} className='user-message'>
+                    <div className='message bg-primary'>{m.text}</div>
+                    <div className='from-user'>{m.user} {m.timeSent}</div>
+                </div>
         )}
     </div>
 }

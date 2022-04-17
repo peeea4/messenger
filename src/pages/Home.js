@@ -14,7 +14,7 @@ const Home = () => {
     const joinRoom = async (user, room) => {
         try {
             const connection = new HubConnectionBuilder()
-                .withUrl('http://localhost:3000/chat')
+                .withUrl('https://localhost:44344/chat')
                 .configureLogging(LogLevel.Information)
                 .build()
 
@@ -22,8 +22,8 @@ const Home = () => {
                 setUsers(users)
             })
 
-            connection.on('ReceiveMessage', (user, message) => {
-                setMessages((messages) => [...messages, { user, message }])
+            connection.on('ReceiveMessage', (message) => {
+                setMessages((messages) => [...messages,  message ])
             })
 
             connection.onclose((e) => {
@@ -48,7 +48,7 @@ const Home = () => {
         }
     }
 
-    const sendMessages = async (message) => {
+    const sendMessage = async (message) => {
         try {
             await connection.invoke('SendMessage', message)
         } catch (e) {
@@ -65,7 +65,7 @@ const Home = () => {
                 ) : (
                     <Chat
                         messages={messages}
-                        sendMessages={sendMessages}
+                        sendMessage={sendMessage}
                         closeConnection={closeConnection}
                         users={users}
                     />
