@@ -1,10 +1,11 @@
-import './styles/index.scss'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Route, Routes } from 'react-router-dom'
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import About from './pages/About';
-import Contact from './pages/Contact';
+import "./styles/index.scss"
+import "bootstrap/dist/css/bootstrap.min.css"
+import { Route, Routes } from "react-router-dom"
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound"
 
 const App = () => {
     return (
@@ -14,7 +15,7 @@ const App = () => {
                     <Route index element={<Home/>}></Route>
                     <Route path="about" element={<About/>}></Route>
                     <Route path="contact" element={<Contact/>}></Route>
-                    <Route path="*"></Route>
+                    <Route path="*" element={<NotFound/>}></Route>
                 </Route>
             </Routes>
         </>

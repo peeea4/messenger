@@ -1,0 +1,13 @@
+.link {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s linear;
+    &:hover {
+        color: rgb(0, 119, 255);
+        transform: scale(1.1);
+    }
+}
+.opened-page {
+    color: rgb(0, 88, 189);
+}

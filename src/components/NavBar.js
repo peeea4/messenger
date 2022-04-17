@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-const setActive = ({isActive}) => isActive ? "active-link link" : "link";
+const setActive = ({isActive}) => isActive ? "opened-page link" : "link";
 
 const NavBar = () => {
     return (
