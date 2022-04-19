@@ -7,12 +7,29 @@
         width: 100%;
         height: 100%;
         display: flex;
+        .aside-room {
+            background-color: #2F3136;
+            color: #B9BBBE;
+            padding: 10px 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: space-between;
+            .user-list {
+                flex: 1;
+                background-color: #2F3136;
+                color:#d2d2d3;
+                padding: 10px 5px;
+            }
+        }
         .chat {
             background-color: #36393F;
             width: 100%;
+            display: flex;
+            flex-direction: column;
             .message-container {
                 padding: 10px;
-                height: 93vh;
+                flex: 1;
                 overflow: auto;
                 background-color: #36393F;
                 .user-message {
@@ -23,11 +40,25 @@
                 .friend-message {
                     text-align: left;
                 }
+                .message {
+                    display: inline-flex;
+                    margin: 0px auto 0px auto;
+                    padding: 5px;
+                    font-size: 18px;
+                    color:#d2d2d3;
+                    background-color: #313131;
+                    border-radius: 10px;
+                    margin-top: 15px;
+                }
+                .from-user {
+                    font-size: small;
+                    color:#8c8c8d;
+                    margin-right: 5px;
+                }
             }
             .send-message-form {
                 padding: 10px 5px;
                 display: flex;
-                
                 column-gap: 6px;
                 input {
                     color: #B9BBBE;
@@ -43,24 +74,7 @@
                 }
             }
         }
-        
-        .leave-room {
-            background-color: #2F3136;
-            color: #B9BBBE;
-            text-align: center;
-            display: flex;
-            align-items: flex-end;
-            padding: 10px 5px;
-        }
     }
-}
-Form Button {
-    width: 100%;
-}
-
-hr.line {
-    border: 1px solid #313131;
-    width: 175px;
 }
 
 .lobby {
@@ -84,29 +98,4 @@ hr.line {
             margin-bottom: 12px;
         }
     }
-}
-
-.user-list {
-    float: left;
-    background-color: #2F3136;
-    color:#d2d2d3;
-    border-left: 2px solid #202225;
-    padding: 10px 5px;
-}
-
-.message {
-    display: inline-flex;
-    margin: 0px auto 0px auto;
-    padding: 5px;
-    font-size: 18px;
-    color:#d2d2d3;
-    background-color: #313131;
-    border-radius: 10px;
-    margin-top: 15px;
-}
-
-.from-user {
-    font-size: small;
-    color:#8c8c8d;
-    margin-right: 5px;
 }

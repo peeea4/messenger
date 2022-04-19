@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import Message from './Message';
 
 const MessageContainer = ({ messages }) => {
     const messageRef = useRef();
@@ -10,15 +11,15 @@ const MessageContainer = ({ messages }) => {
         }
     }, [messages]);
 
-    return <div ref={messageRef} className='message-container' >
+    return (
+        <div ref={messageRef} className='message-container' >
         {
-            messages.map((m, index) =>
-                <div key={index} className={ m.user === localStorage.userName ? "user-message" : "friend-message"}>
-                    <div className='message '>{m.text}</div>
-                    <div className='from-user'>{m.user} {m.timeSent}</div>
-                </div>
-        )}
-    </div>
+            messages.map((message, index) =>
+                <Message key={index} message={message}/>
+            )
+        }
+        </div>
+    )
 }
 
 export default MessageContainer;

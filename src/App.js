@@ -1,7 +1,7 @@
 import "./styles/index.scss"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Route, Routes } from "react-router-dom"
-import Layout from "./components/Layout";
+import Layout from "./components/navigation/Layout";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound"
 
