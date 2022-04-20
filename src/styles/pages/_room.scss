@@ -1,4 +1,4 @@
-.home-page {
+.room-page {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -27,33 +27,49 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            .message-container {
+            .messages-container {
                 padding: 10px;
                 flex: 1;
                 overflow: auto;
                 background-color: #36393F;
+                display: flex;
+                flex-direction: column;
                 .user-message {
-                    text-align: right;
-                    padding-right: 5px;
-                    font-size: 18px;
+                    align-self: flex-end;
+                    margin-left: 40px;
+                    .owner {
+                        color: #1cd9cc;
+                    }
                 }
                 .friend-message {
-                    text-align: left;
+                    align-self: flex-start;
+                    margin-right: 40px;
+                    .owner {
+                        color: #d91c48;
+                    }
                 }
                 .message {
-                    display: inline-flex;
-                    margin: 0px auto 0px auto;
-                    padding: 5px;
-                    font-size: 18px;
-                    color:#d2d2d3;
                     background-color: #313131;
-                    border-radius: 10px;
-                    margin-top: 15px;
-                }
-                .from-user {
-                    font-size: small;
-                    color:#8c8c8d;
-                    margin-right: 5px;
+                    margin-bottom: 5px;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    width: fit-content;
+                    display: flex;
+                    flex-direction: column;
+                    .owner {
+                        margin-bottom: 5px;
+                        font-size: 18px;
+                    }
+                    .text {
+                        font-size: 16px;
+                        color:#d2d2d3;
+                        border-radius: 10px;
+                        word-wrap: break-word;
+                    }
+                    .time {
+                        font-size: 14px;
+                        align-self: flex-end;
+                    }
                 }
             }
             .send-message-form {
@@ -79,13 +95,17 @@
 
 .lobby {
     width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     .lobby-inputs {
         display: flex;
         flex-direction: column;
         row-gap: 6px;
         input {
-            padding: 4px 8px;
-            border: 0;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 6px 12px;
             border-radius: 2px;
             background-color: #cacaca;
             &:focus {

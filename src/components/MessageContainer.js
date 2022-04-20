@@ -12,7 +12,7 @@ const MessageContainer = ({ messages }) => {
     }, [messages]);
 
     return (
-        <div ref={messageRef} className='message-container' >
+        <div ref={messageRef} className='messages-container' >
         {
             messages.map((message, index) =>
                 <Message key={index} message={message}/>

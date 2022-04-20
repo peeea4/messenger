@@ -1,13 +1,31 @@
-.chat-message {
-    position: relative;
+.messages-container {
+    .message {
+        position: relative;
+        .emoji-container {
+            color: white;
+            background-color: #1dc4cd;
+            position: absolute;
+            padding: 5px 2px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+    }
 
-    .emoji-container {
-        color: white;
-        background-color: #1dc4cd;
-        position: absolute;
-        top: -25px;
-        right: 0;
-        padding: 5px 2px;
-        border-radius: 4px;
+    .user-message {
+        .emoji-container {
+            width: 30px;
+            height: 100%;
+            bottom: 0;
+            left: -40px;
+        }
+    }
+
+    .friend-message {
+        .emoji-container {
+            width: 30px;
+            height: 100%;
+            top: 0;
+            right: -40px;
+        }
     }
 }

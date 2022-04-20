@@ -1,43 +1,25 @@
-@import "_variables";
-@import "./links";
-@import "_buttons.scss";
-@import "./layout";
+@import "./components/variables";
+@import "./components/links";
+@import "./components/buttons";
+@import "./components/inputs";
+@import "./pages/layout";
+@import "./pages/home";
+@import "./pages/room";
+@import "./pages/notFound";
 @import "_navigation";
-@import "_home.scss";
-@import "_notFound";
-@import "_message.scss";
+@import "_message";
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-input {
-    padding: 4px 8px;
-    border: 0;
-    border-radius: 4px;
-    &:focus {
-        outline: 0px;
-        border-radius: 0px;
-    }
-}
-
-html {
-    height: 100%;
-    body {
-        background-color: #36393F;
-        height: 100%;
-        #root {
-            height: 100%;
-            .page {
-                min-height: 85%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-    }
-}
 
 h2 {
     color: #313131;
 }
 
+h4 {
+    font-size: 22px;
+}
+
 h6 {
+    font-size: 18px;
     color: #12b8de;
 }
