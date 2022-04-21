@@ -14,14 +14,12 @@ const Lobby = ({ joinRoom }) => {
                 <input placeholder="Personal name" onChange={e => {
                     setUser(e.target.value)
                     localStorage.setItem("userName", `${e.target.value}`);
-                    console.log(localStorage);
                 }} />
                 <input placeholder="Room name" onChange={e => setRoom(e.target.value)} />
             </div>
             <MyButton className="confirm-button button" disabled={!user || !room}>Join</MyButton>
         </form>
     )
-
 }
 
 export default Lobby;

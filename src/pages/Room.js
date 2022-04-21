@@ -23,7 +23,6 @@ const Room = () => {
 
             connection.on('ReceiveMessage', (message) => {
                 setMessages((messages) => [...messages,  message ])
-                console.log(message);
             })
 
             connection.onclose(() => {
