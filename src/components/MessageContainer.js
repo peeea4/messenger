@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import Message from './Message';
+import { Message } from './Message';
 
-const MessageContainer = ({ messages }) => {
+export const MessageContainer = ({ messages }) => {
     const messageRef = useRef();
 
     useEffect(() => {
@@ -21,5 +21,3 @@ const MessageContainer = ({ messages }) => {
         </div>
     )
 }
-
-export default MessageContainer;

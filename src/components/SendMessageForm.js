@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import MyButton from './MyButton'
+import { MyButton } from './MyButton'
 
-const SendMessageForm = ({ sendMessage }) => {
+export const SendMessageForm = ({ sendMessage }) => {
     const [message, setMessage] = useState('')
     return (
         <form className="send-message-form"
@@ -20,4 +20,3 @@ const SendMessageForm = ({ sendMessage }) => {
     )
 
 }
-export default SendMessageForm;

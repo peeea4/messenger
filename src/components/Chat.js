@@ -1,9 +1,9 @@
-import SendMessageForm from './SendMessageForm'
-import MessageContainer from './MessageContainer'
-import ConnectedUsers from './ConnectedUsers'
-import MyButton from './MyButton'
+import { SendMessageForm } from './SendMessageForm'
+import { MessageContainer } from './MessageContainer'
+import { ConnectedUsers } from './ConnectedUsers'
+import { MyButton } from './MyButton'
 
-const Chat = ({ sendMessage, messages, users, closeConnection }) => (
+export const Chat = ({ sendMessage, messages, users, closeConnection }) => (
     <div className='message-chat'>
         <div className="aside-room">
             <ConnectedUsers users={users} />
@@ -17,5 +17,3 @@ const Chat = ({ sendMessage, messages, users, closeConnection }) => (
         </div>
     </div>
 )
-
-export default Chat;

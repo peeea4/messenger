@@ -1,24 +1,21 @@
 import "./styles/index.scss"
 import { Route, Routes } from "react-router-dom"
-import Layout from "./components/navigation/Layout";
-import Room from "./pages/Room";
-import NotFound from "./pages/NotFound"
-import { privateRoutes, publicRoutes } from "./routes";
-import Home from "./pages/Home";
+import { Layout } from "./pages/Layout";
+import { Home } from "./pages/Home";
+import { Auth } from "./pages/Auth";
+import { NotFound } from "./pages/NotFound";
+import { Chat } from "./components/Chat";
 
 const App = () => {
-	const user = false;
+	const user = true;
     return (
 		user ? 
 		(
 			<Routes>
 				<Route path="/" element={<Layout />}>
-					{
-						privateRoutes.map( ({path, Component}) => (
-							<Route path={path} element={Component}/>
-						))
-					}
-					<Route path="*" element={<Home/>}/>
+                    <Route index element={<Home/>}/>
+                    <Route path="chat" element={<Chat/>}/>
+					<Route path="*" element={<NotFound/>}/>
 				</Route>
 			</Routes>
 		)
@@ -26,12 +23,8 @@ const App = () => {
 		(
 			<Routes>
 				<Route path="/" element={<Layout />}>
-					{
-						publicRoutes.map(({ path, Component }) => (
-							<Route path={path} element={Component} />
-						))
-					}
-					<Route path="*" element={<Login/>} />
+                    <Route index element={<Auth/>}/>
+					<Route path="*" element={<NotFound/>} />
 				</Route>
 			</Routes>
 		)

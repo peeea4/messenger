@@ -1,7 +1,7 @@
-import ReactionsBar from "./ReactionsBar";
+import { ReactionsBar } from "./ReactionsBar";
 import { useState } from 'react';
 
-const Message = ({message}) => {
+export const Message = ({message}) => {
     const [sliderStatus, setSliderStatus] = useState(false);
     let className1 = (message.user === localStorage.userName ? "user-message message" : "friend-message message")
     return (
@@ -25,5 +25,3 @@ const Message = ({message}) => {
         </div>
     );
 }
-
-export default Message;

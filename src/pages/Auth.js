@@ -1,4 +1,4 @@
-const Auth = () => {
+export const Auth = () => {
 	return ( 
 		<form onSubmit={ e => {}}>
 			<input type="email" className="auth-mail"/>
@@ -7,5 +7,3 @@ const Auth = () => {
 		</form>
 	);
 }
-
-export default Auth;

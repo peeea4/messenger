@@ -1,4 +1,4 @@
-const ConnectedUsers = ({ users }) => {
+export const ConnectedUsers = ({ users }) => {
     return (
         <div className="user-list">
             <h4>Connected Users</h4>
@@ -8,4 +8,3 @@ const ConnectedUsers = ({ users }) => {
         </div>
     )
 }
-export default ConnectedUsers;

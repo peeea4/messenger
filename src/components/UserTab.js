@@ -1,4 +1,4 @@
-const UserTab = () => {
+export const UserTab = () => {
 	return ( 
 		<div>
 			<img src="" className="user-image" />
@@ -7,5 +7,3 @@ const UserTab = () => {
 		</div>
 	);
 }
-
-export default UserTab;

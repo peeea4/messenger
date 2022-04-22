@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import MyButton from './MyButton';
+import { MyButton } from './MyButton';
 
-const Lobby = ({ joinRoom }) => {
+export const Lobby = ({ joinRoom }) => {
     const [user, setUser] = useState();
     const [room, setRoom] = useState();
     return (
@@ -21,5 +21,3 @@ const Lobby = ({ joinRoom }) => {
         </form>
     )
 }
-
-export default Lobby;

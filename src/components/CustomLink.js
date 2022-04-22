@@ -1,6 +1,6 @@
 import { Link, useMatch } from "react-router-dom"
 
-const Customlink = ({children, to, ...props}) => {
+export const Customlink = ({children, to, ...props}) => {
     const match = useMatch(to);
     return (
         <Link 
@@ -14,5 +14,3 @@ const Customlink = ({children, to, ...props}) => {
         </Link>
     );
 }
-
-export default Customlink;

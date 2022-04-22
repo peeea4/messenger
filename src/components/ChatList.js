@@ -1,5 +1,5 @@
-const ChatList = () => {
-	return (  );
+export const ChatList = () => {
+	return (
+        
+    );
 }
-
-export default ChatList;
