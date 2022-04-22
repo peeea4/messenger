@@ -6,14 +6,12 @@ import NotFound from "./pages/NotFound"
 
 const App = () => {
     return (
-        <>
-            <Routes>
-                <Route path="/" element={<Layout/>}>
-                    <Route index element={<Room/>}></Route>
-                    <Route path="*" element={<NotFound/>}></Route>
-                </Route>
-            </Routes>
-        </>
+        <Routes>
+            <Route path="/" element={<Layout/>}>
+                <Route index element={<Room/>}></Route>
+                <Route path="*" element={<NotFound/>}></Route>
+            </Route>
+        </Routes>
     )
 }
 
