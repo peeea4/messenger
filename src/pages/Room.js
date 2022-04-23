@@ -1,10 +1,10 @@
 import '../styles/index.scss'
-import Lobby from '../components/Lobby'
-import Chat from '../components/Chat'
+import { Lobby } from '../components/Lobby'
+import { Chat } from '../components/Chat'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { useState } from 'react'
 
-const Room = () => {
+export const Room = () => {
     
     const [connection, setConnection] = useState()
     const [messages, setMessages] = useState([])
@@ -41,9 +41,9 @@ const Room = () => {
 
     const closeConnection = async () => {
         try {
-          await connection.stop();
+            await connection.stop();
         } catch (e) {
-          console.log(e);
+            console.log(e);
         }
     }
 
@@ -72,5 +72,3 @@ const Room = () => {
         </div>
     )
 }
-
-export default Room;
