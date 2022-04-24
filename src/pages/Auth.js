@@ -1,9 +1,16 @@
+import { Outlet } from "react-router-dom";
+import { CustomLink } from "../components/CustomLink";
+
 export const Auth = () => {
-	return ( 
-		<form onSubmit={ e => {}}>
-			<input type="email" className="auth-mail"/>
-			<input type="password" className="auth-pass" />
-			<button>Войти</button>
-		</form>
+	return (
+		<div className="page auth-page">
+			<div className="forms-container">
+				<nav>
+					<CustomLink to="/">Войти</CustomLink>
+					<CustomLink to="login">Регистрация</CustomLink>
+				</nav>
+				<Outlet/>
+			</div>
+		</div>
 	);
 }
