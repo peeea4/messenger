@@ -6,19 +6,19 @@ import { Auth } from "./pages/Auth";
 import { NotFound } from "./pages/NotFound";
 import { Chat } from "./components/Chat";
 import { Room } from "./pages/Room";
-import { fetchingUser } from "./store/actions/userActions"
 import LogForm from "./components/LogForm";
 import SignForm from "./components/SignForm";
+import { useState } from "react";
 
 const App = () => {
-	const user = true;
+	const [userStatus, setUserStatus] = useState(false);
 
-	if (user) {
-		fetchingUser(user.id)
-	}
+	// if (user) {
+	// 	fetchingUser(user.id)
+	// }
 
 	return (
-		user ?
+		userStatus ?
 			(
 				<Routes>
 					<Route path="/" element={<Layout />}>
