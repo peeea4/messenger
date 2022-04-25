@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Server.Models;
@@ -52,12 +53,12 @@ namespace Server.Services
 
         public async Task<List<User>> GetUsersAsync()
         {
-            return await this._context.Users.ToListAsync();
+            return await this._context.Users.Include(user => user.Chats).ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await this._context.Users.FindAsync(id);
+            return await this._context.Users.Where(user => user.Id == id).Include(user => user.Chats).FirstOrDefaultAsync();
         }
 
         public async Task<User> UpdateUserAsync(int id, User user)
@@ -81,9 +82,9 @@ namespace Server.Services
             return this._context.Entry(existingUser).Entity;
         }
 
-        public async Task<List<Chat>> GetUserChats(int id)
+        public async Task<List<Chat>> GetUserChatsAsync(int id)
         {
-            var user = await this._context.Users.FindAsync(id);
+            var user = await this.GetUserByIdAsync(id);
             var chats = user?.Chats;
             return chats;
         }
