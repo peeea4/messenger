@@ -8,17 +8,14 @@ import { Chat } from "./components/Chat";
 import { Room } from "./pages/Room";
 import LogForm from "./components/LogForm";
 import SignForm from "./components/SignForm";
-import { useState } from "react";
+import { useSelector } from "react-redux"
 
 const App = () => {
-	const [userStatus, setUserStatus] = useState(false);
-
-	// if (user) {
-	// 	fetchingUser(user.id)
-	// }
-
+    const user = useSelector(state => state.user);
+    console.log(user);
+    localStorage.setItem("user", JSON.stringify(user))
 	return (
-		userStatus ?
+		user.id ?
 			(
 				<Routes>
 					<Route path="/" element={<Layout />}>

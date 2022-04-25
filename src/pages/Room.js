@@ -1,4 +1,3 @@
-import '../styles/index.scss'
 import { Lobby } from '../components/Lobby'
 import { Chat } from '../components/Chat'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'

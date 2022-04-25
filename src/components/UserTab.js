@@ -1,9 +1,8 @@
-// export const UserTab = (id) => {
-// 	return (
-// 		<div className="user-tab" onClick={() => {fetchingChat(id)}}>
-// 			<img src="" className="user-image" />
-// 			<h4 className="user-name"></h4>
-// 			<p className="user-last-message"></p>
-// 		</div>
-// 	);
-// }
+export const UserTab = (username, room, id, joinRoom) => {
+	return (
+		<div className="user-tab" onClick={() => {joinRoom(username, room)}}>
+			<h4 className="user-name">${username}</h4>
+			<p className="user-last-message"></p>
+		</div>
+	);
+}
