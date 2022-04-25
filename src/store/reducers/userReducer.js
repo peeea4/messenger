@@ -1,13 +1,8 @@
-import { ADD_CHAT} from "../actions/usersActions"
-const initialStore = {
-	chatList: []
-}
-expot const userReducer = (state = initialStore, action) => {
-	switch (action.type) { 
-		case ADD_CHAT:
-			return {
-				...state,
-				
-			}
+const initialStore = {}
+export const userReducer = (state = initialStore, action) => {
+	switch (action.type) {
+		case "FETCHED_USER":
+			return action.payload
+		default: return state
 	}
 }

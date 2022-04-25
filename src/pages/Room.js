@@ -58,9 +58,14 @@ export const Room = () => {
     return (
         <div className="page room-page">
             {
-                !connection ? (
-                    <Lobby joinRoom={joinRoom} />
-                ) : (
+                !connection ? 
+				(
+                    <Lobby 
+						joinRoom={joinRoom} 
+					/>
+                )
+				:
+				(
                     <Chat
                         messages={messages}
                         sendMessage={sendMessage}
