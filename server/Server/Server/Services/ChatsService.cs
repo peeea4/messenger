@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Server.Models;
@@ -52,12 +53,12 @@ namespace Server.Services
 
         public async Task<List<Chat>> GetChatsAsync()
         {
-            return await this._context.Chats.ToListAsync();
+            return await this._context.Chats.Include(chat => chat.Messages).ToListAsync();
         }
 
         public async Task<Chat> GetChatByIdAsync(int id)
         {
-            return await this._context.Chats.FindAsync(id);
+            return (await this.GetChatsAsync()).Find(user => user.Id == id);
         }
 
         public async Task<Chat> UpdateChatAsync(int id, Chat chat)
@@ -82,9 +83,35 @@ namespace Server.Services
 
         public async Task<List<Message>> GetChatMessagesAsync(int id)
         {
-            var user = await this._context.Chats.FindAsync(id);
+            var user = await this.GetChatByIdAsync(id);
             var chats = user?.Messages;
             return chats;
+        }
+
+        public async Task<bool> AddMessagesToChat(int chatId, List<Message> messages)
+        {
+            var chat = await this._context.Chats.FindAsync(chatId);
+            chat.Messages.AddRange(messages.Select(message => new Message
+            {
+                Chat = chat,
+                Text = message.Text,
+                TimeSent = message.TimeSent,
+                Id = message.Id,
+                IsEdited = message.IsEdited,
+                Sender = message.Sender
+            }));
+
+            this._context.Entry(chat).State = EntityState.Modified;
+            try
+            {
+                await this._context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

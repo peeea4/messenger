@@ -93,5 +93,17 @@ namespace Server.Controllers
 
             return this.Ok();
         }
+
+        [HttpPatch("{chatId:int}")]
+        public async Task<IActionResult> AddMessagesToChat(int chatId, List<Message> messages)
+        {
+            var result = await this._service.AddMessagesToChat(chatId, messages);
+            if (!result)
+            {
+                return this.Problem("Error occurred while saving.");
+            }
+
+            return this.Ok();
+        }
     }
 }

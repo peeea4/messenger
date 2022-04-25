@@ -22,7 +22,7 @@ namespace Server.Controllers
         [HttpGet("{id:int}/chats")]
         public async Task<ActionResult<List<Chat>>> GetUserChats(int id)
         {
-            var chats = await this._service.GetUserChats(id);
+            var chats = await this._service.GetUserChatsAsync(id);
             if (chats is null)
             {
                 return this.NoContent();
