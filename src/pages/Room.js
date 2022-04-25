@@ -10,10 +10,10 @@ export const Room = () => {
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState([])
 
-    const joinRoom = async (user, room) => {
+    const joinRoom = async (id, username, room, chats) => {
         try {
             const connection = new HubConnectionBuilder()
-                .withUrl(`https://localhost:44344/chat`)
+                .withUrl(`https://localhost:44328/chat`)
                 .configureLogging(LogLevel.Information)
                 .build()
 
@@ -32,7 +32,7 @@ export const Room = () => {
             })
 
             await connection.start()
-            await connection.invoke('JoinRoom', { user, room })
+            await connection.invoke('JoinRoom', { id, username, room, chats })
             setConnection(connection)
         } catch (e) {
             console.log(e)

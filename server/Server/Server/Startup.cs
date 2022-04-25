@@ -1,21 +1,36 @@
-using Messenger.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Messenger.Hubs;
+using Microsoft.EntityFrameworkCore;
+using Server.Hubs;
+using Server.Models;
+using Server.Services;
 
-namespace Messenger
+namespace Server
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+        
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddSignalR();
 
             services.AddCors(options =>
@@ -29,7 +44,15 @@ namespace Messenger
                 });
             });
 
-            services.AddSingleton<IDictionary<string, UserConnection>>(opts => new Dictionary<string, UserConnection>());
+            services
+                .AddScoped<UsersService>()
+                .AddScoped<ChatsService>()
+                .AddScoped<MessagesService>()
+                .AddSingleton<IDictionary<string, User>>(opts => new Dictionary<string, User>());
+
+            services.AddDbContext<Context.Context>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,12 +62,15 @@ namespace Messenger
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chat");
             });
         }
