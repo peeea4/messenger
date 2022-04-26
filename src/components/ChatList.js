@@ -1,15 +1,16 @@
 import { UserTab } from "./UserTab";
-import { useSelector } from "react-redux"
-import { Lobby } from '../components/Lobby'
-import { Chat } from '../components/Chat'
+import { useDispatch, useSelector } from "react-redux"
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { useState } from 'react'
+import { MyButton } from "./MyButton";
+import { creatingChat } from "../store/actions/chatActions";
 export const ChatList = () => {
-
+    const dispatch = useDispatch()
     const [connection, setConnection] = useState()
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState([])
-    const chatList = useSelector(state => state.user.chats)
+    const chatList = useSelector(state => state.chatList)
+    const user = useSelector(state => state.user)
 
     const joinRoom = async (id, username, room, chats) => {
         try {
@@ -57,8 +58,13 @@ export const ChatList = () => {
     }
 
 	return (
-		chatList.map( (chat) => (
-			<UserTab key={chat.id} username={chat.username} room={chat.room} id={chat.id} joinRoom={joinRoom}/>
-		))
+		<div className="chat-list">
+            <MyButton className="button" disabled="false" onClick={ () => {dispatch(creatingChat(user.username))}}>Добавить чат</MyButton>
+            {
+                chatList.map( (chat) => (
+                    <UserTab key={chat.id} username={chat.name}/>
+                ))
+            }
+        </div>
     );
 }

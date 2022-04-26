@@ -1,8 +1,11 @@
 const initialStore = []
 export const chatReducer = (state = initialStore, action) => {
 	switch (action.type) {
-		case "FETCHED_CHAT":
-			return action.payload
+		case "CREATE_CHAT":
+			return [
+                ...state,
+                action.payload
+            ]
 		default: return state
 	}
 }

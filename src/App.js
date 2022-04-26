@@ -12,7 +12,6 @@ import { useSelector } from "react-redux"
 
 const App = () => {
     const user = useSelector(state => state.user);
-    console.log(user);
     localStorage.setItem("user", JSON.stringify(user))
 	return (
 		user.id ?

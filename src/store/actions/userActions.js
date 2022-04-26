@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export function creatingUser(userName) {
 	return (dispatch) => {
 		axios.post(`https://localhost:44328/users`, {
@@ -17,26 +18,6 @@ function createdUser(user) {
 	}
 }
 
-
-/* ----------------------------- */
-
-
-export function getingChatsByID(userID) {
-	return (dispatch) => {
-		axios.get(`https://localhost:44328/users/${userID}/chats`)
-		.then(res => dispatch(getChatsByID(res.data)))
-	}
-}
-
-function getChatsByID(chatList) {
-	return {
-		type: "GET_USER",
-		payload: chatList
-	}
-}
-
-
-/* ----------------------------- */
 
 
 export function getingUserByID(userID) {

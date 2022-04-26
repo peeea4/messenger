@@ -1,7 +1,7 @@
-export const UserTab = (username, room, id, joinRoom) => {
+export const UserTab = ({username}) => {
 	return (
-		<div className="user-tab" onClick={() => {joinRoom(username, room)}}>
-			<h4 className="user-name">${username}</h4>
+		<div className="user-tab" >
+			<h4 className="user-name">{username}</h4>
 			<p className="user-last-message"></p>
 		</div>
 	);

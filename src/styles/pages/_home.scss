@@ -1,0 +1,11 @@
+.home-page {
+    display: flex;
+    .chat-list{
+        height: 100%;
+        width: 25%;
+    }
+    .chat {
+        height: 100%;
+        width: 75%;
+    }
+}

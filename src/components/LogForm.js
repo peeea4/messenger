@@ -13,7 +13,6 @@ const LogForm = () => {
     const registrationSubmit = (e) => {
         e.preventDefault()
         dispatch(creatingUser(userName))
-        console.log("Форма регистрации отправлена");
         navigate('/', { replace: true })
     }
     
