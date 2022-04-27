@@ -4,8 +4,8 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { useState } from 'react'
 import { MyButton } from "./MyButton";
 import { creatingChat } from "../store/actions/chatActions";
+import AddChat from "./AddChat";
 export const ChatList = () => {
-    const dispatch = useDispatch()
     const [connection, setConnection] = useState()
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState([])
@@ -59,10 +59,10 @@ export const ChatList = () => {
 
 	return (
 		<div className="chat-list">
-            <MyButton className="button" disabled="false" onClick={ () => {dispatch(creatingChat(user.username))}}>Добавить чат</MyButton>
+			<AddChat/>
             {
                 chatList.map( (chat) => (
-                    <UserTab key={chat.id} username={chat.name}/>
+                    <UserTab key={chat.id} username={chat.name} chatID={chat.id}/>
                 ))
             }
         </div>
