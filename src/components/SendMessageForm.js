@@ -15,7 +15,7 @@ export const SendMessageForm = ({ sendMessage }) => {
                 onChange={e => setMessage(e.target.value)} 
                 value={message} 
             />
-            <MyButton className="send-button button" disabled={!message}>Send</MyButton>
+            <MyButton className="send-button button" disabled={!message}>Отправить</MyButton>
        </form>
     )
 

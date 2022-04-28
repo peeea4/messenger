@@ -8,7 +8,7 @@ export const Chat = ({ sendMessage, messages, users, closeConnection }) => (
         <div className="aside-room">
             <ConnectedUsers users={users} />
             <MyButton className="decline-button button" onClick={() => closeConnection()}>
-                Leave Room
+                Покинуть чат
             </MyButton>
         </div>
         <div className="chat">

@@ -1,7 +1,9 @@
 .chat {
     height: 100%;
     width: 80%;
+    background-color: $first-color;
     .messages-container {
+        background-color: $first-color;
         .message {
             position: relative;
             .emoji-container {

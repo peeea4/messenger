@@ -10,7 +10,7 @@
     height: 100%;
     display: flex;
     .aside-room {
-        background-color: #2F3136;
+        background-color: $first-color;
         color: #B9BBBE;
         padding: 10px 5px;
         display: flex;
@@ -19,7 +19,7 @@
         align-items: space-between;
         .user-list {
             flex: 1;
-            background-color: #2F3136;
+            background-color: $first-color;
             color:#d2d2d3;
             padding: 10px 5px;
             .user-owner {
@@ -31,7 +31,7 @@
         }
     }
     .chat {
-        background-color: #36393F;
+        background-color: $first-color;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -39,11 +39,11 @@
             padding: 10px;
             flex: 1;
             overflow: auto;
-            background-color: #36393F;
+            background-color: $first-color;
             display: flex;
             flex-direction: column;
             .message {
-                background-color: #313131;
+                background-color: $second-color;
                 margin-bottom: 5px;
                 padding: 5px 10px;
                 border-radius: 5px;

@@ -29,7 +29,6 @@ export function creatingChat(user, friendID) {
         })
 		.then(res => {
             dispatch(createdChat(res.data));
-            console.log(res.data);
         })
 	}
 }
