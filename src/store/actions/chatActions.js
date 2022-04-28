@@ -14,13 +14,19 @@ function getChatsByID(chatList) {
 	}
 }
 
-export function creatingChat(chatName) {
+export function creatingChat(user) {
 	return (dispatch) => {
 		axios.post(`https://localhost:44328/chats`, {
-            'Name': `${chatName}`
+            "Name": `${user.username}`, 
+            "users": [{
+                username: {
+                    ...user
+                }
+            }]
         })
 		.then(res => {
             dispatch(createdChat(res.data));
+            console.log(res.data);
         })
 	}
 }

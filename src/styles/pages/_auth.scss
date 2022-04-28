@@ -8,9 +8,10 @@
 		flex-direction: column;
 		nav {
 			display: flex;
-			a {
-				flex: 1;
-			}
+            margin-bottom: 10px;
+            a {
+                flex: 1;
+            }
 		}
 		.form {
 			flex: 1;

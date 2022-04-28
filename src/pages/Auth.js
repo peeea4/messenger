@@ -6,7 +6,7 @@ export const Auth = () => {
 		<div className="page auth-page">
 			<div className="forms-container">
 				<nav>
-					<CustomLink to="/">Войти</CustomLink>
+					<CustomLink to="/">Вход</CustomLink>
 					<CustomLink to="login">Регистрация</CustomLink>
 				</nav>
 				<Outlet/>

@@ -1,12 +1,10 @@
 import { MyButton } from "../components/MyButton";
-const SignForm = () => {
+export const SignForm = () => {
 	return ( 
 		<form className="form-signin form" onSubmit={e => { }}>
-			<input type="email" className="auth-mail" />
-			<input type="password" className="auth-pass" />
+			<input type="email" className="auth-mail" placeholder="Email" />
+			<input type="password" className="auth-pass" placeholder="Пароль" />
 			<MyButton className="confirm-button button">Войти</MyButton>
 		</form>
 	);
 }
-
-export default SignForm;
