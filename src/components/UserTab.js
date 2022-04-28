@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux"
 import { getingMessages } from "../store/actions/messagesActions";
 
 export const UserTab = ({chatID}) => {
-
     const username = useSelector(state => state.user.username);
     const dispatch = useDispatch();
 

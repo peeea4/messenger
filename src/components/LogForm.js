@@ -8,8 +8,9 @@ export const LogForm = () => {
     const [userName, setUserName] = useState("");
 
     const dispatch = useDispatch()
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    
     const registrationSubmit = (e) => {
         e.preventDefault()
         dispatch(creatingUser(userName))

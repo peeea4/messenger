@@ -4,6 +4,7 @@ import { MyButton } from './MyButton';
 export const Lobby = ({ joinRoom }) => {
     const [username, setUser] = useState();
     const [room, setRoom] = useState();
+    
     return (
         <form className='lobby'
             onSubmit={e => {

@@ -4,7 +4,7 @@ import AddChat from "./AddChat";
 
 export const ChatList = () => {
     const chatList = useSelector(state => state.chatList)
-
+    
 	return (
 		<div className="chat-list">
 			<AddChat/>
