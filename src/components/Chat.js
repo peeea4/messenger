@@ -4,7 +4,7 @@ import { ConnectedUsers } from './ConnectedUsers'
 import { MyButton } from './MyButton'
 
 export const Chat = ({ sendMessage, messages, users, closeConnection }) => (
-    <div className='message-chat'>
+    <div className='chat-container'>
         <div className="aside-room">
             <ConnectedUsers users={users} />
             <MyButton className="decline-button button" onClick={() => closeConnection()}>

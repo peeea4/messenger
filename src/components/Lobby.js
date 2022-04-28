@@ -13,7 +13,6 @@ export const Lobby = ({ joinRoom }) => {
             <div className="lobby-inputs">
                 <input placeholder="Personal name" onChange={e => {
                     setUser(e.target.value)
-                    localStorage.setItem("userName", `${e.target.value}`);
                 }} />
                 <input placeholder="Room name" onChange={e => setRoom(e.target.value)} />
             </div>

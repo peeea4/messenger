@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 export const Message = ({message}) => {
     const [sliderStatus, setSliderStatus] = useState(false);
-    console.log(message);
-    let className1 = (message.sender.username === localStorage.userName ? "user-message message" : "friend-message message")
+    let messageStyle = (message.sender.username === localStorage.userName ? "user-message message" : "friend-message message")
+    console.log(localStorage.userName);
     return (
-        <div className={className1} onClick={e => {setSliderStatus(!sliderStatus)}}>
+        <div className={messageStyle} onClick={e => {setSliderStatus(!sliderStatus)}}>
 
             <div className="owner">
                 {message.user}
