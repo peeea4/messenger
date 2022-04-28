@@ -7,7 +7,6 @@ namespace Server.Models
     public class Chat
     {
         [Key]
-        [ForeignKey("Id")]
         public int Id { get; set; }
 
         public string Name { get; set; }

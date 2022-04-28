@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Server.Models;
 
 namespace Server.Services
@@ -17,12 +18,14 @@ namespace Server.Services
 
         public async Task<int> CreateChatAsync(Chat chat)
         {
-            var newChat = await this._context.Chats.AddAsync(chat);
+            EntityEntry<Chat> newChat;
             try
             {
+                chat.Users = chat?.Users?.Select(user => this._context.Users.Find(user.Id)).ToList();
+                newChat = await this._context.Chats.AddAsync(chat);
                 await this._context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
                 return -1;
             }
@@ -53,7 +56,10 @@ namespace Server.Services
 
         public async Task<List<Chat>> GetChatsAsync()
         {
-            return await this._context.Chats.Include(chat => chat.Messages).ToListAsync();
+            return await this._context.Chats
+                .Include(chat => chat.Messages)
+                .Include(chat => chat.Users)
+                .ToListAsync();
         }
 
         public async Task<Chat> GetChatByIdAsync(int id)

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Server.Models;
@@ -17,6 +19,13 @@ namespace Server.Services
 
         public async Task<int> CreateUserAsync(User user)
         {
+            if (await this._context.Users.AnyAsync(t => t.Email == user.Email))
+            {
+                return -1;
+            }
+
+            var hashedPassword = SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password));
+            user.Password = string.Concat(hashedPassword.Select(item => item.ToString("x2")));
             var newUser = await this._context.Users.AddAsync(user);
             try
             {
@@ -27,7 +36,7 @@ namespace Server.Services
                 return -1;
             }
 
-            return newUser.Entity.Id;
+            return 1;
         }
 
         public async Task<bool> DeleteUserAsync(int id)
