@@ -1,9 +1,11 @@
 import axios from "axios";
 
-export function creatingUser(userName) {
+export function creatingUser(userEmail, userName, userPass) {
 	return (dispatch) => {
 		axios.post(`https://localhost:44328/users`, {
-            "Username": `${userName}`
+            "Username": userName,
+            "Email": userEmail,
+            "Password": userPass
         })
 		.then(res => {
             dispatch(createdUser(res.data));
