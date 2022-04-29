@@ -22,6 +22,7 @@ namespace Server.Controllers
         [HttpGet("{id:int}/chats")]
         public async Task<ActionResult<List<Chat>>> GetUserChats(int id)
         {
+            var t = ControllerContext.HttpContext.Connection.Id;
             var chats = await this._service.GetUserChatsAsync(id);
             if (chats is null)
             {

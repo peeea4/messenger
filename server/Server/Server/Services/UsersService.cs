@@ -24,14 +24,13 @@ namespace Server.Services
                 return -1;
             }
 
-            var hashedPassword = SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(user.Password));
-            user.Password = string.Concat(hashedPassword.Select(item => item.ToString("x2")));
+            user.Password = user.Password.GetHash();
             var newUser = await this._context.Users.AddAsync(user);
             try
             {
                 await this._context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
                 return -1;
             }

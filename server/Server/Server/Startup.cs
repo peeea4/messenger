@@ -4,7 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Server.Hubs;
 using Server.Models;
 using Server.Services;
@@ -42,11 +46,30 @@ namespace Server
                 .AddScoped<UsersService>()
                 .AddScoped<ChatsService>()
                 .AddScoped<MessagesService>()
-                .AddSingleton<IDictionary<string, User>>(opts => new Dictionary<string, User>());
+                .AddScoped<ChatHub>()
+                .AddSingleton<IDictionary<string, User>>(opts => new Dictionary<string, User>())
+                .AddSingleton<IUserIdProvider, EmailIdProvider>();;
 
             services.AddDbContext<Context.Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "ISSUER",
 
+                        ValidateAudience = true,
+                        ValidAudience = "AUDIENCE",
+                        ValidateLifetime = true,
+
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("mysupersecret_secretkey!123")),
+                        ValidateIssuerSigningKey = true,
+                    };
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -59,6 +82,8 @@ namespace Server
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors();
 

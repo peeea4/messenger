@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Server.Hubs;
 using Server.Models;
 
 namespace Server.Services
@@ -10,10 +12,12 @@ namespace Server.Services
     public class ChatsService
     {
         private readonly Context.Context _context;
+        private readonly ChatHub _hub;
 
-        public ChatsService(Context.Context context)
+        public ChatsService(Context.Context context, ChatHub hub)
         {
             _context = context;
+            _hub = hub;
         }
 
         public async Task<int> CreateChatAsync(Chat chat)
@@ -24,6 +28,7 @@ namespace Server.Services
                 chat.Users = chat?.Users?.Select(user => this._context.Users.Find(user.Id)).ToList();
                 newChat = await this._context.Chats.AddAsync(chat);
                 await this._context.SaveChangesAsync();
+               // await _hub.CreateRoom(newChat.Entity.Name);
             }
             catch (DbUpdateException e)
             {

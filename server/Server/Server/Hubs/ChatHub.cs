@@ -60,6 +60,7 @@ namespace Server.Hubs
 
         public async Task SendMessage(string message)
         {
+            var c = Clients?.User("stas");
             if (_connections.TryGetValue(Context.ConnectionId, out User user))
             {
                 await Clients.Group(user.Room).SendAsync(
@@ -80,6 +81,20 @@ namespace Server.Hubs
                 .Select(c => c.Username);
 
             return Clients.Group(room).SendAsync("UsersInRoom", users);
+        }
+
+        public async Task NotifyChatCreated(Chat chat)
+        {
+            foreach (var user in chat.Users)
+            {
+                var c = Clients.User(user.Email);
+                await Clients.Client(user.Email).SendAsync("newChatCreated");
+            }
+        }
+
+        public async Task CreateRoom(string roomName)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
         }
     }
 }
