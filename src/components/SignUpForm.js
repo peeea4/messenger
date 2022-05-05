@@ -1,4 +1,4 @@
-import { creatingUser } from "../store/actions/userActions";
+import { registrationUserAsync } from "../store/actions/userActions";
 import { useDispatch } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
@@ -11,9 +11,7 @@ export const SignUpForm = () => {
         },
         handleSubmit,
         reset, 
-    } = useForm({
-        mode: "all"
-    });
+    } = useForm({ mode: "all" });
 
     const dispatch = useDispatch();
 
@@ -21,7 +19,7 @@ export const SignUpForm = () => {
     
     const registrationSubmit = (data) => {
         reset();
-        dispatch(creatingUser(data.email, data.nickname, data.password));
+        dispatch(registrationUserAsync(data.email, data.nickname, data.password));
         navigate('/', { replace: true });
     }
     
@@ -29,6 +27,7 @@ export const SignUpForm = () => {
 		<div className="signup auth-container">
             <h2 className="signup-title auth-title">Sign Up</h2>
             <form className="form-signup form" onSubmit={handleSubmit(registrationSubmit)}>
+
                 <label className="auth-label">
                     <p>
                         Email
@@ -38,6 +37,7 @@ export const SignUpForm = () => {
                 <div className="auth-error">
                     {errors?.email && <p>{errors?.email?.message || "Error!"}</p>}
                 </div>
+
                 <label className="auth-label">
                     <p>
                         Nickname
@@ -47,6 +47,7 @@ export const SignUpForm = () => {
                 <div className="auth-error">
                     {errors?.nickname && <p>{errors?.nickname?.message || "Error!"}</p>}
                 </div>
+
                 <label className="auth-label">
                     <p>
                         Password
@@ -62,6 +63,7 @@ export const SignUpForm = () => {
                  <div className="auth-error">
                     {errors?.password && <p>{errors?.password?.message || "Error!"}</p>}
                 </div>
+
                 <button type="submit" className="confirm-button button" disabled={!isValid}>Sign Up</button>
             </form>
             <p className="redirect">Already have an account?</p>
