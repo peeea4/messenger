@@ -65,7 +65,7 @@ namespace Server.Controllers
                 return this.BadRequest();
             }
 
-            return this.CreatedAtAction("GetUserById", new { id = newUserId }, user);
+            return this.CreatedAtAction("GetUserById", new { id = newUserId.Id }, user);
         }
 
         [HttpPut("{id:int}")]
