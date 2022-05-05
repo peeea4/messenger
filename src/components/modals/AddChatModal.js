@@ -14,6 +14,7 @@ export const AddChatModal = ({joinRoom}) => {
     const createChat = () => {
         joinRoom(1, user.username, userDestination, null);
         dispatch(creatingChat(user, userDestination));
+        dispatch(showModal(!modalAddChat));
     }
 
     const closeModal = (e) => {

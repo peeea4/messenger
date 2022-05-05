@@ -3,8 +3,8 @@
     border: 0;
     font-size: 20px;
     font-family: $main-font-style;
-    padding: 3px 6px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 16px;
     color: rgb(213, 213, 213);
     &:disabled {
         color: rgb(159, 159, 159);
@@ -14,9 +14,20 @@
     background-color: rgb(171, 7, 7);
 }
 .confirm-button {
-    background-color: #198754;
+    background-color: rgb(90, 82, 175);
 }
 .send-button {
     background-color: transparent;
     border: 2px solid rgb(29, 29, 29);
+}
+.redirect-button {
+    text-align: center;
+    width: 100%;
+    text-decoration: none;
+    background-color: transparent;
+    border: 2px solid $main-color;
+    transition: all .2s linear;
+}
+.redirect-button:hover {
+    background-color: $main-color;
 }

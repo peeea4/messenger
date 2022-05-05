@@ -4,8 +4,8 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { NotFound } from "./pages/NotFound";
-import { LogForm } from "./components/LogForm";
-import { SignForm } from "./components/SignForm";
+import { SignUpForm } from "./components/SignUpForm";
+import { LogInForm } from "./components/LogInForm";
 import { useSelector } from "react-redux"
 
 const App = () => {
@@ -24,14 +24,12 @@ const App = () => {
 			:
 			(
 				<Routes>
-					<Route path="/" element={<Layout />}>
-						<Route path="/" element={<Auth />}>
-							<Route index element={<SignForm />} />
-							<Route path="login" element={<LogForm />} />
-							<Route path="*" element={<NotFound />} />
-						</Route>
-						<Route path="*" element={<NotFound />} />
-					</Route>
+                    <Route path="/" element={<Auth />}>
+                        <Route index element={<LogInForm />} />
+                        <Route path="signup" element={<SignUpForm />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Route>
+                    <Route path="*" element={<NotFound />} />
 				</Routes>
 			)
 	)

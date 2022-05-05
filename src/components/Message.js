@@ -9,7 +9,7 @@ export const Message = ({message}) => {
         <div className={messageStyle} onClick={e => {setSliderStatus(!sliderStatus)}}>
 
             <div className="owner">
-                {message.user}
+                {message.sender.username}
             </div>
 
             <div className="text">
@@ -23,6 +23,7 @@ export const Message = ({message}) => {
             {
                 sliderStatus ? <ReactionsBar /> : null
             }
+            
         </div>
     );
 }

@@ -9,7 +9,7 @@
         flex-direction: column;
         justify-content: flex-start;
         gap: 15px;
-        
+        background-color: $second-color;
         overflow: auto;
         padding: 8px 12px;
         .add-chat {
@@ -31,9 +31,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgba(0, 0, 0, 0.269);
+        background-color: rgba(0, 0, 0, 0.492);
         .add-chat-modal {
-
             background-color: $second-color;
             border-radius: 10px;
             display: flex;
