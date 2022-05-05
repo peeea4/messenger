@@ -22,6 +22,7 @@ namespace Server.Controllers
         [HttpGet("{id:int}/chats")]
         public async Task<ActionResult<List<Chat>>> GetUserChats(int id)
         {
+            var t = ControllerContext.HttpContext.Connection.Id;
             var chats = await this._service.GetUserChatsAsync(id);
             if (chats is null)
             {
@@ -59,7 +60,7 @@ namespace Server.Controllers
         public async Task<ActionResult<User>> CreateUserAsync(User user)
         {
             var newUserId = await _service.CreateUserAsync(user);
-            if (newUserId <= 0)
+            if (newUserId is null)
             {
                 return this.BadRequest();
             }
