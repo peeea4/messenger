@@ -24,21 +24,39 @@ namespace Server.Controllers
         {
             _service = service;
         }
-
-        [Authorize]
+        
         [Route("signIn")]
-        public async Task<ActionResult<AuthenticateResponse>> SignIn()
+        public async Task<ActionResult<AuthenticateResponse>> SignIn(User user)
         {
-            var t = User.Identity.Name;
-            return null;
+            var userFromDb = await _service.GetUserByEmailAsync(user.Email);
+            if (userFromDb is null)
+            {
+                return BadRequest($"User with email '{user.Email}' does not exist.");
+            }
+
+            if (!user.Password.CompareWithHashed(userFromDb.Password))
+            {
+                return BadRequest($"User with email '{user.Email}' does not exist.");
+            }
+
+            var response = GetAuthenticateResponse(user);
+
+            return Ok();
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<AuthenticateResponse>> Register(User user)
         {
-            await this._service.CreateUserAsync(user);
+            var newUser = await this._service.CreateUserAsync(user);
 
-            var identity = await GetIdentity(user);
+            var response = GetAuthenticateResponse(newUser);
+
+            return this.Ok(response);
+        }
+
+        private AuthenticateResponse GetAuthenticateResponse(User user)
+        {
+            var identity = GetIdentity(user);
             var token = new JwtSecurityToken(
                 issuer: "ISSUER",
                 audience: "AUDIENCE",
@@ -49,14 +67,13 @@ namespace Server.Controllers
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
             var response = new AuthenticateResponse
             {
-                User = user,
                 AccessToken = encodedJwt
             };
 
-            return this.Ok(response);
+            return response;
         }
 
-        private async Task<ClaimsIdentity> GetIdentity(User user)
+        private ClaimsIdentity GetIdentity(User user)
         {
             if (user != null)
             {

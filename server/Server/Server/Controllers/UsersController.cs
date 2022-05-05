@@ -60,7 +60,7 @@ namespace Server.Controllers
         public async Task<ActionResult<User>> CreateUserAsync(User user)
         {
             var newUserId = await _service.CreateUserAsync(user);
-            if (newUserId <= 0)
+            if (newUserId is null)
             {
                 return this.BadRequest();
             }

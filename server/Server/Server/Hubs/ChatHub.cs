@@ -28,42 +28,33 @@ namespace Server.Hubs
             _context = context;
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
+        public async Task LeaveRoom(string chatId)
         {
-            if (_connections.TryGetValue(Context.ConnectionId, out User userConnection))
-            {
-                _connections.Remove(Context.ConnectionId);
-                Clients.Group(userConnection.Room).SendAsync("ReceiveMessage", _botUser, $"{userConnection.Username} has left");
-                SendUsersConnected(userConnection.Room);
-            }
-
-            return base.OnDisconnectedAsync(exception);
+            await Clients.Group(chatId).SendAsync("ReceiveMessage", _botUser, $"{Context.UserIdentifier} has left");
+            await SendUsersConnected(chatId);
         }
 
-        public async Task JoinRoom(User user)
+        public async Task JoinRoom(User user, string chatId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, user.Room);
-            
-            _connections[Context.ConnectionId] = user;
             var message = new Message
             {
-                Text = $"{user.Username} has joined {user.Room}",
+                Text = $"{user.Username} has joined",
                 Sender = _botUser,
                 TimeSent = DateTime.Now.ToString("HH:mm"),
             };
-            await Clients.Group(user.Room).SendAsync(
+
+            await Clients.Group(chatId).SendAsync(
                 "ReceiveMessage",
                 message);
             
-            await SendUsersConnected(user.Room);
+            await SendUsersConnected(chatId);
         }
 
-        public async Task SendMessage(string message)
+        public async Task SendMessage(string chatId, string message)
         {
-            var c = Clients?.User("stas");
             if (_connections.TryGetValue(Context.ConnectionId, out User user))
             {
-                await Clients.Group(user.Room).SendAsync(
+                await Clients.Group(chatId).SendAsync(
                     "ReceiveMessage",
                     new Message
                     {
@@ -77,7 +68,7 @@ namespace Server.Hubs
         public Task SendUsersConnected(string room)
         {
             var users = _connections.Values
-                .Where(c => c.Room == room)
+                .Where(c => c.Chats.Exists(chat => chat.Name == room))
                 .Select(c => c.Username);
 
             return Clients.Group(room).SendAsync("UsersInRoom", users);

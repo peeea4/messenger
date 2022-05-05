@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO.Pipelines;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,11 +18,11 @@ namespace Server.Services
             _context = context;
         }
 
-        public async Task<int> CreateUserAsync(User user)
+        public async Task<User> CreateUserAsync(User user)
         {
             if (await this._context.Users.AnyAsync(t => t.Email == user.Email))
             {
-                return -1;
+                return null;
             }
 
             user.Password = user.Password.GetHash();
@@ -32,10 +33,10 @@ namespace Server.Services
             }
             catch (DbUpdateException e)
             {
-                return -1;
+                return null;
             }
 
-            return 1;
+            return newUser.Entity;
         }
 
         public async Task<bool> DeleteUserAsync(int id)
@@ -69,12 +70,16 @@ namespace Server.Services
             return await this._context.Users.Where(user => user.Id == id).Include(user => user.Chats).FirstOrDefaultAsync();
         }
 
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await this._context.Users.FirstOrDefaultAsync(user => string.Equals(user.Email, email));
+        }
+
         public async Task<User> UpdateUserAsync(int id, User user)
         {
             var existingUser = await this._context.Users.FindAsync(id);
             existingUser.Chats = user.Chats;
             existingUser.Username = user.Username;
-            existingUser.Room = user.Room;
 
             this._context.Entry(existingUser).State = EntityState.Modified;
             try
