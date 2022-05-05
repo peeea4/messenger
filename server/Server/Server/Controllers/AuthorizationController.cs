@@ -39,9 +39,9 @@ namespace Server.Controllers
                 return BadRequest($"User with email '{user.Email}' does not exist.");
             }
 
-            var response = GetAuthenticateResponse(user);
+            var response = GetAuthenticateResponse(userFromDb);
 
-            return Ok();
+            return Ok(response);
         }
 
         [HttpPost("register")]
@@ -56,6 +56,7 @@ namespace Server.Controllers
 
         private AuthenticateResponse GetAuthenticateResponse(User user)
         {
+            user.Password = null;
             var identity = GetIdentity(user);
             var token = new JwtSecurityToken(
                 issuer: "ISSUER",
@@ -67,6 +68,7 @@ namespace Server.Controllers
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
             var response = new AuthenticateResponse
             {
+                User = user,
                 AccessToken = encodedJwt
             };
 

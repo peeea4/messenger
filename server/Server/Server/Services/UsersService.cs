@@ -72,7 +72,7 @@ namespace Server.Services
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await this._context.Users.FirstOrDefaultAsync(user => string.Equals(user.Email, email));
+            return await this._context.Users.Include(user => user.Chats).FirstOrDefaultAsync(user => string.Equals(user.Email, email));
         }
 
         public async Task<User> UpdateUserAsync(int id, User user)
