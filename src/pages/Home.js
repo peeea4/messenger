@@ -2,24 +2,26 @@ import { ChatList } from "../components/ChatList"
 import { Chat } from "../components/Chat";
 import { useEffect, useState } from "react";
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
+import { useSelector } from "react-redux";
 export const Home = () => {
     const [connection, setConnection] = useState()
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState([])
-    // useEffect(() => {
-    //     joinRoom();
-    // }, []);
+    const user = useSelector(state => state.user.user.user);
+    useEffect(() => {
+        joinRoom(user, "112");
+    }, []);
     const joinRoom = async (user, chatID) => {
         try {
             const connection = new HubConnectionBuilder()
                 .withUrl(`https://localhost:44328/chat`)
                 .configureLogging(LogLevel.Information)
                 .build()
-
+ 
             connection.on('UsersInRoom', (users) => {
                 setUsers(users)
             })
-
+            console.log(connection);
             connection.on('ReceiveMessage', (message) => {
                 setMessages((messages) => [...messages,  message ])
             })
@@ -31,7 +33,6 @@ export const Home = () => {
             })
 
             await connection.start()
-            console.log(user, chatID);
             await connection.invoke('JoinRoom', user, chatID)
             setConnection(connection)
         } catch (e) {
@@ -47,13 +48,14 @@ export const Home = () => {
         }
     }
 
-    const sendMessage = async (chat,  message) => {
+    const sendMessage = async (chatID, message) => {
         try {
-            await connection.invoke('SendMessage', message)
+            await connection.invoke('SendMessage', chatID, message)
         } catch (e) {
             console.log(e)
         }
     }
+
     return (
         <div className="page home-page">
             <ChatList joinRoom={joinRoom}/>
@@ -65,6 +67,7 @@ export const Home = () => {
                         sendMessage={sendMessage}
                         closeConnection={closeConnection}
                         users={users}
+                        tempID="112"
                     />
                 )
                 :

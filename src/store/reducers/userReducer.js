@@ -6,7 +6,6 @@ const initialStore = {
 export const userReducer = (state = initialStore, action) => {
 	switch (action.type) {
 		case CREATED_USER:
-            console.log("created");
 			return {
                 ...state,
                 user: action.payload

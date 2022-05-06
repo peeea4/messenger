@@ -7,7 +7,7 @@ export const ChatBlock = ({joinRoom, chatID, friendID}) => {
 	return (
 		<div className="user-tab" onClick={() => {
             dispatch(setChatID(chatID));
-            joinRoom(user, chatID)
+            joinRoom(user.user, String(chatID))
         }}>
             <div className="user-image-aside"></div>
             <div className="user-content">

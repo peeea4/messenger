@@ -4,7 +4,7 @@ export const UserBlock = ({friend}) => {
     const dispatch = useDispatch();
     let user = JSON.parse(localStorage.getItem("user"));
     return (
-        <div onClick={() => {dispatch(creatingChat(user, friend.id))}} className="user-block">
+        <div onClick={() => {dispatch(creatingChat(user.user, friend.id))}} className="user-block">
             {
                 friend.username
             }

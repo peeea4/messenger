@@ -52,17 +52,13 @@ namespace Server.Hubs
 
         public async Task SendMessage(string chatId, string message)
         {
-            if (_connections.TryGetValue(Context.ConnectionId, out User user))
-            {
-                await Clients.Group(chatId).SendAsync(
+                await Clients.All.SendAsync(
                     "ReceiveMessage",
                     new Message
                     {
                         Text = message,
-                        Sender = user,
                         TimeSent = DateTime.Now.ToString("HH:mm"),
                     });
-            }
         }
 
         public Task SendUsersConnected(string room)

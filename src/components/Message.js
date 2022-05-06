@@ -1,13 +1,12 @@
 export const Message = ({message}) => {
 
-    let messageStyle = (message.sender.username === localStorage.userName ? "user-message message" : "friend-message message");
-
+    let messageStyle = "message";
     return (
         <div className={messageStyle}>
 
-            <div className="owner">
+            {/* <div className="owner">
                 {message.sender.username}
-            </div>
+            </div> */}
 
             <div className="text">
                 {message.text}

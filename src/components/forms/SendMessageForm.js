@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export const SendMessageForm = ({ sendMessage }) => {
-    const chatID = useSelector(state => state)
+    const chatID = useSelector(state => state.chats.chatID)
     const [message, setMessage] = useState('')
     return (
         <form className="send-message-form"
         onSubmit={e => {
             e.preventDefault();
-            sendMessage(chatID, message);
+            sendMessage(String(chatID), message);
             setMessage('');
         }}>
             <input 
