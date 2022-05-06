@@ -28,7 +28,7 @@ namespace Server.Services
                 chat.Users = chat?.Users?.Select(user => this._context.Users.Find(user.Id)).ToList();
                 newChat = await this._context.Chats.AddAsync(chat);
                 await this._context.SaveChangesAsync();
-                await _hub.SendUsersConnected(newChat.Entity.Id.ToString());
+                
             }
             catch (DbUpdateException e)
             {

@@ -14,6 +14,8 @@ function getChatsByID(chatList) {
 	}
 }
 
+/* --- */
+
 export function creatingChat(user, friendID) {
 	return (dispatch) => {
 		axios.post(`https://localhost:44328/chats`, {
@@ -39,3 +41,14 @@ function createdChat(chat) {
 		payload: chat
 	}
 }
+
+/* --- */
+
+export function setChatID(chatID) {
+	return {
+		type: "SET_ID",
+		payload: chatID
+	}
+}
+
+/* --- */

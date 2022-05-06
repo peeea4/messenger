@@ -4,15 +4,15 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { NotFound } from "./pages/NotFound";
-import { SignUpForm } from "./components/SignUpForm";
-import { LogInForm } from "./components/LogInForm";
+import { SignUpForm } from "./components/forms/SignUpForm";
+import { LogInForm } from "./components/forms/LogInForm";
 import { useSelector } from "react-redux"
 
 const App = () => {
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.user.user);
     localStorage.setItem("user", JSON.stringify(user))
 	return (
-		user.id ?
+		user ?
 			(
 				<Routes>
 					<Route path="/" element={<Layout />}>

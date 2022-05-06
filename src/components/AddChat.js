@@ -1,12 +1,38 @@
-import { useDispatch, useSelector } from "react-redux";
-import { showModal } from "../store/actions/modalActions";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { UserBlock } from "./blocks/UserBlock";
 const AddChat = () => {
-    const modalAddChat = useSelector(state => state.modalAddChat)
-	const dispatch = useDispatch()
-    
+    const userList = useSelector(state => state.user.userList)
+    const [searchUser, setSearchValue] = useState("");
+    const [searchOpened, setSearchOpened] = useState(false);
+    const filteredUsers = userList?.filter( user => {
+        return user.username.toLowerCase().includes(searchUser.toLowerCase())
+    });
+    console.log(filteredUsers, "userlist");
     return (
-		<div className="add-chat" onClick={() => {dispatch(showModal(!modalAddChat))}}>
-            Добавить чат
+		<div className="add-chat">
+            <input 
+                type="text" 
+                placeholder="Search"
+                className="search-input" 
+                onChange={ e => setSearchValue(e.target.value) } 
+                onFocus={ () => setSearchOpened(true) } 
+            />
+            {
+                searchOpened ? 
+                (
+                    <div className="all-users">
+                        {
+                            filteredUsers?.map(friend => <UserBlock friend={friend} key={friend.id}/>)
+                        }
+                    </div>
+                )
+                :
+                (
+                    null
+                )
+                
+            }
         </div>
     );
 }

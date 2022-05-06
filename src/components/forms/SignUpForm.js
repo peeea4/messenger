@@ -1,4 +1,4 @@
-import { registrationUserAsync } from "../store/actions/userActions";
+import { getUserListAsync, registrationUserAsync } from "../../store/actions/userActions";
 import { useDispatch } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
@@ -16,9 +16,11 @@ export const SignUpForm = () => {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+
     
     const registrationSubmit = (data) => {
         reset();
+        dispatch(getUserListAsync());
         dispatch(registrationUserAsync(data.email, data.nickname, data.password));
         navigate('/', { replace: true });
     }

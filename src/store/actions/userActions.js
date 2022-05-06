@@ -1,4 +1,5 @@
 import axios from "axios";
+import { CREATED_USER } from "../constants";
 
 export function registrationUserAsync(userEmail, userName, userPass) {
 	return (dispatch) => {
@@ -13,10 +14,9 @@ export function registrationUserAsync(userEmail, userName, userPass) {
 	}
 }
 
-export function authorizationUserAsync(userEmail, userName, userPass) {
+export function authorizationUserAsync(userEmail, userPass) {
 	return (dispatch) => {
-		axios.post(`https://localhost:44328/users`, {
-            "Username": userName,
+		axios.post(`https://localhost:44328/auth/signIn`, {
             "Email": userEmail,
             "Password": userPass
         })
@@ -28,12 +28,30 @@ export function authorizationUserAsync(userEmail, userName, userPass) {
 
 function creatingUser(user) {
 	return {
-		type: "CREATED_USER",
+		type: CREATED_USER,
 		payload: user
 	}
 }
 
+/* --- */
 
+export function getUserListAsync() {
+	return (dispatch) => {
+		axios.get(`https://localhost:44328/users`)
+		.then(res => {
+            dispatch(createUserList(res.data));
+        })
+	}
+}
+
+function createUserList(userList) {
+	return {
+		type: "CREATE_USER_LIST",
+		payload: userList
+	}
+}
+
+/* --- */
 
 // export function getingUserByID(userID) {
 // 	return (dispatch) => {

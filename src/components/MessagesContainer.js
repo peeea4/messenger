@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Message } from './Message';
 
-export const MessageContainer = ({ messages }) => {
+export const MessagesContainer = ({ messages }) => {
     const messageRef = useRef();
 
     useEffect(() => {

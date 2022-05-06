@@ -1,6 +1,6 @@
-import { CustomLink } from "./CustomLink";
+import { CustomLink } from "../CustomLink";
 import { useForm } from "react-hook-form"
-import { authorizationUserAsync } from "../store/actions/userActions";
+import { authorizationUserAsync } from "../../store/actions/userActions";
 import { useDispatch } from "react-redux";
 export const LogInForm = () => {
     const dispatch = useDispatch();
@@ -15,9 +15,10 @@ export const LogInForm = () => {
     } = useForm({
         mode: "all"
     });
-// /auth/signIn
+
     const submitAuthentication = (data) => {
-        dispatch(authorizationUserAsync(data));
+        console.log(data);
+        dispatch(authorizationUserAsync(data.email, data.password));
         reset();
     }
 

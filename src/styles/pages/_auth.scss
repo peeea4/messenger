@@ -33,6 +33,17 @@
                     padding: 8px 10px;
                     margin-bottom: 4px;
                     border: 1px solid $main-color;
+                    &:focus {
+                        border-radius: 4px;
+                        border: 1px solid $main-color-light;
+                        background-color: $second-color;
+                    }
+                    &:-webkit-autofill {
+                        -webkit-text-fill-color: $main-font-color;
+                        box-shadow: 0 0 0px 1000px inherit inset;
+                        -webkit-box-shadow: 0 0 0px 1000px inherit inset;
+                        transition: background-color 5000s ease-in-out 0s;
+                    }
                 }
                 p {
                     position: absolute;

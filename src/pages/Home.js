@@ -1,21 +1,15 @@
 import { ChatList } from "../components/ChatList"
 import { Chat } from "../components/Chat";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
-import { AddChatModal } from "../components/modals/AddChatModal";
 export const Home = () => {
-
-    // const dispatch = useDispatch()
-    // const messages = useSelector(state => state.messagesList)
-    // const username = useSelector(state => state.user.username);
-    
-    const modalAddChat = useSelector(state => state.modalAddChat)
     const [connection, setConnection] = useState()
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState([])
-    
-    const joinRoom = async (id, username, room, chats) => {
+    // useEffect(() => {
+    //     joinRoom();
+    // }, []);
+    const joinRoom = async (user, chatID) => {
         try {
             const connection = new HubConnectionBuilder()
                 .withUrl(`https://localhost:44328/chat`)
@@ -37,7 +31,8 @@ export const Home = () => {
             })
 
             await connection.start()
-            await connection.invoke('JoinRoom', { id, username, room, chats })
+            console.log(user, chatID);
+            await connection.invoke('JoinRoom', user, chatID)
             setConnection(connection)
         } catch (e) {
             console.log(e)
@@ -52,27 +47,16 @@ export const Home = () => {
         }
     }
 
-    const sendMessage = async (message) => {
+    const sendMessage = async (chat,  message) => {
         try {
             await connection.invoke('SendMessage', message)
         } catch (e) {
             console.log(e)
         }
     }
-
     return (
         <div className="page home-page">
             <ChatList joinRoom={joinRoom}/>
-            {
-                modalAddChat ? 
-                (
-                    <AddChatModal joinRoom={joinRoom}/>
-                )
-                :
-                (
-                    null
-                )
-            }
             {
                 connection ? 
                 (
