@@ -2,10 +2,7 @@ import { SendMessageForm } from './forms/SendMessageForm'
 import { MessagesContainer } from './MessagesContainer'
 import { ConnectedUsers } from './ConnectedUsers'
 
-export const Chat = ({ sendMessage, messages, users, closeConnection, tempID }) => {
-    if (tempID === "112") {
-        closeConnection();
-    }
+export const Chat = ({ sendMessage, messages, users, closeConnection }) => {
     return (
         <div className='chat-container'>
             <div className="chat">

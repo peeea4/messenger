@@ -1,16 +1,12 @@
 import { ChatList } from "../components/ChatList"
 import { Chat } from "../components/Chat";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
-import { useSelector } from "react-redux";
+import { ChooseChat } from "../components/ChooseChat";
 export const Home = () => {
-    const [connection, setConnection] = useState()
-    const [messages, setMessages] = useState([])
-    const [users, setUsers] = useState([])
-    const user = useSelector(state => state.user.user.user);
-    useEffect(() => {
-        joinRoom(user, "112");
-    }, []);
+    const [connection, setConnection] = useState();
+    const [messages, setMessages] = useState([]);
+    const [users, setUsers] = useState([]);
     const joinRoom = async (user, chatID) => {
         try {
             const connection = new HubConnectionBuilder()
@@ -19,24 +15,26 @@ export const Home = () => {
                 .build()
  
             connection.on('UsersInRoom', (users) => {
-                setUsers(users)
+                setUsers(users);
             })
             console.log(connection);
             connection.on('ReceiveMessage', (message) => {
-                setMessages((messages) => [...messages,  message ])
+                setMessages((messages) => [...messages,  message ]);
             })
 
             connection.onclose(() => {
-                setConnection()
-                setMessages([])
-                setUsers([])
+                setConnection();
+                setMessages([]);
+                setUsers([]);
             })
 
-            await connection.start()
-            await connection.invoke('JoinRoom', user, chatID)
-            setConnection(connection)
+            await connection.start();
+            await connection.invoke('JoinRoom', user, chatID);
+            if(chatID != 0) {
+                setConnection(connection);
+            }
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
     }
 
@@ -50,9 +48,9 @@ export const Home = () => {
 
     const sendMessage = async (chatID, message) => {
         try {
-            await connection.invoke('SendMessage', chatID, message)
+            await connection.invoke('SendMessage', chatID, message);
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
     }
 
@@ -67,14 +65,11 @@ export const Home = () => {
                         sendMessage={sendMessage}
                         closeConnection={closeConnection}
                         users={users}
-                        tempID="112"
                     />
                 )
                 :
                 (
-                    <div className="choose-chat">
-                        <p>Выберите, кому хотели бы написать</p>
-                    </div>
+                    <ChooseChat joinRoom={joinRoom}/>
                 )
             }
         </div>

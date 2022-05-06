@@ -36,18 +36,7 @@ namespace Server.Hubs
 
         public async Task JoinRoom(User user, string chatId)
         {
-            var message = new Message
-            {
-                Text = $"{user.Username} has joined",
-                Sender = _botUser,
-                TimeSent = DateTime.Now.ToString("HH:mm"),
-            };
 
-            await Clients.Group(chatId).SendAsync(
-                "ReceiveMessage",
-                message);
-            
-            await SendUsersConnected(chatId);
         }
 
         public async Task SendMessage(string chatId, string message)

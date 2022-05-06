@@ -1,8 +1,11 @@
 import { CustomLink } from "../CustomLink";
 import { useForm } from "react-hook-form"
 import { authorizationUserAsync, getUserListAsync } from "../../store/actions/userActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export const LogInForm = () => {
+    const store = useSelector(state => state)
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const {
         register, 
@@ -17,9 +20,11 @@ export const LogInForm = () => {
     });
 
     const submitAuthentication = (data) => {
+        console.log(store);
         dispatch(getUserListAsync());
         dispatch(authorizationUserAsync(data.email, data.password));
         reset();
+        navigate('/', { replace: true });
     }
 
 	return (

@@ -9,7 +9,7 @@ export function registrationUserAsync(userEmail, userName, userPass) {
             "Password": userPass
         })
 		.then(res => {
-            dispatch(creatingUser(res.data));
+            dispatch(creatingUser(res.data.user));
         })
 	}
 }
@@ -21,7 +21,8 @@ export function authorizationUserAsync(userEmail, userPass) {
             "Password": userPass
         })
 		.then(res => {
-            dispatch(creatingUser(res.data));
+            console.log(res.data.user);
+            dispatch(creatingUser(res.data.user));
         })
 	}
 }

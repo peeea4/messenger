@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from "react-redux"
 import { setChatID } from "../../store/actions/chatActions";
-export const ChatBlock = ({joinRoom, chatID, friendID}) => {
+export const ChatBlock = ({joinRoom, chatID}) => {
     const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
 	return (
 		<div className="user-tab" onClick={() => {
             dispatch(setChatID(chatID));
-            joinRoom(user.user, String(chatID))
+            joinRoom(user.user, String(chatID));
         }}>
             <div className="user-image-aside"></div>
             <div className="user-content">

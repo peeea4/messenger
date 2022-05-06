@@ -1,4 +1,5 @@
 export const ConnectedUsers = ({ users }) => {
+    console.log(users);
     return (
         <div className="user-list">
             <h4>Участники</h4>
