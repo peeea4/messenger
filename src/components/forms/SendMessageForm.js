@@ -2,14 +2,15 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export const SendMessageForm = ({ sendMessage }) => {
-    const chatID = useSelector(state => state.chats.chatID)
-    const [message, setMessage] = useState('')
+    const chatID = useSelector(state => state.chatStore.chatID);
+	
+    const [message, setMessage] = useState('');
     return (
         <form className="send-message-form"
         onSubmit={e => {
             e.preventDefault();
             sendMessage(String(chatID), message);
-            setMessage('');
+            setMessage('');	
         }}>
             <input 
                 type="user" placeholder="message..."
@@ -17,6 +18,6 @@ export const SendMessageForm = ({ sendMessage }) => {
                 value={message} 
             />
             <button className="send-button button" disabled={!message}>Отправить</button>
-       </form>
+        </form>
     )
 }

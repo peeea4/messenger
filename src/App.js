@@ -9,10 +9,9 @@ import { LogInForm } from "./components/forms/LogInForm";
 import { useSelector } from "react-redux"
 
 const App = () => {
-    const user = useSelector(state => state.user.user);
-    localStorage.setItem("user", JSON.stringify(user))
+	const user = useSelector(state => state.userStore.currentUser);
 	return (
-		user ?
+		user ?	
 			(
 				<Routes>
 					<Route path="/" element={<Layout />}>

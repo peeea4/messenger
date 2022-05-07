@@ -3,17 +3,19 @@ import { Chat } from "../components/Chat";
 import { useState } from "react";
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { ChooseChat } from "../components/ChooseChat";
+import { useSelector } from "react-redux";
 export const Home = () => {
     const [connection, setConnection] = useState();
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
+	const accessToken = useSelector(state => state.userStore.currentUser.accessToken)
     const joinRoom = async (user, chatID) => {
         try {
             const connection = new HubConnectionBuilder()
-                .withUrl(`https://localhost:44328/chat`)
+				.withUrl(`https://localhost:44328/chat`, { accessTokenFactory: () => accessToken })
                 .configureLogging(LogLevel.Information)
-                .build()
- 
+                .build();
+
             connection.on('UsersInRoom', (users) => {
                 setUsers(users);
             })

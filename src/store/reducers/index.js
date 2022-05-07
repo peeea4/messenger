@@ -3,9 +3,9 @@ import { userReducer } from "./userReducer";
 import { chatReducer } from "./chatReducer";
 import { messagesReducer } from "./messagesReducer";
 const rootReducer = combineReducers({ 
-	user: userReducer,
-    chats: chatReducer, 
-    messagesList: messagesReducer,
+	userStore: userReducer,
+    chatStore: chatReducer, 
+    messageStore: messagesReducer,
 });
 
 export default rootReducer;

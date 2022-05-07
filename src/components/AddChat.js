@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { UserBlock } from "./blocks/UserBlock";
 const AddChat = () => {
-    const userList = useSelector(state => state.user.userList)
+	const userList = useSelector(state => state.userStore.userList)
     const [searchUser, setSearchValue] = useState("");
     const [searchOpened, setSearchOpened] = useState(false);
     const filteredUsers = userList?.filter( user => {

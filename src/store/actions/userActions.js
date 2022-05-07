@@ -9,7 +9,7 @@ export function registrationUserAsync(userEmail, userName, userPass) {
             "Password": userPass
         })
 		.then(res => {
-            dispatch(creatingUser(res.data.user));
+            dispatch(creatingUser(res.data));
         })
 	}
 }
@@ -22,12 +22,13 @@ export function authorizationUserAsync(userEmail, userPass) {
         })
 		.then(res => {
             console.log(res.data.user);
-            dispatch(creatingUser(res.data.user));
+            dispatch(creatingUser(res.data));
         })
 	}
 }
 
 function creatingUser(user) {
+	localStorage.setItem("user", JSON.stringify(user.user));
 	return {
 		type: CREATED_USER,
 		payload: user

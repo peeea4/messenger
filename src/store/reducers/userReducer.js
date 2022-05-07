@@ -8,7 +8,7 @@ export const userReducer = (state = initialStore, action) => {
 		case CREATED_USER:
 			return {
                 ...state,
-                user: {...action.payload}
+                currentUser: {...action.payload}
             }
         case CREATE_USER_LIST:
             return {
