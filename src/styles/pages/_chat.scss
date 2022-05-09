@@ -1,0 +1,94 @@
+.chat {
+    background-color: $first-color;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .messages-container {
+        padding: 10px;
+        flex: 1;
+        overflow: auto;
+        background-color: $first-color;
+        display: flex;
+        flex-direction: column;
+        .message {
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            .emoji-container {
+                width: 30px;
+                height: 100%;
+                bottom: 0;
+                color: white;
+                background-color: $second-color;
+                position: absolute;
+                padding: 5px 2px;
+                border-radius: 4px;
+                z-index: 2;
+            }
+            .owner {
+                margin-bottom: 5px;
+                font-size: 18px;
+            }
+            .text {
+                font-size: 16px;
+                color:#e7e7e7;
+                border-radius: 10px;
+                word-wrap: break-word;
+            }
+            .time {
+                color:#9f9e9e;
+                font-size: 14px;
+                align-self: flex-end;
+            }
+        }
+        .user-message {
+            background-color: $user-color;
+            align-self: flex-end;
+            margin-left: 40px;
+            .owner {
+                color: #1c74d9;
+            }
+            .emoji-container {
+                width: 30px;
+                height: 100%;
+                bottom: 0;
+                left: -40px;
+            }
+        }
+        .friend-message {
+            background-color: $friend-color;
+            align-self: flex-start;
+            margin-right: 40px;
+            .owner {
+                color: #c2331d;
+            }
+            .emoji-container {
+                width: 30px;
+                height: 100%;
+                top: 0;
+                right: -40px;
+            }
+        }
+    }
+    .send-message-form {
+        padding: 10px 5px;
+        display: flex;
+        column-gap: 6px;
+        input {
+            color: #B9BBBE;
+            padding: 5px;
+            font-size: 18px;
+            flex: 1;
+            background-color: #2F3136;
+            border: 0;
+            border-radius: 4px;
+        }
+        button {
+            width: 15%;
+        }
+    }
+}
