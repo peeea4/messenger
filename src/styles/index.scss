@@ -1,0 +1,26 @@
+@import "./components/variables";
+@import "./components/links";
+@import "./components/buttons";
+@import "./components/inputs";
+@import "./pages/layout";
+@import "./pages/home";
+@import "./pages/room";
+@import "./pages/auth";
+@import "./pages/notFound";
+@import "./pages/chat";
+@import "./components/navigation";
+@import "./components/userTab";
+@import "./components/navbar";
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+h2 {
+    color: #313131;
+}
+
+h4 {
+    font-size: 22px;
+}
+
+h6 {
+    font-size: 18px;
+}

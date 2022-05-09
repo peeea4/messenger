@@ -1,0 +1,45 @@
+.home-page {
+    display: flex;
+    height: 100%;
+    position: relative;
+    .chat-list{
+        height: 100%;
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 15px;
+        background-color: $second-color;
+        overflow: auto;
+        padding: 8px 12px;
+        .add-chat {
+            background-color: $first-color;
+            border-radius: 8px;
+            width: 100%;
+            color: $main-font-color;
+            padding: 12px 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .search-input {
+                background-color: inherit;
+                width: 100%;
+            }
+            .all-users {
+                padding: 12px 12px 0px 12px;
+                .user-block {
+
+                }
+            }
+        }
+    }
+    .choose-chat {
+        width: 80%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $first-color;
+        color: $main-font-color;
+    }
+}

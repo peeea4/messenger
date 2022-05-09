@@ -1,0 +1,15 @@
+.link {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 45px;
+        height: 45px;
+    }
+}
+.opened-page {
+    color: rgb(0, 88, 189);
+}

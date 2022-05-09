@@ -1,0 +1,11 @@
+input {
+    font-family: $main-font-style;
+    color: $main-font-color;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 4px;
+    &:focus {
+        outline: 0px;
+        border-radius: 0px;
+    }
+}

@@ -1,0 +1,32 @@
+.room-page {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chat-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    .aside-room {
+        background-color: $second-color;
+        color: #B9BBBE;
+        padding: 10px 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: space-between;
+        .user-list {
+            flex: 1;
+            color:#d2d2d3;
+            padding: 10px 5px;
+            .user-owner {
+                color: #1c74d9;
+            }
+            .user-friend {
+                color: #c2331d;
+            }
+        }
+    }
+}
+
