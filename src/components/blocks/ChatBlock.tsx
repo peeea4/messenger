@@ -1,3 +1,4 @@
+import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 type ChatBlockProps = {
@@ -11,10 +12,12 @@ export const ChatBlock:React.FC<ChatBlockProps> = ({joinRoom, chatName, chatID, 
 
 	const user = useTypedSelector(state => state.userState.currentUser.user);
     
+    const {setChatID} = useActions();
 	return (
 		<div className="user-tab" onClick={() => {
             closeConnection();
 			joinRoom(user, String(chatID));
+            setChatID(chatID);
         }}>
             <div className="user-image-aside"></div>
             <div className="user-content">
