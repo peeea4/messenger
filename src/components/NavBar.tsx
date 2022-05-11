@@ -1,10 +1,10 @@
-import { CustomLink } from "./CustomLink"
+import { NavLink } from "react-router-dom";
+
 const NavBar = () => {
     return (
         <nav className="navbar">
-            <CustomLink to="/profile">My Profile</CustomLink>
-            <CustomLink to="/">Chats</CustomLink>
-            
+            <NavLink className="button profile-icon" to="/profile"></NavLink>
+            <NavLink className="button redirect-button" to="/">Chats</NavLink>
         </nav>
     );
 }

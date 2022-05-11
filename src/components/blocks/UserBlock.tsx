@@ -7,10 +7,10 @@ type UserBlockProps = {
 }
 
 export const UserBlock:React.FC<UserBlockProps> = ({friend, closeSearch}) => {
-    let user: string = JSON.parse(localStorage.getItem("user") || "");
+    let user: any  = JSON.parse(localStorage.getItem("user") || "");
     const { creatingChat } = useActions();
     const clickHandler = () => {
-        creatingChat(user, friend.id);
+        creatingChat(user.user, friend.id);
         closeSearch();
     }
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Message } from './Message';
 type MessagesContainerProps = {
     messages: any[]

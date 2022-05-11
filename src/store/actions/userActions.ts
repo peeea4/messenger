@@ -9,6 +9,7 @@ export const registrationUserAsync = (userEmail: string, userName: string, userP
             "Email": userEmail,
             "Password": userPass
         });
+        localStorage.setItem("user", response.data)
         dispatch({type: UserActionTypes.CREATE_USER, payload: response.data});
 	}
 }
@@ -19,6 +20,7 @@ export function authorizationUserAsync(userEmail:string, userPass:string) {
             "Email": userEmail,
             "Password": userPass
         });
+        localStorage.setItem("user", JSON.stringify(response.data))
         dispatch({type: UserActionTypes.CREATE_USER, payload: response.data});
 	}
 }
@@ -28,5 +30,4 @@ export function getUserListAsync() {
 		const response = await axios.get(`https://localhost:44328/users`);
         dispatch({type: UserActionTypes.CREATE_USER_LIST, payload: response.data});
 	}
-    
 }

@@ -19,7 +19,7 @@ export function creatingChat(user: any, friendID: number) {
 	}
 }
 
-export const setChatID = (chatID: string) => {
+export const setChatID = (chatID: any) => {
 	return async (dispatch:Dispatch<ChatAction>) => {
         dispatch({type: ChatActionTypes.SET_ID, payload: chatID});
 	}

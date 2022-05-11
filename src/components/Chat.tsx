@@ -6,7 +6,6 @@ type ChatProps = {
     sendMessage: (chatID:any, message: any) => void;
     users: any;
     closeConnection: () => void;
-
 }
 export const Chat:React.FC<ChatProps> = ({ messages, sendMessage, users, closeConnection }) => {
     return (
@@ -17,9 +16,6 @@ export const Chat:React.FC<ChatProps> = ({ messages, sendMessage, users, closeCo
             </div>
             <div className="aside-room">
                 <ConnectedUsers users={users} />
-                <button className="decline-button button" onClick={() => closeConnection()}>
-                    Покинуть чат
-                </button>
             </div>
         </div>
     )

@@ -1,4 +1,3 @@
-import { CustomLink } from "../CustomLink";
 import { NavLink } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { authorizationUserAsync, getUserListAsync } from "../../store/actions/userActions";
