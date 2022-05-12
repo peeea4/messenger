@@ -29,6 +29,10 @@ export const Home = () => {
                 setMessages((messages) => [...messages,  message ]);
             })
 
+            connectionS.on('newChatCreated', () => {
+                alert();
+            })
+
             connectionS.onclose(() => {
                 setConnection({});
                 setMessages([]);
@@ -59,6 +63,8 @@ export const Home = () => {
 
     const sendMessage = async (chatID: any, message: any) => {
         try { 
+            console.log(chatID);
+            console.log(message);
             await connection.invoke('SendMessage', chatID, message);
         } catch (e) {
             console.log(e);

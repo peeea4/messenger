@@ -12,9 +12,9 @@ namespace Server.Services
     public class ChatsService
     {
         private readonly Context.Context _context;
-        private readonly ChatHub _hub;
+        private readonly IHubContext<ChatHub> _hub;
 
-        public ChatsService(Context.Context context, ChatHub hub)
+        public ChatsService(Context.Context context, IHubContext<ChatHub> hub)
         {
             _context = context;
             _hub = hub;
@@ -29,6 +29,10 @@ namespace Server.Services
                 newChat = await this._context.Chats.AddAsync(chat);
                 await this._context.SaveChangesAsync();
                 
+                foreach (var user in newChat.Entity.Users)
+                {
+                    await this._hub.Clients.User(user.Id.ToString()).SendAsync("newChatCreated");
+                }
             }
             catch (DbUpdateException e)
             {
