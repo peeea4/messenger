@@ -80,7 +80,6 @@ export const Home = () => {
                     <Chat
                         messages={messages}
                         sendMessage={sendMessage}
-                        closeConnection={closeConnection}
                         users={users}
                     />
                 )
