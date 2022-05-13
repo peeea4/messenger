@@ -1,11 +1,15 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { Message } from './Message';
+
 type MessagesContainerProps = {
     messages: any[]
-}
+};
+
 export const MessagesContainer:React.FC<MessagesContainerProps> = ({messages}) => {
+
     const messageRef = React.useRef<HTMLDivElement>(null);
+    
     useEffect(() => {
         if (messageRef && messageRef.current) {
             const { scrollHeight, clientHeight } = messageRef.current;

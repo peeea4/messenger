@@ -6,14 +6,14 @@ const initialState: UserState = {
         accessToken: ""
     },
     userList: [],
-}
+};
 
 export const userReducer = (state = initialState, action: UserAction): UserState => {
 	switch (action.type) {
 		case UserActionTypes.CREATE_USER:
 			return {
                 ...state,
-                currentUser: {...action.payload}
+                currentUser: action.payload 
             }
         case UserActionTypes.CREATE_USER_LIST:
             return {

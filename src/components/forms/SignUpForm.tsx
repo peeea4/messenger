@@ -1,8 +1,9 @@
-import { getUserListAsync, registrationUserAsync } from "../../store/actions/userActions";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 export const SignUpForm = () => {
+    
     const {
         register, 
         formState: {
@@ -13,14 +14,16 @@ export const SignUpForm = () => {
         reset, 
     } = useForm({ mode: "all" });
 
-    const {getUserListAsync, registrationUserAsync} = useActions();
+    const {getUserListAsync, registrationUserAsync, getUserChats} = useActions();
+
+    const user = useTypedSelector(state => state.userState.currentUser.user)
 
     const navigate = useNavigate();
 
     const registrationSubmit = (data:any) => {
-        reset();
         getUserListAsync();
         registrationUserAsync(data.email, data.nickname, data.password);
+        reset();
         navigate('/', { replace: true });
     }
     

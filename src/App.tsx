@@ -12,7 +12,7 @@ export const App = () => {
 	const user = useTypedSelector(state => state.userState.currentUser.user);
 
 	return (
-		user.id ?	
+		user?.id ?	
 			(
 				<Routes>
 					<Route path="/" element={<Layout />}>

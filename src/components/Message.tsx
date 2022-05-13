@@ -4,14 +4,15 @@ type MessageProps = {
 
 export const Message:React.FC<MessageProps> = ({message}) => {
 
-    // let messageStyle = (message.sender.username === JSON.parse(localStorage.getItem("user") || "").username ? "user-message message" : "friend-message message");
-    let messageStyle = "message";
+    let messageStyle = (message.sender.username === JSON.parse(localStorage.getItem("user") || "").username ? "user-message message" : "friend-message message");
+    console.log(JSON.parse(localStorage.getItem("user") || ""));
+    
     return (
         <div className={messageStyle}>
 
-            {/* <div className="owner">
+            <div className="owner">
                 {message.sender.username}
-            </div> */}
+            </div>
 
             <div className="text">
                 {message.text}

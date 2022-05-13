@@ -2,7 +2,8 @@ import { MessageAction, MessageActionTypes, MessageState } from "../../types/Mes
 
 const initialState: MessageState = {
     messages: []
-}
+};
+
 export const messageReducer = (state = initialState, action: MessageAction): MessageState => {
 	switch (action.type) {
 		case MessageActionTypes.SET_MESSAGE:

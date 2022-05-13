@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { UserBlock } from "./blocks/UserBlock";
 import { useTypedSelector } from "../hooks/useTypedSelector";
+
 const AddChat = () => {
+
 	const userList = useTypedSelector(state => state.userState.userList)
     const [searchUser, setSearchValue] = useState("");
     const [searchOpened, setSearchOpened] = useState(false);
     const filteredUsers = userList?.filter( user => {
         return user.username.toLowerCase().includes(searchUser.toLowerCase())
     });
+
     const closeSearch = () => {
         setSearchOpened(false)
     }
+    
     return (
 		<div className="add-chat">
             <input 

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
+    
     return (
         <nav className="navbar">
             <NavLink className="button profile-icon" to="/profile"></NavLink>

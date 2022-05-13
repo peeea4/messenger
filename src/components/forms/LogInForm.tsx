@@ -1,6 +1,5 @@
-import { NavLink } from "react-router-dom"
-import { useForm } from "react-hook-form"
-import { authorizationUserAsync, getUserListAsync } from "../../store/actions/userActions";
+import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useActions } from "../../hooks/useActions";
 export const LogInForm: React.FC= () => {
@@ -18,14 +17,14 @@ export const LogInForm: React.FC= () => {
         mode: "all"
     });
 
-    const {getUserListAsync, authorizationUserAsync} = useActions();
+    const {getUserListAsync, authorizationUserAsync, getUserChats} = useActions();
 
     const submitAuthentication = (data: any) => {
         getUserListAsync();
         authorizationUserAsync(data.email, data.password);
         reset();
         navigate('/', { replace: true });
-    }
+    };
 
 	return (
         <div className="login auth-container">

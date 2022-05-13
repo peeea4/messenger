@@ -1,5 +1,4 @@
-import { ChatBlock } from "./blocks/ChatBlock"
-import { useSelector } from "react-redux"
+import { ChatBlock } from "./blocks/ChatBlock";
 import AddChat from "./AddChat";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 
@@ -10,14 +9,15 @@ type ChatListProps = {
 
 export const ChatList:React.FC<ChatListProps> = ({joinRoom, closeConnection}) => {
 
-	const chatList = useTypedSelector(state => state.chatState.chatList)
+	const chatList = useTypedSelector(state => state.chatState.chatList);
+    const state = useTypedSelector(state => state);
     
 	return (
 		<div className="chat-list">
 			<AddChat/>
             {
                 chatList.map( (chat) => (
-                    <ChatBlock joinRoom={joinRoom} closeConnection={closeConnection} key={chat.id} chatName={chat.users[1].username} chatID={chat.id}/>
+                    <ChatBlock joinRoom={joinRoom} closeConnection={closeConnection} key={chat.id} chatName={chat.users[1]?.username} chatID={chat.id}/>
                 ))
             }
         </div>

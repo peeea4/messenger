@@ -1,9 +1,12 @@
-import { Link, useMatch } from "react-router-dom"
+import { Link, useMatch } from "react-router-dom";
+
 type CustomLinkProps = {
     children: any;
     to: any;
-}
+};
+
 export const CustomLink:React.FC<CustomLinkProps> = ({children, to, ...props}) => {
+    
     const match = useMatch(to);
     
     return (

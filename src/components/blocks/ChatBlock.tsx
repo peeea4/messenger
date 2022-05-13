@@ -4,19 +4,21 @@ import { useTypedSelector } from "../../hooks/useTypedSelector";
 type ChatBlockProps = {
     joinRoom: (user: {}, chatID: any) => void;
     closeConnection: () => void;
-    chatName: string;
+    chatName: any;
     chatID: number;
 }
 
 export const ChatBlock:React.FC<ChatBlockProps> = ({joinRoom, chatName, chatID, closeConnection}) => {
-
+    
 	const user = useTypedSelector(state => state.userState.currentUser.user);
     
-    const {setChatID} = useActions();
-	return (
+    const {setChatID, setModalSync} = useActions();
+	
+    return (
 		<div className="user-tab" onClick={() => {
             closeConnection();
 			joinRoom(user, String(chatID));
+            setModalSync(true);
             setChatID(chatID);
         }}>
             <div className="user-image-aside"></div>
