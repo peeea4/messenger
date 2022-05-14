@@ -40,8 +40,8 @@ namespace Server
                 .AddSingleton<IDictionary<string, User>>(opts => new Dictionary<string, User>())
                 .AddSingleton<IUserIdProvider, EmailIdProvider>();;
 
-            services.AddDbContext<Context.Context>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<Context.MessengerContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -59,9 +59,7 @@ namespace Server
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("mysupersecret_secretkey!123")),
                         ValidateIssuerSigningKey = true,
                     };
-
-                    // options.Authority = "http://localhost:3000";
-
+                    
                     options.Events = new JwtBearerEvents
                     {
                         OnMessageReceived = context =>

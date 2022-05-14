@@ -3,9 +3,9 @@ using Server.Models;
 
 namespace Server.Context
 {
-    public class Context : DbContext
+    public class MessengerContext : DbContext
     {
-        public Context(DbContextOptions options) : base(options)
+        public MessengerContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
         }

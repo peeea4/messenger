@@ -13,21 +13,21 @@ namespace Server.Hubs
     {
         private readonly User _botUser;
         private readonly IDictionary<string, User> _connections;
-        private readonly Context.Context _context;
+        private readonly Context.MessengerContext _messengerContext;
         private readonly ChatsService _service;
 
-        public ChatHub(IDictionary<string, User> connections, Context.Context context, ChatsService service)
+        public ChatHub(IDictionary<string, User> connections, Context.MessengerContext messengerContext, ChatsService service)
         {
-            _botUser = _context?.Users is null 
+            _botUser = _messengerContext?.Users is null 
                 ? new User
                     {
                         Id = 1,
                         Username = "Bot"
                     } 
-                : _context.Users.Find(1);
+                : _messengerContext.Users.Find(1);
 
             _connections = connections;
-            _context = context;
+            _messengerContext = messengerContext;
             _service = service;
         }
 
@@ -44,22 +44,43 @@ namespace Server.Hubs
                 return;
             }
 
-            await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
+            try
+            {
+                this._connections.Add(Context.UserIdentifier, user);
+            }
+            catch(Exception e)
+            {
+
+            }
+            
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
+            await Clients.Group(chatId).SendAsync(
+                "ReceiveMessage", 
+                new Message
+                     {
+                        Text = $"{user.Username} joined the chat!",
+                        Sender = _botUser,
+                        TimeSent = DateTime.Now.ToString("HH:mm")
+                });
         }
 
-        public async Task SendMessage(int chatId, string message)
+        public async Task SendMessage(string chatId, string messageText)
         {
-            var chat = await this._service.GetChatByIdAsync(chatId);
-            foreach (var user in chat.Users)
+            if (this._connections.TryGetValue(Context.UserIdentifier, out User user))
             {
-                await Clients.User(user.Id.ToString()).SendAsync(
+                var message = new Message
+                {
+                    Text = messageText,
+                    Sender = user,
+                    TimeSent = DateTime.Now.ToString("HH:mm")
+                };
+
+                await Clients.Group(chatId.ToString()).SendAsync(
                     "ReceiveMessage",
-                    new Message
-                    {
-                        Text = message,
-                        Sender = user,
-                        TimeSent = DateTime.Now.ToString("HH:mm"),
-                    });
+                    message
+                    );
+
+                await this._service.AddMessagesToChatAsync(int.Parse(chatId), new List<Message> { message });
             }
         }
 
@@ -70,20 +91,6 @@ namespace Server.Hubs
                 .Select(c => c.Username);
 
             return Clients.Group(room).SendAsync("UsersInRoom", users);
-        }
-
-        public async Task NotifyChatCreated(Chat chat)
-        {
-            foreach (var user in chat.Users)
-            {
-                var c = Clients.User(user.Id.ToString());
-                await Clients.Client(user.Id.ToString()).SendAsync("newChatCreated");
-            }
-        }
-
-        public async Task CreateRoom(string roomName)
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
         }
     }
 }

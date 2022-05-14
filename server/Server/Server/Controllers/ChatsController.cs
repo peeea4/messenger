@@ -97,7 +97,7 @@ namespace Server.Controllers
         [HttpPatch("{chatId:int}")]
         public async Task<IActionResult> AddMessagesToChat(int chatId, List<Message> messages)
         {
-            var result = await this._service.AddMessagesToChat(chatId, messages);
+            var result = await this._service.AddMessagesToChatAsync(chatId, messages);
             if (!result)
             {
                 return this.Problem("Error occurred while saving.");

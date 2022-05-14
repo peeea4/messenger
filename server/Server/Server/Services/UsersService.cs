@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Server.Models;
 
@@ -11,25 +12,25 @@ namespace Server.Services
 {
     public class UsersService
     {
-        private readonly Context.Context _context;
+        private readonly Context.MessengerContext _messengerContext;
 
-        public UsersService(Context.Context context)
+        public UsersService(Context.MessengerContext messengerContext)
         {
-            _context = context;
+            _messengerContext = messengerContext;
         }
 
         public async Task<User> CreateUserAsync(User user)
         {
-            if (await this._context.Users.AnyAsync(t => t.Email == user.Email))
+            if (await this._messengerContext.Users.AnyAsync(t => t.Email == user.Email))
             {
                 return null;
             }
 
             user.Password = user.Password.GetHash();
-            var newUser = await this._context.Users.AddAsync(user);
+            var newUser = await this._messengerContext.Users.AddAsync(user);
             try
             {
-                await this._context.SaveChangesAsync();
+                await this._messengerContext.SaveChangesAsync();
             }
             catch (DbUpdateException e)
             {
@@ -41,16 +42,17 @@ namespace Server.Services
 
         public async Task<bool> DeleteUserAsync(int id)
         {
-            var user = await this._context.Users.FindAsync(id);
+            var user = await this._messengerContext.Users.FindAsync(id);
             if (user is null)
             {
                 return false;
             }
 
-            this._context.Users.Remove(user);
+            user.Messages = null;
+            this._messengerContext.Users.Remove(user);
             try
             {
-                await this._context.SaveChangesAsync();
+                await this._messengerContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -62,37 +64,40 @@ namespace Server.Services
 
         public async Task<List<User>> GetUsersAsync()
         {
-            return await this._context.Users.Include(user => user.Chats).ToListAsync();
+            return await this._messengerContext.Users.Include(user => user.Chats).ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await this._context.Users.Where(user => user.Id == id).Include(user => user.Chats).FirstOrDefaultAsync();
+            return await this._messengerContext.Users
+                .Include(user => user.Chats)
+                .ThenInclude(chat => chat.Users)
+                .FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await this._context.Users.Include(user => user.Chats).FirstOrDefaultAsync(user => string.Equals(user.Email, email));
+            return await this._messengerContext.Users.Include(user => user.Chats).FirstOrDefaultAsync(user => string.Equals(user.Email, email));
         }
 
         public async Task<User> UpdateUserAsync(int id, User user)
         {
-            var existingUser = await this._context.Users.FindAsync(id);
+            var existingUser = await this._messengerContext.Users.FindAsync(id);
             existingUser.Chats = user.Chats;
             existingUser.Username = user.Username;
 
-            this._context.Entry(existingUser).State = EntityState.Modified;
+            this._messengerContext.Entry(existingUser).State = EntityState.Modified;
             try
             {
-                await this._context.SaveChangesAsync();
+                await this._messengerContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
                 return null;
             }
-            var t = this._context.Entry(existingUser).Entity;
+            var t = this._messengerContext.Entry(existingUser).Entity;
 
-            return this._context.Entry(existingUser).Entity;
+            return this._messengerContext.Entry(existingUser).Entity;
         }
 
         public async Task<List<Chat>> GetUserChatsAsync(int id)

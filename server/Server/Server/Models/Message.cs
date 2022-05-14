@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO.Compression;
 
 namespace Server.Models
@@ -11,11 +12,12 @@ namespace Server.Models
         
         public string Text { get; set; }
 
-        public User Sender { get; set; }
+        public User Sender { get; set; } = new User();
 
         public string TimeSent { get; set; }
 
-        public Chat Chat { get; set; }
+        [ForeignKey("ChatId")]
+        public Chat Chat { get; set; } = new Chat();
 
         public bool IsEdited { get; set; }
 
