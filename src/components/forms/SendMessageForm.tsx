@@ -18,11 +18,11 @@ export const SendMessageForm:React.FC<SendMessageFormProps> = ({ sendMessage }) 
             setMessage('');	
         }}>
             <input 
-                type="user" placeholder="message..."
+                type="user" placeholder="Write a message..."
                 onChange={e => setMessage(e.target.value)} 
                 value={message} 
             />
-            <button className="send-button button" disabled={!message}>Отправить</button>
+            {/* <button className="send-button button" disabled={!message}>Отправить</button> */}
         </form>
     )
 }

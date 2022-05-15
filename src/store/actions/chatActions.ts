@@ -29,6 +29,12 @@ export function getUserChats(userId:any) {
 	return async (dispatch: Dispatch<ChatAction>) => {
 		const response = await axios.get(`https://localhost:44328/users/${userId}/chats`);
         dispatch({type: ChatActionTypes.GET_USER_CHATS, payload: response.data});
-        console.log("Chat list from DB: ", response.data);
 	}
 }
+
+export const setChatStatus = (value:boolean) => {
+    return async (dispatch: Dispatch<ChatAction>) => {
+      dispatch({ type: ChatActionTypes.OPEN_CHAT, payload: value});
+    }
+  }
+

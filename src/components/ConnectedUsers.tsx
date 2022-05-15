@@ -1,12 +1,20 @@
-type ConnectedUsersProps = {
-    users: any[]
-}
-export const ConnectedUsers:React.FC<ConnectedUsersProps> = ({ users }) => {
+import { useTypedSelector } from "../hooks/useTypedSelector"
+import { ChatMember } from "./ChatMember"
+
+export const ConnectedUsers:React.FC = () => {
     return (
         <div className="user-list">
-            <h4>Участники</h4>
             {
-                users.map((user: any, index: number) => (<h6 key={index} className={user === localStorage.userName ? "user-owner" : "user-frined"}>{user}</h6>))
+                // users.map((user: any, index: number) => (
+                //     user.username != JSON.parse(localStorage.getItem("user") || "") ? 
+                //     (
+                //         <ChatMember key={index} user={user}/>
+                //     )
+                //     :
+                //     (
+                //         null
+                //     )
+                // ))
             }
         </div>
     )

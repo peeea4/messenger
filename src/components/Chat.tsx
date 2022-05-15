@@ -5,18 +5,17 @@ import { ConnectedUsers } from './ConnectedUsers'
 type ChatProps = {
     messages: any[];
     sendMessage: (chatID:any, message: any) => void;
-    users: any;
 }
 
-export const Chat:React.FC<ChatProps> = ({ messages, sendMessage, users }) => {
+export const Chat:React.FC<ChatProps> = ({ messages, sendMessage }) => {
     return (
-        <div className='chat-container'>
+        <div className="chat-container">
+            <div className="chat-info">
+                <ConnectedUsers/>
+            </div>
             <div className="chat">
                 <MessagesContainer messages={messages} />
                 <SendMessageForm sendMessage={sendMessage} />
-            </div>
-            <div className="aside-room">
-                <ConnectedUsers users={users} />
             </div>
         </div>
     )

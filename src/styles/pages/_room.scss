@@ -8,14 +8,17 @@
     width: 100%;
     height: 100%;
     display: flex;
-    .aside-room {
-        background-color: $second-color;
+    flex-direction: column;
+    .chat-info {
+        background-color: $first-color;
         color: #B9BBBE;
         padding: 10px 5px;
         display: flex;
+        height: 5%;
         flex-direction: column;
         justify-content: flex-start;
         align-items: space-between;
+        border-left: solid 1px $second-color;
         .user-list {
             flex: 1;
             color:#d2d2d3;
