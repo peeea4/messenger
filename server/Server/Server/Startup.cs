@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Server.Context;
 using Server.Hubs;
 using Server.Models;
 using Server.Services;
@@ -37,11 +38,15 @@ namespace Server
                 .AddScoped<ChatsService>()
                 .AddScoped<MessagesService>()
                 .AddScoped<ChatHub>()
+                .AddScoped<MessengerContext>()
                 .AddSingleton<IDictionary<string, User>>(opts => new Dictionary<string, User>())
                 .AddSingleton<IUserIdProvider, EmailIdProvider>();;
 
-            services.AddDbContext<Context.MessengerContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))); 
+           var contextOptions = new DbContextOptionsBuilder<DbContext>()
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                .Options;
+
+           services.AddSingleton<DbContextOptions>(contextOptions);
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

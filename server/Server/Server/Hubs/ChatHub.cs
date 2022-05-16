@@ -15,8 +15,15 @@ namespace Server.Hubs
         private readonly IDictionary<string, User> _connections;
         private readonly Context.MessengerContext _messengerContext;
         private readonly ChatsService _service;
+        private readonly MessagesService _messagesService;
+        private readonly UsersService _usersService;
 
-        public ChatHub(IDictionary<string, User> connections, Context.MessengerContext messengerContext, ChatsService service)
+        public ChatHub(
+            IDictionary<string, User> connections,
+            Context.MessengerContext messengerContext,
+            ChatsService service,
+            MessagesService messagesService,
+            UsersService usersService)
         {
             _botUser = _messengerContext?.Users is null 
                 ? new User
@@ -29,6 +36,8 @@ namespace Server.Hubs
             _connections = connections;
             _messengerContext = messengerContext;
             _service = service;
+            _messagesService = messagesService;
+            _usersService = usersService;
         }
 
         public async Task LeaveRoom(string chatId)
@@ -68,10 +77,13 @@ namespace Server.Hubs
         {
             if (this._connections.TryGetValue(Context.UserIdentifier, out User user))
             {
+                var chat = await this._messengerContext.Chats.FindAsync(int.Parse(chatId));
+                var existingUser = await this._messengerContext.Users.FindAsync(user.Id);
                 var message = new Message
                 {
                     Text = messageText,
-                    Sender = user,
+                    Sender = existingUser,
+                    Chat = chat,
                     TimeSent = DateTime.Now.ToString("HH:mm")
                 };
 
@@ -80,7 +92,8 @@ namespace Server.Hubs
                     message
                     );
 
-                await this._service.AddMessagesToChatAsync(int.Parse(chatId), new List<Message> { message });
+                await this._messagesService.CreateMessageAsync(message);
+                //await this._service.AddMessagesToChatAsync(int.Parse(chatId), new List<Message> { message });
             }
         }
 

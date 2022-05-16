@@ -56,7 +56,7 @@ namespace Server.Controllers
         public async Task<ActionResult<Message>> CreateMessageAsync(Message message)
         {
             var newMessageId = await _service.CreateMessageAsync(message);
-            if (newMessageId <= 0)
+            if (newMessageId is null)
             {
                 return this.BadRequest();
             }

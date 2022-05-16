@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Server.Context;
 using Server.Models;
 
 namespace Server.Services
 {
     public class MessagesService
     {
-        private readonly Context.MessengerContext _messengerContext;
+        private readonly MessengerContext _messengerContext;
 
-        public MessagesService(Context.MessengerContext messengerContext)
+        public MessagesService(MessengerContext messengerContext)
         {
             _messengerContext = messengerContext;
         }
 
-        public async Task<int> CreateMessageAsync(Message message)
+        public async Task<Message> CreateMessageAsync(Message message)
         {
             var newMessage = await this._messengerContext.Messages.AddAsync(message);
             try
@@ -23,10 +24,10 @@ namespace Server.Services
             }
             catch (DbUpdateException)
             {
-                return -1;
+                return null;
             }
 
-            return newMessage.Entity.Id;
+            return newMessage.Entity;
         }
 
         public async Task<bool> DeleteMessageAsync(int id)

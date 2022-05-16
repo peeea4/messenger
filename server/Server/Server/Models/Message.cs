@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO.Compression;
+using Newtonsoft.Json;
 
 namespace Server.Models
 {
@@ -11,12 +12,11 @@ namespace Server.Models
         public int Id { get; set; }
         
         public string Text { get; set; }
-
+        
         public User Sender { get; set; } = new User();
 
         public string TimeSent { get; set; }
-
-        [ForeignKey("ChatId")]
+        
         public Chat Chat { get; set; } = new Chat();
 
         public bool IsEdited { get; set; }

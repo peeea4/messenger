@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Server.Context;
 using Server.Hubs;
 using Server.Models;
 
@@ -12,10 +12,10 @@ namespace Server.Services
 {
     public class ChatsService
     {
-        private readonly Context.MessengerContext _messengerContext;
+        private readonly MessengerContext _messengerContext;
         private readonly IHubContext<ChatHub> _hub;
 
-        public ChatsService(Context.MessengerContext messengerContext, IHubContext<ChatHub> hub)
+        public ChatsService(MessengerContext messengerContext, IHubContext<ChatHub> hub)
         {
             _messengerContext = messengerContext;
             _hub = hub;
@@ -84,8 +84,11 @@ namespace Server.Services
         public async Task<Chat> GetChatByIdAsync(int id)
         {
             return await this._messengerContext.Chats
-                .Include(chat => chat.Messages)
                 .Include(chat => chat.Users)
+                .AsNoTracking()
+                .Include(chat => chat.Messages)
+                .ThenInclude(message => message.Sender)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(chat => chat.Id == id);
         }
 
@@ -118,15 +121,16 @@ namespace Server.Services
 
         public async Task<bool> AddMessagesToChatAsync(int chatId, List<Message> messages)
         {
-            var chat = await this._messengerContext.Chats.FindAsync(chatId);
-            var t = chat.Messages;
-            t.Add(messages.First());
-            chat.Messages = t;
             try
             {
-                this._messengerContext.Entry(chat).State = EntityState.Modified;
+                var chat = await this._messengerContext.Chats.FirstOrDefaultAsync(chat => chat.Id == chatId);
+                var t = chat.Messages;
+                t.Add(messages.First());
+                chat.Messages = t;
+                this._messengerContext.Entry(chat).State = EntityState.Detached;
                 await this._messengerContext.SaveChangesAsync();
 
+                chat = await this.GetChatByIdAsync(chatId);
             }
             catch (DbUpdateException)
             {

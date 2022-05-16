@@ -1,20 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.IO.Pipelines;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Server.Context;
 using Server.Models;
 
 namespace Server.Services
 {
     public class UsersService
     {
-        private readonly Context.MessengerContext _messengerContext;
+        private readonly MessengerContext _messengerContext;
 
-        public UsersService(Context.MessengerContext messengerContext)
+        public UsersService(MessengerContext messengerContext)
         {
             _messengerContext = messengerContext;
         }
