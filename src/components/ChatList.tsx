@@ -16,7 +16,7 @@ export const ChatList:React.FC<ChatListProps> = ({joinRoom, closeConnection}) =>
 			<AddChat joinRoom={joinRoom}/>
             {
                 chatList.map( (chat) => (
-                    <ChatBlock joinRoom={joinRoom} closeConnection={closeConnection} key={chat.id} chatName={chat.users[1]?.username} chatID={chat.id}/>
+                    <ChatBlock chat={chat} joinRoom={joinRoom} closeConnection={closeConnection} key={chat.id} chatName={chat.users[1]?.username} chatID={chat.id}/>
                 ))
             }
         </div>

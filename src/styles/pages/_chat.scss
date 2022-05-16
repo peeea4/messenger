@@ -32,18 +32,21 @@
             }
             .owner {
                 margin-bottom: 5px;
-                font-size: 18px;
+                font-size: 14px;
+                font-weight: 600;
             }
             .text {
-                font-size: 16px;
+                font-size: 14px;
                 color:#e7e7e7;
                 border-radius: 10px;
-                word-wrap: break-word;
+                word-break: break-word;
+                font-weight: 400;
             }
             .time {
                 color:#9f9e9e;
-                font-size: 14px;
+                font-size: 12px;
                 align-self: flex-end;
+                font-weight: 300;
             }
         }
         .user-message {

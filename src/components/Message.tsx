@@ -17,9 +17,9 @@ export const Message:React.FC<MessageProps> = ({message}) => {
                 {message.text}
             </div>
 
-            <div className="time">
+            <span className="time">
                 {message.timeSent}
-            </div>
+            </span>
 
         </div>
     );

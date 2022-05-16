@@ -38,3 +38,9 @@ export const setChatStatus = (value:boolean) => {
     }
   }
 
+export function getChatById(chatId:any) {
+	return async (dispatch: Dispatch<ChatAction>) => {
+		const response = await axios.get(`https://localhost:44328/chats/${chatId}`);
+        dispatch({type: ChatActionTypes.GET_CHAT_BY_ID, payload: response.data});
+	}
+}

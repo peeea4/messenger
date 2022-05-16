@@ -4,6 +4,7 @@ const initialState: ChatState = {
     chatList: [], 
     chatID: "",
     chatIsOpened: false,
+    currentChat: {},
 };
 
 export const chatReducer = (state = initialState, action: ChatAction): ChatState => {
@@ -27,6 +28,11 @@ export const chatReducer = (state = initialState, action: ChatAction): ChatState
                 ...state,
                 chatIsOpened: true
               }
+        case ChatActionTypes.GET_CHAT_BY_ID:
+        return {
+            ...state,
+            currentChat: {...action.payload}
+            }
 		default: return state
 	}
 }

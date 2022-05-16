@@ -2,6 +2,7 @@ export interface ChatState {
     chatList: any[];
     chatID: string;
     chatIsOpened: boolean;
+    currentChat: any;
 }
 
 export enum ChatActionTypes {
@@ -9,6 +10,7 @@ export enum ChatActionTypes {
     SET_ID = "SET_ID", 
     GET_USER_CHATS = "GET_USER_CHATS",
     OPEN_CHAT = "OPEN_CHAT",
+    GET_CHAT_BY_ID = "GET_CHAT_BY_ID",
 }
 
 interface FetchChatAction {
@@ -30,4 +32,9 @@ interface FetchUserChatAction {
     payload: [];
 }
 
-export type ChatAction = FetchChatAction | FetchChatIDAction | FetchUserChatAction | SyncChatOpenAction;
+interface FetchChatByIdAction {
+    type: ChatActionTypes.GET_CHAT_BY_ID;
+    payload: {};
+}
+
+export type ChatAction = FetchChatAction | FetchChatIDAction | FetchUserChatAction | SyncChatOpenAction | FetchChatByIdAction;

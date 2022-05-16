@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
 using Server.Services;
@@ -68,7 +69,7 @@ namespace Server.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateUserAsync(int id, User user)
+        public async Task<IActionResult> UpdateUserAsync(int id, User user, [FromForm] IFormFile image)
         {
             if (user.Id != 0 && id != user.Id)
             {

@@ -11,7 +11,7 @@ export const Home = () => {
     const [connection, setConnection] = React.useState<any>();
     const [messages, setMessages] = React.useState<Array<any>>([]);
     const [users, setUsers] = React.useState<any>([]);
-    const {getUserChats, setSearchOpened} = useActions();
+    const {getUserChats, setSearchOpened, getChatById} = useActions();
 	const accessToken = useTypedSelector(state => state.userState.currentUser.accessToken);
     const chatStatus = useTypedSelector(state => state.chatState.chatIsOpened);
     const profileStatus = useTypedSelector(state => state.modalState.profileIsOpened);
@@ -19,9 +19,8 @@ export const Home = () => {
     useEffect(() => {
         getUserChats(userId);
     }, [])
-    const joinRoom = async (user: any, chatID: any) => {
+    const joinRoom = async (user: any, chatID: any, chat?:any) => {
         try {
-
             if(chatID !== 0 && connection) {
                 await connection.stop();
             }

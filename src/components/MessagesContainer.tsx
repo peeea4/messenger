@@ -3,13 +3,18 @@ import { useEffect } from 'react';
 import { Message } from './Message';
 
 type MessagesContainerProps = {
-    messages: any[]
+    messages: any[];
+    messagesFromDB: any[];
 };
 
-export const MessagesContainer:React.FC<MessagesContainerProps> = ({messages}) => {
-
+export const MessagesContainer:React.FC<MessagesContainerProps> = ({messagesFromDB, messages}) => {
     const messageRef = React.useRef<HTMLDivElement>(null);
-    
+    const finallyArray:any = [];
+    finallyArray.push(...messages)
+        if(messagesFromDB?.length) {
+            finallyArray.unshift(...messagesFromDB)
+        }
+
     useEffect(() => {
         if (messageRef && messageRef.current) {
             const { scrollHeight, clientHeight } = messageRef.current;
@@ -20,7 +25,7 @@ export const MessagesContainer:React.FC<MessagesContainerProps> = ({messages}) =
     return (
         <div ref={messageRef} className="messages-container" >
         {
-            messages.map((message, index) =>
+            finallyArray.map((message:any, index:number) =>
                 <Message key={index} message={message}/>
             )
         }

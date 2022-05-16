@@ -1,6 +1,7 @@
 import { SendMessageForm } from './forms/SendMessageForm'
 import { MessagesContainer } from './MessagesContainer'
 import { ConnectedUsers } from './ConnectedUsers'
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
 type ChatProps = {
     messages: any[];
@@ -8,13 +9,15 @@ type ChatProps = {
 }
 
 export const Chat:React.FC<ChatProps> = ({ messages, sendMessage }) => {
+    const messagesFromDB = useTypedSelector(state => state.chatState.currentChat.messages);
+    const usersFromDB = useTypedSelector(state => state.chatState.currentChat.users);
     return (
         <div className="chat-container">
             <div className="chat-info">
-                <ConnectedUsers/>
+                <ConnectedUsers users={usersFromDB}/>
             </div>
             <div className="chat">
-                <MessagesContainer messages={messages} />
+                <MessagesContainer messagesFromDB={messagesFromDB} messages={messages} />
                 <SendMessageForm sendMessage={sendMessage} />
             </div>
         </div>
