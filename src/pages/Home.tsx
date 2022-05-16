@@ -5,14 +5,16 @@ import { ChooseChat } from "../components/ChooseChat";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import React, { useEffect } from "react";
 import { useActions } from "../hooks/useActions";
+import { ProfileModal } from "../components/modals/ProfileModal";
 export const Home = () => {
 
     const [connection, setConnection] = React.useState<any>();
     const [messages, setMessages] = React.useState<Array<any>>([]);
     const [users, setUsers] = React.useState<any>([]);
-    const {getUserChats} = useActions();
+    const {getUserChats, setSearchOpened} = useActions();
 	const accessToken = useTypedSelector(state => state.userState.currentUser.accessToken);
-    const chatStatus = useTypedSelector(state => state.modalState.isOpened);
+    const chatStatus = useTypedSelector(state => state.chatState.chatIsOpened);
+    const profileStatus = useTypedSelector(state => state.modalState.profileIsOpened);
     const userId = useTypedSelector(state => state.userState.currentUser.user.id);
     useEffect(() => {
         getUserChats(userId);
@@ -39,7 +41,6 @@ export const Home = () => {
             })
 
             connectionS.on('newChatCreated', () => {
-                alert();
                 getUserChats(user.id);
             })
 
@@ -76,17 +77,33 @@ export const Home = () => {
             console.log(e);
         }
     }
-   
+
+    const searchHandler = (e:any) => {
+        if(!e.target.classList.contains("add-chat") && !e.target.classList.contains("search-block") && !e.target.classList.contains("search-input")) {
+            setSearchOpened(false)
+        }
+    }
     return (
-        <div className="page home-page">
+        <div 
+            className="page home-page"
+            onClick={e => searchHandler(e)}>
             <ChatList joinRoom={joinRoom} closeConnection={closeConnection}/>
+            {
+                profileStatus ? 
+                (
+                    <ProfileModal/>
+                )
+                :
+                (
+                    null
+                )
+            }
             {
                 chatStatus ?
                 (
                     <Chat
                         messages={messages}
                         sendMessage={sendMessage}
-                        users={users}
                     />
                 )
                 :

@@ -3,6 +3,7 @@ import { ChatAction, ChatActionTypes, ChatState } from "../../types/Chat"
 const initialState: ChatState = {
     chatList: [], 
     chatID: "",
+    chatIsOpened: false,
 };
 
 export const chatReducer = (state = initialState, action: ChatAction): ChatState => {
@@ -21,6 +22,11 @@ export const chatReducer = (state = initialState, action: ChatAction): ChatState
                 ...state,
                 chatList: [...action.payload],
             }
+        case ChatActionTypes.OPEN_CHAT:
+            return {
+                ...state,
+                chatIsOpened: true
+              }
 		default: return state
 	}
 }

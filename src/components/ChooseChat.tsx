@@ -15,7 +15,7 @@ export const ChooseChat:React.FC<ChooseChatProps> = ({joinRoom}) => {
 
     return (
         <div className="choose-chat">
-            <p>Выберите, кому хотели бы написать</p>
+            <p>Select a chat to start messaging</p>
         </div>
     );
 }

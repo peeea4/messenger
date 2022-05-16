@@ -1,14 +1,21 @@
 export interface ModalState {
-    isOpened: boolean;
-  }
+    searchIsOpened: boolean;
+    profileIsOpened: boolean;
+}
   
-  export enum ModalActionTypes {
-    OPEN_CHAT = "OPEN_CHAT",
-  }
-  
-  interface SyncModalAction {
-    type: ModalActionTypes.OPEN_CHAT;
+export enum ModalActionTypes {
+    CHANGE_SEARCH_STATUS = "CHANGE_SEARCH_STATUS",
+    CHANGE_PROFILE_STATUS = "CHANGE_PROFILE_STATUS"
+}
+
+interface ModalSearchAction {
+    type: ModalActionTypes.CHANGE_SEARCH_STATUS;
     payload: boolean;
-  }
+}
+
+interface ModalProfileAction {
+    type: ModalActionTypes.CHANGE_PROFILE_STATUS;
+    payload: boolean;
+}
   
-  export type ModalAction = SyncModalAction;
+export type ModalAction = ModalSearchAction | ModalProfileAction;

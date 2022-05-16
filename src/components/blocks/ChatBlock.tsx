@@ -12,13 +12,13 @@ export const ChatBlock:React.FC<ChatBlockProps> = ({joinRoom, chatName, chatID, 
     
 	const user = useTypedSelector(state => state.userState.currentUser.user);
     
-    const {setChatID, setModalSync} = useActions();
+    const {setChatID, setChatStatus} = useActions();
 	
     return (
 		<div className="user-tab" onClick={() => {
             closeConnection();
 			joinRoom(user, String(chatID));
-            setModalSync(true);
+            setChatStatus(true);
             setChatID(chatID);
         }}>
             <div className="user-image-aside"></div>

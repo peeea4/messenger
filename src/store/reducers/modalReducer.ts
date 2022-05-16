@@ -1,14 +1,23 @@
-import { ModalAction, ModalActionTypes, ModalState } from "../../types/Modal"
+import { ModalAction, ModalActionTypes, ModalState } from '../../types/Modal'
 
 const initialState: ModalState = {
-  isOpened: false,
+    searchIsOpened: false,
+    profileIsOpened: false,
 }
+
 export const modalReducer = (state = initialState, action: ModalAction): ModalState => {
-  switch (action.type) {
-    case ModalActionTypes.OPEN_CHAT:
-      return {
-        isOpened: true
-      }
-    default: return state
-  }
+    switch (action.type) {
+        case ModalActionTypes.CHANGE_SEARCH_STATUS:
+            return {
+                ...state,
+                searchIsOpened: action.payload,
+            }
+        case ModalActionTypes.CHANGE_PROFILE_STATUS:
+            return {
+                ...state,
+                profileIsOpened: action.payload,
+            }
+        default:
+        return state
+    }
 }
