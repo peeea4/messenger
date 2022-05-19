@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Server.Models;
 using Server.Services;
 
@@ -19,10 +16,12 @@ namespace Server.Controllers
     public class AuthorizationController : Controller
     {
         private readonly UsersService _service;
+        private readonly IMapper _mapper;
 
-        public AuthorizationController(UsersService service)
+        public AuthorizationController(UsersService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
         
         [Route("signIn")]
@@ -36,7 +35,7 @@ namespace Server.Controllers
 
             if (!user.Password.CompareWithHashed(userFromDb.Password))
             {
-                return BadRequest($"User with email '{user.Email}' does not exist.");
+                return BadRequest($"Incorrect password.");
             }
 
             var response = GetAuthenticateResponse(userFromDb);
@@ -45,9 +44,9 @@ namespace Server.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AuthenticateResponse>> Register(User user)
+        public async Task<ActionResult<AuthenticateResponse>> Register(User user, [FromForm] IFormFile image)
         {
-            var newUser = await this._service.CreateUserAsync(user);
+            var newUser = await this._service.CreateUserAsync(user, image);
 
             var response = GetAuthenticateResponse(newUser);
 
@@ -56,19 +55,18 @@ namespace Server.Controllers
 
         private AuthenticateResponse GetAuthenticateResponse(User user)
         {
-            user.Password = null;
             var identity = GetIdentity(user);
             var token = new JwtSecurityToken(
-                issuer: "ISSUER",
-                audience: "AUDIENCE",
+                issuer: JwtTokenCreationSettings.Issuer,
+                audience: JwtTokenCreationSettings.Audience,
                 notBefore: DateTime.Now,
                 claims: identity.Claims,
-                expires: DateTime.Now.Add(TimeSpan.FromMinutes(60)),
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("mysupersecret_secretkey!123")), SecurityAlgorithms.HmacSha256));
+                expires: JwtTokenCreationSettings.Expires,
+                signingCredentials: JwtTokenCreationSettings.SigningCredentials);
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
             var response = new AuthenticateResponse
             {
-                User = user,
+                User = _mapper.Map<User, UserResponseModel>(user),
                 AccessToken = encodedJwt
             };
 

@@ -21,8 +21,13 @@ export const ProfileModal = () => {
     const sendFile = React.useCallback(async() => {
         const data = new FormData()
         data.append("image", image[0])
-        console.log(data.getAll("image"));
-        
+        data.append("id", userData.id);
+        data.append("username", userData.username);
+        data.append("email", userData.email);
+        data.append("chats", JSON.stringify(userData.chats));
+        data.append("messages", JSON.stringify(userData.messages))
+        console.log(image[0]);
+        console.log(userData, "1");
         await axios.put(`https://localhost:44328/users/${userData.id}`, data)
         .then(res => setAvatar(res.data.path))
 

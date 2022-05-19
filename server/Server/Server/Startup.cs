@@ -4,14 +4,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Server.Context;
 using Server.Hubs;
+using Server.Mappings;
 using Server.Models;
 using Server.Services;
 
@@ -33,6 +37,8 @@ namespace Server
 
             services.AddSignalR();
 
+            services.AddAutoMapper(typeof(UserProfile));
+            
             services
                 .AddScoped<UsersService>()
                 .AddScoped<ChatsService>()
@@ -41,12 +47,12 @@ namespace Server
                 .AddScoped<MessengerContext>()
                 .AddSingleton<IDictionary<string, User>>(opts => new Dictionary<string, User>())
                 .AddSingleton<IUserIdProvider, EmailIdProvider>();;
-
-           var contextOptions = new DbContextOptionsBuilder<DbContext>()
+            
+            var contextOptions = new DbContextOptionsBuilder<DbContext>()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 .Options;
-
-           services.AddSingleton<DbContextOptions>(contextOptions);
+            
+            services.AddSingleton<DbContextOptions>(contextOptions);
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -104,7 +110,11 @@ namespace Server
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "wwwroot/Images")),
+                RequestPath = "/Images"
+            });
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -63,14 +63,19 @@ namespace Server.Hubs
             }
             
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
-            await Clients.Group(chatId).SendAsync(
-                "ReceiveMessage", 
-                new Message
-                     {
+
+            var chat = await this._service.GetChatByIdAsync(int.Parse(chatId));
+            if (!chat.Users.Contains(user))
+            {
+                await Clients.Group(chatId).SendAsync(
+                    "ReceiveMessage",
+                    new Message
+                    {
                         Text = $"{user.Username} joined the chat!",
                         Sender = _botUser,
                         TimeSent = DateTime.Now.ToString("HH:mm")
-                });
+                    });
+            }
         }
 
         public async Task SendMessage(string chatId, string messageText)
@@ -93,7 +98,6 @@ namespace Server.Hubs
                     );
 
                 await this._messagesService.CreateMessageAsync(message);
-                //await this._service.AddMessagesToChatAsync(int.Parse(chatId), new List<Message> { message });
             }
         }
 
