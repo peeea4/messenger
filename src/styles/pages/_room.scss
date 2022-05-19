@@ -12,23 +12,17 @@
     .chat-info {
         background-color: $first-color;
         color: #B9BBBE;
-        padding: 10px 5px;
         display: flex;
+		align-items: center;
+		gap: 10px;
         height: 5%;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: space-between;
         border-left: solid 1px $second-color;
+		cursor: pointer;
         .user-list {
-            flex: 1;
-            color:#d2d2d3;
-            padding: 10px 5px;
-            .user-owner {
-                color: #1c74d9;
-            }
-            .user-friend {
-                color: #c2331d;
-            }
+			margin-left: 5px;
+			.chat-member {
+
+			}
         }
     }
 }
