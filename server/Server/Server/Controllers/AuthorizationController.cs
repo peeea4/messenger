@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Server.Models;
@@ -17,10 +18,12 @@ namespace Server.Controllers
     public class AuthorizationController : Controller
     {
         private readonly UsersService _service;
+        private readonly IMapper _mapper;
 
-        public AuthorizationController(UsersService service)
+        public AuthorizationController(UsersService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
         
         [Route("signIn")]
@@ -66,7 +69,7 @@ namespace Server.Controllers
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(token);
             var response = new AuthenticateResponse
             {
-                User = user,
+                User = _mapper.Map<User,UserResponseModel>(user),
                 AccessToken = encodedJwt
             };
 

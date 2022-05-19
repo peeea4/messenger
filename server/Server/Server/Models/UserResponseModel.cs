@@ -9,9 +9,9 @@ namespace Server.Models
         public string Email { get; set; }
 
         public string Username { get; set; }
-
+        
         public string ProfileImageFilePath { get; set; }
-
+        
         public List<Chat> Chats { get; set; } = new List<Chat>();
 
         public List<Message> Messages { get; set; } = new List<Message>();

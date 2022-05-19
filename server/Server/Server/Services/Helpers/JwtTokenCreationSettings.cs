@@ -11,7 +11,7 @@ namespace Server.Services.Helpers
         public static string Audience => "AUDIENCE";
 
         public static DateTime? Expires => DateTime.Now.AddMinutes(60);
-
+        
         public static SymmetricSecurityKey SymmetricSecurityKey => new SymmetricSecurityKey(Encoding.ASCII.GetBytes("mysupersecret_secretkey!123"));
     }
 }

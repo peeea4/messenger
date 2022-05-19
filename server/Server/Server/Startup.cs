@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -47,12 +48,12 @@ namespace Server
                 .AddScoped<MessengerContext>()
                 .AddSingleton<IDictionary<string, User>>(opts => new Dictionary<string, User>())
                 .AddSingleton<IUserIdProvider, EmailIdProvider>();;
-
-           var contextOptions = new DbContextOptionsBuilder<DbContext>()
+            
+            var contextOptions = new DbContextOptionsBuilder<DbContext>()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 .Options;
-
-           services.AddSingleton<DbContextOptions>(contextOptions);
+            
+            services.AddSingleton<DbContextOptions>(contextOptions);
             
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
