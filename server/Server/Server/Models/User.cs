@@ -19,6 +19,8 @@ namespace Server.Models
         
         public string ProfileImageFilePath { get; set; }
         
+        public string ImageSourceFilePath { get; set; }
+        
         public List<Chat> Chats { get; set; } = new List<Chat>();
 
         public List<Message> Messages { get; set; } = new List<Message>();

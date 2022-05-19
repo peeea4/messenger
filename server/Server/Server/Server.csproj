@@ -21,6 +21,11 @@
 
   <ItemGroup>
     <Compile Remove="Services\Helpers\PasswordHelper.cs" />
+    <Compile Remove="Services\PasswordHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images" />
   </ItemGroup>
 
   <ItemGroup>
