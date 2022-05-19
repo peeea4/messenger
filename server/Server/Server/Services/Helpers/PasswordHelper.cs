@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Server.Services
+namespace Server.Services.Helpers
 {
     public static class PasswordHelper
     {
