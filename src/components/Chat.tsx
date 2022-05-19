@@ -2,7 +2,6 @@ import { SendMessageForm } from './forms/SendMessageForm'
 import { MessagesContainer } from './MessagesContainer'
 import { ConnectedUsers } from './ConnectedUsers'
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { ChatInfo } from './modals/ChatInfo';
 
 type ChatProps = {
     messages: any[];
@@ -16,7 +15,6 @@ export const Chat:React.FC<ChatProps> = ({ messages, sendMessage }) => {
         <div className="chat-container">
             <div className="chat-info">
                 <ConnectedUsers users={usersFromDB}/>
-				<ChatInfo />
             </div>
             <div className="chat">
                 <MessagesContainer messagesFromDB={messagesFromDB} messages={messages} />

@@ -1,16 +1,18 @@
 import axios from "axios";
-import React from "react";
+import React, { useRef } from "react";
 import { useActions } from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-
+const logo = require("../../assets/icons/user.png");
 export const ProfileModal = () => {
+    
 	const { setProfileOpened } = useActions();
+    const state = useTypedSelector(state => state)
 	const userData = useTypedSelector(state => state.userState.currentUser.user);
+    console.log(state);
+    
 	const [selectStatus, setSelectStatus] = React.useState<boolean>(false);
 	const [image, setImage] = React.useState<any>(null);
 	const [avatar, setAvatar] = React.useState<any>(null);
-	console.log(image);
-
 
 	const profileHandler = (e: any) => {
 		if (e.target.classList.contains("profile-modal-wrapper")) {
@@ -18,18 +20,20 @@ export const ProfileModal = () => {
 		}
 	};
 
-	const sendFile = React.useCallback(async () => {
-		const data = new FormData()
-		data.append("image", image[0])
-		console.log(data.get("image"))
-		const obj = {
-			"user": {...userData},
-			"user-image": { ...data}
-		}
-		await axios.put(`https://localhost:44328/users/${userData.id}`, data)
-		.then(res => setAvatar(res.data.path))
+    const form = useRef<HTMLFormElement | any>(null)
 
-	}, [image])
+	const sendFile = React.useCallback(async (e: any) => {
+        e.preventDefault()
+		const data = new FormData(form.current);
+		data.set("image", image[0]);
+        data.set("chats", JSON.stringify(userData.chats));
+        data.set("email", userData.email);
+        data.set("id", userData.id);
+        data.set("messages", JSON.stringify(userData.messages));
+        data.set("password", userData.password);
+        data.set("username", userData.username);
+		await axios.put(`https://localhost:44328/users/${userData.id}`, data)
+	}, [image, userData])
 
 	return (
 		<div className="profile-modal-wrapper" onClick={e => { profileHandler(e) }}>
@@ -43,7 +47,7 @@ export const ProfileModal = () => {
 							{
 								avatar
 									? <img onClick={() => { setSelectStatus(!selectStatus) }} className="profile-avatar" src={`${avatar}`} alt="" />
-									: <img onClick={() => { setSelectStatus(!selectStatus) }} className="profile-avatar" src="" alt="" />
+									: <img onClick={() => { setSelectStatus(!selectStatus) }} className="profile-avatar" src={logo} alt="" />
 							}
 						</div>
 						<div className="profile-description">
@@ -54,10 +58,10 @@ export const ProfileModal = () => {
 					{
 						selectStatus ?
 							(
-								<div className="choose-file">
+								<form ref={form} className="choose-file">
 									<input type="file" onChange={(e) => { setImage(e.target.files) }} />
-									<button onClick={sendFile}>Change Photo</button>
-								</div>
+									<button onClick={(e) => {sendFile(e)}}>Change Photo</button>
+								</form>
 							)
 							: null
 					}

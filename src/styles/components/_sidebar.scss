@@ -1,0 +1,21 @@
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 18px;
+    background-color: $second-color;
+    .menu-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: transparent;
+        gap: 6px;
+        border: 0;
+        cursor: pointer;
+        span {
+            height: 1px;
+            width: 28px;
+            background-color: $main-font-color;
+        }
+    }
+}

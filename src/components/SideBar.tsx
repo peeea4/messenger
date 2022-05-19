@@ -1,16 +1,16 @@
-import { useActions } from "../hooks/useActions"
-import { useTypedSelector } from "../hooks/useTypedSelector"
+import { useActions } from "../hooks/useActions";
 
 export const SideBar = () => {
-    // const userPhoto = useTypedSelector(state => state.userState.currentUser.avatar);
-    const {setProfileOpened} = useActions();
-  return (
-    <div className="side-bar">
-        <div 
-            className="user-avatar"
-            onClick={() => {setProfileOpened(true)}}
-        >
+    
+    const {setNavBarOpened} = useActions()
+    
+    return (
+        <div className="side-bar">
+            <button className="menu-btn" onClick={() => {setNavBarOpened(true)}}>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-    </div>
-  )
+    )
 }

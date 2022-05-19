@@ -8,6 +8,7 @@ type UserBlockProps = {
 }
 
 export const UserBlock:React.FC<UserBlockProps> = ({joinRoom, friend, closeSearch}) => {
+
     const chatlist = useTypedSelector(state => state.chatState.chatList);
     const nameList = chatlist.map(chat => chat.users[1].username);
     let user: any  = JSON.parse(localStorage.getItem("user") || "");
@@ -26,6 +27,7 @@ export const UserBlock:React.FC<UserBlockProps> = ({joinRoom, friend, closeSearc
         }
         closeSearch();
     }
+    
     return (
         <div onClick={() => {clickHandler()}} className="user-block">
             {

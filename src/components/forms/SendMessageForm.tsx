@@ -8,14 +8,17 @@ type SendMessageFormProps = {
 export const SendMessageForm:React.FC<SendMessageFormProps> = ({ sendMessage }) => {
 
     const chatID = useTypedSelector(state => state.chatState.chatID);
+        
     const [message, setMessage] = useState('');
     
     return (
         <form className="send-message-form"
         onSubmit={e => {
             e.preventDefault();
-            sendMessage(String(chatID), message);
-            setMessage('');	
+            if(message.length) {
+                sendMessage(String(chatID), message);
+                setMessage('');	
+            }
         }}>
             <input 
                 type="user" placeholder="Write a message..."

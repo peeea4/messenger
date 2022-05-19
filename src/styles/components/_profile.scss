@@ -36,32 +36,30 @@
 			.profile-main-info {
 				display: flex;
 				padding: 0px 20px 20px;
+                align-items: center;
 				.profile-avatar-block {
-						.profile-avatar {
-							width: 70px;
-							height: 70px;
-							border-radius: 50%;
-							margin-right: 10px;
-						}
-					}
-		
-					.profile-description {
-						width: 70%;
-						.username {
-							color: $main-font-color;
-							font-weight: 500;
-						}
-				
-						.user-title {
-							color: $main-font-color;
-						}
-				
-						.user-email {
-							color: $main-font-color-dark;
-							font-size: 16px;
-							font-weight: 400;
-						}
-					}
+                    .profile-avatar {
+                        width: 55px;
+                        height: 55px;
+                        border-radius: 50%;
+                        margin-right: 10px;
+                    }
+				}
+                .profile-description {
+                    width: 70%;
+                    .username {
+                        color: $main-font-color;
+                        font-weight: 500;
+                    }
+                    .user-title {
+                        color: $main-font-color;
+                    }
+                    .user-email {
+                        color: $main-font-color-dark;
+                        font-size: 16px;
+                        font-weight: 400;
+                    }
+                }
 			}
         }
         .profile-settings {

@@ -30,6 +30,11 @@
             }
             .all-users {
                 padding: 12px 12px 0px 12px;
+                display: flex;
+                flex-direction: column;
+                .user-block {
+                    cursor: pointer;
+                }
             }
         }
     }

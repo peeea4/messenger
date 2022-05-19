@@ -5,20 +5,35 @@ import { ChooseChat } from "../components/ChooseChat";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import React, { useEffect } from "react";
 import { useActions } from "../hooks/useActions";
+import { ChatInfo } from "../components/modals/ChatInfo";
+import { NavBar } from "../components/NavBar";
 import { ProfileModal } from "../components/modals/ProfileModal";
 export const Home = () => {
 
+    const {getUserChats, setSearchOpened, getUserListAsync} = useActions();
+
     const [connection, setConnection] = React.useState<any>();
     const [messages, setMessages] = React.useState<Array<any>>([]);
-    const [users, setUsers] = React.useState<any>([]);
-    const {getUserChats, setSearchOpened, getChatById} = useActions();
-	const accessToken = useTypedSelector(state => state.userState.currentUser.accessToken);
+    
+	const accessTokenNew = useTypedSelector(state => state.userState.currentUser.accessToken);
+    const accessTokenFromLS = JSON.parse(localStorage.getItem("user") || "").accessToken;
+    let accessToken:any;
+    if(!accessTokenNew) {
+        accessToken = accessTokenFromLS;
+    } else {
+        accessToken = accessTokenNew;
+    }    
     const chatStatus = useTypedSelector(state => state.chatState.chatIsOpened);
+    const chatInfoStatus = useTypedSelector(state => state.modalState.chatInfoIsOpened);
+    const navBarStatus = useTypedSelector(state => state.modalState.navBarIsOpened);
     const profileStatus = useTypedSelector(state => state.modalState.profileIsOpened);
-    const userId = useTypedSelector(state => state.userState.currentUser.user.id);
+    
+    const userId = JSON.parse(localStorage.getItem("user") || "false").user.id
+    
     useEffect(() => {
         getUserChats(userId);
     }, [])
+
     const joinRoom = async (user: any, chatID: any, chat?:any) => {
         try {
             if(chatID !== 0 && connection) {
@@ -31,10 +46,6 @@ export const Home = () => {
                 .configureLogging(LogLevel.Information)
                 .build();
 
-            connectionS.on('UsersInRoom', (users) => {
-                setUsers(users);
-            })
-
             connectionS.on('ReceiveMessage', (message) => {
                 setMessages((messages) => [...messages,  message ]);
             })
@@ -46,7 +57,6 @@ export const Home = () => {
             connectionS.onclose(() => {
                 setConnection({});
                 setMessages([]);
-                setUsers([]);
             })
 
             await connectionS.start();
@@ -69,9 +79,10 @@ export const Home = () => {
         }
     }
 
-    const sendMessage = async (chatID: any, message: any) => {
+    const sendMessage = async (chatID: any, message: any) => {    
         try { 
             await connection.invoke('SendMessage', chatID, message);
+            getUserListAsync();
         } catch (e) {
             console.log(e);
         }
@@ -86,29 +97,18 @@ export const Home = () => {
         <div 
             className="page home-page"
             onClick={e => searchHandler(e)}>
-            <ChatList joinRoom={joinRoom} closeConnection={closeConnection}/>
             {
-                profileStatus ? 
-                (
-                    <ProfileModal/>
-                )
-                :
-                (
-                    null
-                )
+                navBarStatus ? <NavBar/> : null
             }
             {
-                chatStatus ?
-                (
-                    <Chat
-                        messages={messages}
-                        sendMessage={sendMessage}
-                    />
-                )
-                :
-                (
-                    <ChooseChat joinRoom={joinRoom}/>
-                )
+                profileStatus ? <ProfileModal/> : null
+            }
+            <ChatList joinRoom={joinRoom} closeConnection={closeConnection}/>
+            {
+                chatInfoStatus ? <ChatInfo /> : null
+            }
+            {
+                chatStatus ? <Chat messages={messages} sendMessage={sendMessage}/> : <ChooseChat joinRoom={joinRoom}/>
             }
         </div>
     );

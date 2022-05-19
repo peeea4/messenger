@@ -1,14 +1,44 @@
-.side-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 6px;
-    background-color: $second-color;
-    .user-avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: 1px solid $main-color;
-        cursor: pointer;
+.navbar-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .navbar {
+        width: 15%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: $second-color;
+        .user-block {
+            width: 100%;
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            column-gap: 10px;
+            border-bottom: 1px solid $third-color;
+            .user-avatar {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                border: 1px solid $main-color;
+            }
+            .user-name {
+                font-size: 16px;
+                color: $main-font-color;
+                font-weight: 400;
+                margin-top: 14px;
+            }
+            .user-email {
+                font-size: 13px;
+                color: $main-font-color-transparent;
+                font-weight: 300;
+                margin-top: 2px;
+            }
+        }
+        
     }
 }

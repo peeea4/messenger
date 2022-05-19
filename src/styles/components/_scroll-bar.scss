@@ -1,6 +1,6 @@
 /* width */
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 6px;
 }
 
 /* Track */
@@ -10,10 +10,11 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #555;
+	background: rgba(85, 85, 85, 0.45);
+    border-radius: 6px;
 }
 
-// /* Handle on hover */
-// ::-webkit-scrollbar-thumb:hover {
-// 	background: #555;
-// }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(85, 85, 85);
+}

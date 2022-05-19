@@ -1,96 +1,121 @@
-.chat {
-    background-color: $second-color;
+.chat-container{
     width: 100%;
-    height: 95%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    .messages-container {
-        padding: 10px;
-        flex: 1;
-        overflow: auto;
-        background-color: $second-color;
+    .chat-info {
+        background-color: $first-color;
+        color: #B9BBBE;
         display: flex;
-        flex-direction: column;
-        .message {
-            margin-bottom: 5px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            width: fit-content;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            .emoji-container {
-                width: 30px;
-                height: 100%;
-                bottom: 0;
-                color: white;
-                background-color: $first-color;
-                position: absolute;
-                padding: 5px 2px;
-                border-radius: 4px;
-                z-index: 2;
-            }
-            .owner {
-                margin-bottom: 5px;
-                font-size: 14px;
-                font-weight: 600;
-            }
-            .text {
-                font-size: 14px;
-                color:#e7e7e7;
-                border-radius: 10px;
-                word-break: break-word;
-                font-weight: 400;
-            }
-            .time {
-                color:#9f9e9e;
-                font-size: 12px;
-                align-self: flex-end;
-                font-weight: 300;
-            }
-        }
-        .user-message {
-            background-color: $user-color;
-            align-self: flex-end;
-            margin-left: 40px;
-            .owner {
-                color: #1c74d9;
-            }
-            .emoji-container {
-                width: 30px;
-                height: 100%;
-                bottom: 0;
-                left: -40px;
-            }
-        }
-        .friend-message {
-            background-color: $friend-color;
-            align-self: flex-start;
-            margin-right: 40px;
-            .owner {
-                color: #c2331d;
-            }
-            .emoji-container {
-                width: 30px;
-                height: 100%;
-                top: 0;
-                right: -40px;
+        align-items: center;
+        gap: 10px;
+        height: 5%;
+        border-left: solid 1px $second-color;
+        cursor: pointer;
+        .user-list {
+            margin-left: 24px;
+            .chat-member {
+                font-weight: 500;
+                font-size: 15px;
+                letter-spacing: 0.4px;
+                color: $main-font-color;
             }
         }
     }
-    .send-message-form {
+    .chat {
+        background-color: $second-color;
+        width: 100%;
+        height: 95%;
         display: flex;
-        input {
-            color: #B9BBBE;
-            padding: 12px 14px;
-            font-size: 18px;
+        flex-direction: column;
+        .messages-container {
+            padding: 10px;
             flex: 1;
-            background-color: $first-color;
-            border-left: 1px solid $second-color;
-            border-radius: 0px;
+            overflow: auto;
+            background-color: $second-color;
+            display: flex;
+            flex-direction: column;
+            .message {
+                margin-bottom: 5px;
+                padding: 3px 10px;
+                border-radius: 5px;
+                width: fit-content;
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                .emoji-container {
+                    width: 30px;
+                    height: 100%;
+                    bottom: 0;
+                    color: white;
+                    background-color: $first-color;
+                    position: absolute;
+                    padding: 5px 2px;
+                    border-radius: 4px;
+                    z-index: 2;
+                }
+                .owner {
+                    margin-bottom: 5px;
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+                .text {
+                    font-size: 14px;
+                    color:#e7e7e7;
+                    border-radius: 10px;
+                    word-break: break-word;
+                    font-weight: 400;
+                }
+                .time {
+                    color:#9f9e9e;
+                    font-size: 12px;
+                    align-self: flex-end;
+                    font-weight: 300;
+                }
+            }
+            .user-message {
+                background-color: $user-color;
+                align-self: flex-end;
+                margin-left: 40px;
+                .owner {
+                    color: #1c74d9;
+                }
+                .emoji-container {
+                    width: 30px;
+                    height: 100%;
+                    bottom: 0;
+                    left: -40px;
+                }
+            }
+            .friend-message {
+                background-color: $friend-color;
+                align-self: flex-start;
+                margin-right: 40px;
+                .owner {
+                    color: #c2331d;
+                }
+                .emoji-container {
+                    width: 30px;
+                    height: 100%;
+                    top: 0;
+                    right: -40px;
+                }
+            }
         }
-        button {
-            width: 15%;
+        .send-message-form {
+            display: flex;
+            input {
+                color: #B9BBBE;
+                padding: 12px 14px;
+                font-size: 18px;
+                flex: 1;
+                background-color: $first-color;
+                border-left: 1px solid $second-color;
+                border-radius: 0px;
+            }
+            button {
+                width: 15%;
+            }
         }
     }
 }

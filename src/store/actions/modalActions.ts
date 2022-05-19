@@ -18,3 +18,21 @@ export const setProfileOpened = (value: boolean) => {
         })
     }
 }
+
+export const setChatInfoOpened = (value: boolean) => {
+    return async (dispatch: Dispatch<ModalAction>) => {
+        dispatch({
+            type: ModalActionTypes.CHANGE_CHAT_INFO_STATUS,
+            payload: value,
+        })
+    }
+}
+
+export const setNavBarOpened = (value: boolean) => {
+    return async (dispatch: Dispatch<ModalAction>) => {
+        dispatch({
+            type: ModalActionTypes.CHANGE_NAVBAR_STATUS,
+            payload: value,
+        })
+    }
+}

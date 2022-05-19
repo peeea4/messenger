@@ -10,12 +10,15 @@ export const AddChat:React.FC<AddChatProps> = ({ joinRoom }) => {
 	const userList = useTypedSelector(state => state.userState.userList);
     const searchOpened = useTypedSelector(state => state.modalState.searchIsOpened);   
     const [searchUser, setSearchValue] = useState("");
+
     const filteredUsers = userList?.filter( user => {
         return (user?.username.toLowerCase().includes(searchUser.toLowerCase()) && user.username !== JSON.parse(localStorage.getItem("user") || "").user.username && user.username )
     });
+
     const closeSearch = () => {
-        setSearchOpened(false)
+        setSearchOpened(false);
     }
+
     return (
 		<div className="add-chat">
             <div 

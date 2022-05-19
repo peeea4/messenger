@@ -28,6 +28,22 @@ export function authorizationUserAsync(userEmail:string, userPass:string) {
 export function getUserListAsync() {
 	return async (dispatch: Dispatch<UserAction>) => {
 		const response = await axios.get(`https://localhost:44328/users`);
+        console.log(response.data);
         dispatch({type: UserActionTypes.CREATE_USER_LIST, payload: response.data});
+	};
+};
+
+export function getUserById(userID: any) {
+	return async (dispatch: Dispatch<UserAction>) => {        
+		const response = await axios.get(`https://localhost:44328/users/${userID}`);
+        localStorage.setItem("user", JSON.stringify(response.data));
+        dispatch({type: UserActionTypes.CREATE_USER, payload: response.data});
+	};
+};
+
+export function createUser() {
+	return async (dispatch: Dispatch<UserAction>) => {        
+        const userData = JSON.parse(localStorage.getItem("user") || "")
+        dispatch({type: UserActionTypes.CREATE_USER, payload: userData});
 	};
 };

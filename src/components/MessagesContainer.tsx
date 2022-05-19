@@ -21,7 +21,7 @@ export const MessagesContainer:React.FC<MessagesContainerProps> = ({messagesFrom
             messageRef.current.scrollTo({ left: 0, top: scrollHeight - clientHeight, behavior: 'smooth' });
         }
     }, [messages]);
-
+  
     return (
         <div ref={messageRef} className="messages-container" >
         {
