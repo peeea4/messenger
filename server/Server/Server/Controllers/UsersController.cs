@@ -2,8 +2,12 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
 using Server.Models;
 using Server.Services;
 
@@ -14,10 +18,12 @@ namespace Server.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UsersService _service;
+        private readonly IMapper _mapper;
 
-        public UsersController(UsersService service)
+        public UsersController(UsersService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet("{id:int}/chats")]
@@ -41,7 +47,7 @@ namespace Server.Controllers
                 return this.NotFound($"User with id '{id}' is not found.");
             }
 
-            return this.Ok(user);
+            return this.Ok(_mapper.Map<User, UserResponseModel>(user));
         }
 
         [HttpGet]
@@ -69,20 +75,31 @@ namespace Server.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateUserAsync(int id, User user, [FromForm] IFormFile image)
+        public async Task<IActionResult> UpdateUserAsync(int id, [FromForm] User user, [FromForm] IFormFile image)
         {
+            var requestForm = HttpContext.Request.Form;
+            if (requestForm.TryGetValue("chats", out StringValues chatsStringValues))
+            {
+                user.Chats = JsonConvert.DeserializeObject<List<Chat>>(chatsStringValues);
+            }
+
+            if (HttpContext.Request.Form.TryGetValue("messages", out StringValues messagesStringValues))
+            {
+                user.Messages = JsonConvert.DeserializeObject<List<Message>>(messagesStringValues);
+            }
+
             if (user.Id != 0 && id != user.Id)
             {
                 return this.BadRequest();
             }
 
-            var result = await _service.UpdateUserAsync(id, user);
+            var result = await _service.UpdateUserAsync(id, user, image);
             if (result is null)
             {
                 return this.BadRequest();
             }
 
-            return this.Ok(result);
+            return this.Ok(_mapper.Map<User, UserResponseModel>(result));
         }
 
         [HttpDelete("{id:int}")]

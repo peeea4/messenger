@@ -1,21 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Server.Context;
 using Server.Models;
+using Server.Services.Helpers;
 
 namespace Server.Services
 {
     public class UsersService
     {
         private readonly MessengerContext _messengerContext;
+        private readonly IWebHostEnvironment _env;
 
-        public UsersService(MessengerContext messengerContext)
+        public UsersService(MessengerContext messengerContext, IWebHostEnvironment env)
         {
             _messengerContext = messengerContext;
+            _env = env;
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<User> CreateUserAsync(User user, IFormFile image = null)
         {
             if (await this._messengerContext.Users.AnyAsync(t => t.Email == user.Email))
             {
@@ -24,6 +32,10 @@ namespace Server.Services
 
             user.Password = user.Password.GetHash();
             var newUser = await this._messengerContext.Users.AddAsync(user);
+            if (image != null)
+            {
+                await SaveProfileImage(newUser.Entity.Id, image);
+            }
             try
             {
                 await this._messengerContext.SaveChangesAsync();
@@ -76,31 +88,52 @@ namespace Server.Services
             return await this._messengerContext.Users.Include(user => user.Chats).FirstOrDefaultAsync(user => string.Equals(user.Email, email));
         }
 
-        public async Task<User> UpdateUserAsync(int id, User user)
+        public async Task<User> UpdateUserAsync(int id, User user, IFormFile image = null)
         {
-            var existingUser = await this._messengerContext.Users.FindAsync(id);
-            existingUser.Chats = user.Chats;
-            existingUser.Username = user.Username;
+            var existingUser = await GetUserByIdAsync(id);
 
-            this._messengerContext.Entry(existingUser).State = EntityState.Modified;
             try
             {
+                existingUser.Username = user.Username;
+                if (image != null)
+                {
+                    existingUser.ProfileImageFilePath = await SaveProfileImage(id, image);
+                }
+
+                this._messengerContext.Entry(existingUser).State = EntityState.Modified;
                 await this._messengerContext.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException e)
             {
                 return null;
             }
-            var t = this._messengerContext.Entry(existingUser).Entity;
+            catch (Exception e)
+            {
 
-            return this._messengerContext.Entry(existingUser).Entity;
+            }
+
+            return existingUser;
         }
 
         public async Task<List<Chat>> GetUserChatsAsync(int id)
         {
-            var user = await this.GetUserByIdAsync(id);
-            var chats = user?.Chats;
+            var chats = await this._messengerContext.Chats
+                .Where(chat => chat.Users.Select(user => user.Id).FirstOrDefault() == id)
+                .Include(chat => chat.Users)
+                .Include(chat => chat.Messages)
+                .ThenInclude(message => message.Sender)
+                .AsNoTracking()
+                .ToListAsync();
+
             return chats;
+        }
+
+        private async Task<string> SaveProfileImage(int userId, IFormFile profileImage)
+        {
+            var profileImageFilePath = Path.Combine(_env.ContentRootPath, "wwwroot", "Images", $"{userId}{Path.GetExtension(profileImage.FileName)}");
+            await using var fileStream = new FileStream($"{profileImageFilePath}", FileMode.Create);
+            await profileImage.CopyToAsync(fileStream);
+            return profileImageFilePath;
         }
     }
 }

@@ -40,6 +40,8 @@ namespace Server.Services
                 {
                     await this._hub.Clients.User(user.Id.ToString()).SendAsync("newChatCreated");
                 }
+
+                id = newChat.Id;
             }
             catch (Exception e)
             {

@@ -4,16 +4,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Server.Context;
 using Server.Hubs;
+using Server.Mappings;
 using Server.Models;
 using Server.Services;
+using Server.Services.Helpers;
 
 namespace Server
 {
@@ -32,6 +36,8 @@ namespace Server
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSignalR();
+
+            services.AddAutoMapper(typeof(UserProfile));
 
             services
                 .AddScoped<UsersService>()
@@ -55,13 +61,13 @@ namespace Server
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "ISSUER",
+                        ValidIssuer = JwtTokenCreationSettings.Issuer,
 
                         ValidateAudience = true,
-                        ValidAudience = "AUDIENCE",
+                        ValidAudience = JwtTokenCreationSettings.Audience,
                         ValidateLifetime = true,
-
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("mysupersecret_secretkey!123")),
+                        
+                        IssuerSigningKey = JwtTokenCreationSettings.SymmetricSecurityKey,
                         ValidateIssuerSigningKey = true,
                     };
                     
@@ -104,6 +110,12 @@ namespace Server
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "wwwroot/Images")),
+                RequestPath = "/Images"
+            });
 
             app.UseRouting();
             app.UseAuthentication();
