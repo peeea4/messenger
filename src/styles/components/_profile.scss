@@ -73,3 +73,20 @@
 		}
     }
 }
+.profmodal-enter {
+    transform: translateY(-100%);
+}
+
+.profmodal-enter-active {
+    transform: translateY(0);
+    transition: all 200ms;
+}
+
+.profmodal-exit {
+    transform: translateY(0);
+}
+
+.profmodal-exit-active {
+    transform: translateY(-100%);
+    transition: all 200ms;
+}

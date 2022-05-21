@@ -6,9 +6,7 @@ const logo = require("../../assets/icons/user.png");
 export const ProfileModal = () => {
     
 	const { setProfileOpened } = useActions();
-    const state = useTypedSelector(state => state)
 	const userData = useTypedSelector(state => state.userState.currentUser.user);
-    console.log(state);
     
 	const [selectStatus, setSelectStatus] = React.useState<boolean>(false);
 	const [image, setImage] = React.useState<any>(null);
@@ -21,7 +19,7 @@ export const ProfileModal = () => {
 	};
 
     const form = useRef<HTMLFormElement | any>(null)
-
+    let response;
 	const sendFile = React.useCallback(async (e: any) => {
         e.preventDefault()
 		const data = new FormData(form.current);
@@ -32,7 +30,11 @@ export const ProfileModal = () => {
         data.set("messages", JSON.stringify(userData.messages));
         data.set("password", userData.password);
         data.set("username", userData.username);
-		await axios.put(`https://localhost:44328/users/${userData.id}`, data)
+		response = await axios.put(`https://localhost:44328/users/${userData.id}`, data);
+        console.log(response);
+        
+        setAvatar(response.data.profileImageFilePath)
+        
 	}, [image, userData])
 
 	return (

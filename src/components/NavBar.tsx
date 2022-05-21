@@ -9,13 +9,13 @@ export const NavBar = () => {
 
     const wrapperClickHandler = (e:any) => {
         if(e.target.classList.contains("navbar-wrapper")) {
-            setNavBarOpened(false)
+            setNavBarOpened(false);
         }
     }
 
     const avatarClickHandler = (e:any) => {
-        setProfileOpened(true)
-        setNavBarOpened(false)
+        setProfileOpened(true);
+        setNavBarOpened(false);
     }
     
     return (

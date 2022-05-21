@@ -6,8 +6,8 @@ import { useTypedSelector } from "../hooks/useTypedSelector";
 import React, { useEffect } from "react";
 import { useActions } from "../hooks/useActions";
 import { ChatInfo } from "../components/modals/ChatInfo";
-import { NavBar } from "../components/NavBar";
 import { ProfileModal } from "../components/modals/ProfileModal";
+import { CSSTransition } from "react-transition-group";
 export const Home = () => {
 
     const {getUserChats, setSearchOpened, getUserListAsync} = useActions();
@@ -25,7 +25,6 @@ export const Home = () => {
     }    
     const chatStatus = useTypedSelector(state => state.chatState.chatIsOpened);
     const chatInfoStatus = useTypedSelector(state => state.modalState.chatInfoIsOpened);
-    const navBarStatus = useTypedSelector(state => state.modalState.navBarIsOpened);
     const profileStatus = useTypedSelector(state => state.modalState.profileIsOpened);
     
     const userId = JSON.parse(localStorage.getItem("user") || "false").user.id
@@ -52,6 +51,8 @@ export const Home = () => {
 
             connectionS.on('newChatCreated', () => {
                 getUserChats(user.id);
+                console.log("newChatCreated");
+                
             })
 
             connectionS.onclose(() => {
@@ -79,10 +80,12 @@ export const Home = () => {
         }
     }
 
-    const sendMessage = async (chatID: any, message: any) => {    
+    const sendMessage = async (chatID: any, message: any) => {
+        console.log(message);
+            
         try { 
             await connection.invoke('SendMessage', chatID, message);
-            getUserListAsync();
+            getUserChats(chatID);
         } catch (e) {
             console.log(e);
         }
@@ -97,12 +100,14 @@ export const Home = () => {
         <div 
             className="page home-page"
             onClick={e => searchHandler(e)}>
-            {
-                navBarStatus ? <NavBar/> : null
-            }
-            {
-                profileStatus ? <ProfileModal/> : null
-            }
+            <CSSTransition
+                in={profileStatus}
+                timeout={300}
+                classNames="profmodal"
+                unmountOnExit
+            >
+                <ProfileModal/>
+            </CSSTransition>
             <ChatList joinRoom={joinRoom} closeConnection={closeConnection}/>
             {
                 chatInfoStatus ? <ChatInfo /> : null

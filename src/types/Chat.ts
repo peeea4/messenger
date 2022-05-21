@@ -11,6 +11,7 @@ export enum ChatActionTypes {
     GET_USER_CHATS = "GET_USER_CHATS",
     OPEN_CHAT = "OPEN_CHAT",
     GET_CHAT_BY_ID = "GET_CHAT_BY_ID",
+    SET_LAST_MESSAGE = "SET_LAST_MESSAGE"
 }
 
 interface FetchChatAction {
@@ -37,4 +38,9 @@ interface FetchChatByIdAction {
     payload: {};
 }
 
-export type ChatAction = FetchChatAction | FetchChatIDAction | FetchUserChatAction | SyncChatOpenAction | FetchChatByIdAction;
+interface SetChatLastMessageAction {
+    type: ChatActionTypes.SET_LAST_MESSAGE;
+    payload: {};
+}
+
+export type ChatAction = FetchChatAction | FetchChatIDAction | FetchUserChatAction | SyncChatOpenAction | FetchChatByIdAction | SetChatLastMessageAction;

@@ -4,7 +4,9 @@ const initialState: ChatState = {
     chatList: [], 
     chatID: "",
     chatIsOpened: false,
-    currentChat: {},
+    currentChat: {
+        lastMessage: null
+    },
 };
 
 export const chatReducer = (state = initialState, action: ChatAction): ChatState => {
@@ -33,6 +35,11 @@ export const chatReducer = (state = initialState, action: ChatAction): ChatState
             ...state,
             currentChat: {...action.payload}
             }
+        // case ChatActionTypes.SET_LAST_MESSAGE:
+        //     return {
+        //         ...state,
+        //         ...state.currentChat.lastMessage
+        //     }
 		default: return state
 	}
 }
