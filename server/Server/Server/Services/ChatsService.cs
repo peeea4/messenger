@@ -42,6 +42,10 @@ namespace Server.Services
                 }
 
                 id = newChat.Id;
+                var user1 = await this._messengerContext.Users
+                    .Include(user => user.Chats)
+                    .ThenInclude(chat => chat.Users)
+                    .FirstOrDefaultAsync(user => user.Id == 4);
             }
             catch (Exception e)
             {

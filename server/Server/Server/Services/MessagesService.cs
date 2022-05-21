@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Server.Context;
@@ -58,14 +59,30 @@ namespace Server.Services
 
         public async Task<Message> GetMessageByIdAsync(int id)
         {
-            return await this._messengerContext.Messages.FindAsync(id);
+            return await this._messengerContext.Messages.
+                    Include(message => message.Emotions)
+                    .FirstOrDefaultAsync(message => message.Id == id);
         }
 
         public async Task<Message> UpdateMessageAsync(int id, Message message)
         {
-            var existingMessage = await this._messengerContext.Messages.FindAsync(id);
+            var existingMessage = await GetMessageByIdAsync(id);
             existingMessage.Text = message.Text;
             existingMessage.IsEdited = true;
+            var emotion = message.Emotions.FirstOrDefault();
+            var existingEmotion = existingMessage.Emotions.FirstOrDefault(e => string.Equals(e.Symbol, emotion.Symbol));
+            if (existingEmotion != null)
+            {
+                existingEmotion.Count++;
+            }
+            else
+            {
+                existingMessage.Emotions.Add(new Emotion
+                {
+                    Symbol = emotion.Symbol,
+                    Count = 1
+                });
+            }
 
             this._messengerContext.Entry(existingMessage).State = EntityState.Modified;
             try

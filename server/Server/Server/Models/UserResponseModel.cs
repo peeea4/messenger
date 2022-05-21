@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Server.Models
 {
@@ -11,7 +12,11 @@ namespace Server.Models
         public string Username { get; set; }
         
         public string ProfileImageFilePath { get; set; }
-        
+
+        public bool IsCurrentlyOnline { get; set; }
+
+        public DateTime? LastOnline { get; set; }
+
         public List<Chat> Chats { get; set; } = new List<Chat>();
 
         public List<Message> Messages { get; set; } = new List<Message>();

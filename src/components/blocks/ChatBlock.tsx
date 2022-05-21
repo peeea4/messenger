@@ -18,7 +18,7 @@ export const ChatBlock:React.FC<ChatBlockProps> = ({chat, joinRoom, chatName, ch
     return (
 		<div className="user-tab" onClick={() => {
             getChatById(chatID);
-            closeConnection();
+            // closeConnection();
 			joinRoom(user, String(chatID), chat);
             setChatStatus(true);
             setChatID(chatID);

@@ -60,7 +60,7 @@ namespace Server.Controllers
                 return this.NoContent();
             }
 
-            return this.Ok(users);
+            return this.Ok(users.Select(user => _mapper.Map<User, UserResponseModel>(user)));
         }
 
         [HttpPost]
@@ -100,6 +100,7 @@ namespace Server.Controllers
                 return this.BadRequest();
             }
 
+            var mapped = _mapper.Map<User, UserResponseModel>(result);
             return this.Ok(_mapper.Map<User, UserResponseModel>(result));
         }
 
@@ -109,7 +110,6 @@ namespace Server.Controllers
             if (id <= 0)
             {
                 return this.BadRequest("Invalid id.");
-
             }
 
             var result= await this._service.DeleteUserAsync(id);

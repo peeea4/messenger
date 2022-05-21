@@ -21,6 +21,6 @@ namespace Server.Models
 
         public bool IsEdited { get; set; }
 
-        // public List<Emotion> Emotions { get; set; } = new List<Emotion>();
+        public List<Emotion> Emotions { get; set; } = new List<Emotion>();
     }
 }

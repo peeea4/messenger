@@ -36,34 +36,31 @@ export const Home = () => {
 
     const joinRoom = async (user: any, chatID: any, chat?:any) => {
         try {
-            if(chatID !== 0 && connection) {
-                await connection.stop();
-            }
-
-            const connectionS = new HubConnectionBuilder()
+            if (!connection){
+                let connectionS = new HubConnectionBuilder()
 				.withUrl(`https://localhost:44328/chat`, { accessTokenFactory: () => accessToken })
                 .withAutomaticReconnect()
                 .configureLogging(LogLevel.Information)
                 .build();
 
-            connectionS.on('ReceiveMessage', (message) => {
-                setMessages((messages) => [...messages,  message ]);
-            })
+                connectionS.on('ReceiveMessage', (message) => {
+                    setMessages((messages) => [...messages,  message ]);
+                })
 
-            connectionS.on('newChatCreated', () => {
-                getUserChats(user.id);
-            })
+                connectionS.on('newChatCreated', () => {
+                    getUserChats(user.id);
+                })
 
-            connectionS.onclose(() => {
-                setConnection({});
-                setMessages([]);
-            })
+                connectionS.onclose(() => {
+                    setConnection({});
+                    setMessages([]);
+                })
 
-            await connectionS.start();
-            await connectionS.invoke('JoinRoom', user, chatID);
-
-            setConnection(connectionS);
-
+                await connectionS.start();
+                setConnection(connectionS);
+            } else{
+                await connection.invoke('JoinRoom', user, chatID);
+            }
         } catch (e) {
             console.log(e);
         }
