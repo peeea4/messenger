@@ -116,6 +116,10 @@ namespace Server.Hubs
                 existingUser.LastOnline = DateTime.Now;
                 existingUser.IsCurrentlyOnline = false;
                 await this._usersService.UpdateUserAsync(existingUser.Id, existingUser);
+                foreach (var chat in user.Chats)
+                {
+                    await Clients.Group(chat.Id.ToString()).SendAsync("onlineStatusChanged", chat.Id);
+                }
             }
         }
 
@@ -125,6 +129,10 @@ namespace Server.Hubs
             this._connections.Add(Context.UserIdentifier, user);
             user.IsCurrentlyOnline = true;
             await this._usersService.UpdateUserAsync(user.Id, user);
+            foreach (var chat in user.Chats)
+            {
+                await Clients.Group(chat.Id.ToString()).SendAsync("onlineStatusChanged", chat.Id);
+            }
         }
     }
 }
