@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Models;
@@ -13,19 +14,24 @@ namespace Server.Controllers
     public class ChatsController : ControllerBase
     {
         private readonly ChatsService _service;
+        private readonly IMapper _mapper;
 
-        public ChatsController(ChatsService service)
+        public ChatsController(ChatsService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Chat>> GetChatByIdAsync(int id)
         {
             var chat = await this._service.GetChatByIdAsync(id);
-            return chat is null 
-                ? this.NotFound($"Chat with id `{id}` is not found.") 
-                : this.Ok(chat);
+            if (chat is null)
+            {
+                return this.NotFound($"Chat with id `{id}` is not found.");
+            }
+
+            return this.Ok(_mapper.Map<Chat, ChatResponseModel>(chat));
         }
 
         [HttpGet("{id:int}/messages")]
@@ -41,9 +47,12 @@ namespace Server.Controllers
         public async Task<ActionResult<List<Chat>>> GetChatsAsync()
         {
             var chats = await this._service.GetChatsAsync();
-            return chats is null
-                ? this.NoContent()
-                : this.Ok(chats);
+            if (chats is null)
+            {
+                return this.NoContent();
+            }
+
+            return this.Ok(chats.Select(chat => _mapper.Map<Chat, ChatResponseModel>(chat)));
         }
         
         [HttpPut("{id:int}")]
@@ -60,7 +69,7 @@ namespace Server.Controllers
                 return this.BadRequest();
             }
 
-            return this.Ok(result);
+            return this.Ok(_mapper.Map<Chat, ChatResponseModel>(result));
         }
         
         [HttpPost]

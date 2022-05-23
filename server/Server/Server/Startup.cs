@@ -38,7 +38,9 @@ namespace Server
 
             services.AddSignalR();
 
-            services.AddAutoMapper(typeof(UserProfile));
+            services.AddAutoMapper(
+                typeof(UserProfile),
+                typeof(ChatProfile));
 
             services
                 .AddScoped<UsersService>()
