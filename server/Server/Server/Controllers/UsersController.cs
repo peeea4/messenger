@@ -36,7 +36,7 @@ namespace Server.Controllers
                 return this.NoContent();
             }
 
-            return this.Ok(chats);
+            return this.Ok(chats.Select(chat => _mapper.Map<Chat, ChatResponseModel>(chat)));
         }
 
         [HttpGet("{id:int}")]
