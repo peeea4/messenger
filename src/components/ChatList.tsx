@@ -4,10 +4,9 @@ import { useTypedSelector } from "../hooks/useTypedSelector";
 
 type ChatListProps = {
     joinRoom: (user: {}, chatID: any) => void;
-    closeConnection: () => void;
 }
 
-export const ChatList:React.FC<ChatListProps> = ({joinRoom, closeConnection}) => {
+export const ChatList:React.FC<ChatListProps> = ({joinRoom}) => {
 
 	const chatList = useTypedSelector(state => state.chatState.chatList);
     
@@ -16,7 +15,7 @@ export const ChatList:React.FC<ChatListProps> = ({joinRoom, closeConnection}) =>
 			<AddChat joinRoom={joinRoom}/>
             {
                 chatList.map( (chat) => (
-                    <ChatBlock chat={chat} joinRoom={joinRoom} closeConnection={closeConnection} key={chat.id} chatName={chat.users[1]?.username} chatImage={chat.users[0]?.profileImageFilePath} chatID={chat.id}/>
+                    <ChatBlock chat={chat} joinRoom={joinRoom} key={chat.id} chatID={chat.id}/>
                 ))
             }
         </div>

@@ -3,7 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    .chat-info {
+    .chat-header{
         background-color: $first-color;
         color: #B9BBBE;
         display: flex;
@@ -12,13 +12,31 @@
         height: 5%;
         border-left: solid 1px $second-color;
         cursor: pointer;
-        .user-list {
-            margin-left: 24px;
-            .chat-member {
-                font-weight: 500;
-                font-size: 15px;
-                letter-spacing: 0.4px;
-                color: $main-font-color;
+        .chat-settings {
+            width: 100%;
+            .user-list {
+                margin-left: 24px;
+                .chat-member {
+                    font-weight: 500;
+                    font-size: 15px;
+                    letter-spacing: 0.4px;
+                    color: $main-font-color;
+                    .username {
+                        margin-bottom: 2px;
+                    }
+                    .last-online {
+                        p {
+                            font-size: 13px;
+                            font-weight: 300;
+                        }
+                        .online {
+                            color: $main-color-light; 
+                        }
+                        .offline {
+    
+                        }
+                    }
+                }
             }
         }
     }
@@ -55,7 +73,7 @@
                     z-index: 2;
                 }
                 .owner {
-                    margin-bottom: 5px;
+                    margin-bottom: 2px;
                     font-size: 14px;
                     font-weight: 600;
                 }
@@ -78,7 +96,7 @@
                 align-self: flex-end;
                 margin-left: 40px;
                 .owner {
-                    color: #1c74d9;
+                    color: $main-color-light;
                 }
                 .emoji-container {
                     width: 30px;

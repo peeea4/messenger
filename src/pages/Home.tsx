@@ -5,16 +5,14 @@ import { ChooseChat } from "../components/ChooseChat";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import React, { useEffect } from "react";
 import { useActions } from "../hooks/useActions";
-import { ChatInfo } from "../components/modals/ChatInfo";
 import { ProfileModal } from "../components/modals/ProfileModal";
 import { CSSTransition } from "react-transition-group";
 export const Home = () => {
 
-    const {getUserChats, setSearchOpened, getUserListAsync} = useActions();
-
+    const { getUserChats, setSearchOpened, getChatById } = useActions();
     const [connection, setConnection] = React.useState<any>();
     const [messages, setMessages] = React.useState<Array<any>>([]);
-    
+
 	const accessTokenNew = useTypedSelector(state => state.userState.currentUser.accessToken);
     const accessTokenFromLS = JSON.parse(localStorage.getItem("user") || "").accessToken;
     let accessToken:any;
@@ -24,35 +22,34 @@ export const Home = () => {
         accessToken = accessTokenNew;
     }    
     const chatStatus = useTypedSelector(state => state.chatState.chatIsOpened);
-    const chatInfoStatus = useTypedSelector(state => state.modalState.chatInfoIsOpened);
     const profileStatus = useTypedSelector(state => state.modalState.profileIsOpened);
     
     const userId = JSON.parse(localStorage.getItem("user") || "false").user.id
     
     useEffect(() => {
         getUserChats(userId);
-    }, [])
+    }, [getUserChats, userId])
 
     const joinRoom = async (user: any, chatID: any, chat?:any) => {
         try {
-            if(chatID !== 0 && connection) {
-                await connection.stop();
-            }
-
-            const connectionS = new HubConnectionBuilder()
+            if (!connection){
+                let connectionS = new HubConnectionBuilder()
 				.withUrl(`https://localhost:44328/chat`, { accessTokenFactory: () => accessToken })
                 .withAutomaticReconnect()
                 .configureLogging(LogLevel.Information)
                 .build();
 
-            connectionS.on('ReceiveMessage', (message) => {
-                setMessages((messages) => [...messages,  message ]);
-            })
+                connectionS.on('ReceiveMessage', (message) => {
+                    setMessages((messages) => [...messages,  message ]);
+                    getUserChats(user.id);
+                })
 
             connectionS.on('newChatCreated', () => {
-                getUserChats(user.id);
-                console.log("newChatCreated");
-                
+                getUserChats(user.id);    
+            })
+
+            connectionS.on('onlineStatusChanged', () => {
+                getChatById(chatID);    
             })
 
             connectionS.onclose(() => {
@@ -61,19 +58,9 @@ export const Home = () => {
             })
 
             await connectionS.start();
-            await connectionS.invoke('JoinRoom', user, chatID);
-
             setConnection(connectionS);
-
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    const closeConnection = async () => {
-        try {
-            if(connection) {
-                await connection.stop();
+            } else {
+                await connection.invoke('JoinRoom', user, chatID);
             }
         } catch (e) {
             console.log(e);
@@ -81,8 +68,6 @@ export const Home = () => {
     }
 
     const sendMessage = async (chatID: any, message: any) => {
-        console.log(message);
-            
         try { 
             await connection.invoke('SendMessage', chatID, message);
             getUserChats(chatID);
@@ -108,10 +93,8 @@ export const Home = () => {
             >
                 <ProfileModal/>
             </CSSTransition>
-            <ChatList joinRoom={joinRoom} closeConnection={closeConnection}/>
-            {
-                chatInfoStatus ? <ChatInfo /> : null
-            }
+            <ChatList joinRoom={joinRoom}/>
+
             {
                 chatStatus ? <Chat messages={messages} sendMessage={sendMessage}/> : <ChooseChat joinRoom={joinRoom}/>
             }

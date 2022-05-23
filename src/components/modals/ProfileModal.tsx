@@ -1,16 +1,17 @@
-import axios from "axios";
 import React, { useRef } from "react";
 import { useActions } from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 const logo = require("../../assets/icons/user.png");
+
 export const ProfileModal = () => {
     
-	const { setProfileOpened } = useActions();
+	const { setProfileOpened, updateUser} = useActions();
 	const userData = useTypedSelector(state => state.userState.currentUser.user);
+    const currentUserData = useTypedSelector(state => state.userState.currentUserData);
     
 	const [selectStatus, setSelectStatus] = React.useState<boolean>(false);
 	const [image, setImage] = React.useState<any>(null);
-	const [avatar, setAvatar] = React.useState<any>(null);
+	const [avatar, setAvatar] = React.useState<any>(currentUserData.profileImageFilePath);
 
 	const profileHandler = (e: any) => {
 		if (e.target.classList.contains("profile-modal-wrapper")) {
@@ -18,24 +19,31 @@ export const ProfileModal = () => {
 		}
 	};
 
-    const form = useRef<HTMLFormElement | any>(null)
-    let response;
-	const sendFile = React.useCallback(async (e: any) => {
+    const form = useRef<HTMLFormElement | any>(null);
+
+	const sendFile = (e: any) => {
         e.preventDefault()
 		const data = new FormData(form.current);
-		data.set("image", image[0]);
+		data.set("image", image);
         data.set("chats", JSON.stringify(userData.chats));
         data.set("email", userData.email);
         data.set("id", userData.id);
         data.set("messages", JSON.stringify(userData.messages));
         data.set("password", userData.password);
         data.set("username", userData.username);
-		response = await axios.put(`https://localhost:44328/users/${userData.id}`, data);
-        console.log(response);
-        
-        setAvatar(response.data.profileImageFilePath)
-        
-	}, [image, userData])
+        updateUser(userData.id, data);     
+	}
+
+    const imageHandler = (filesArray: any) => {
+        setImage(filesArray[0])
+        const reader = new FileReader();
+        reader.onload = () => {
+            if(reader.readyState === 2) {
+                setAvatar(reader.result)
+            }
+        }
+        reader.readAsDataURL(filesArray[0])
+    }
 
 	return (
 		<div className="profile-modal-wrapper" onClick={e => { profileHandler(e) }}>
@@ -61,7 +69,7 @@ export const ProfileModal = () => {
 						selectStatus ?
 							(
 								<form ref={form} className="choose-file">
-									<input type="file" onChange={(e) => { setImage(e.target.files) }} />
+									<input type="file" onChange={(e) => { imageHandler(e.target.files) }} />
 									<button onClick={(e) => {sendFile(e)}}>Change Photo</button>
 								</form>
 							)

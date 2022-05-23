@@ -95,6 +95,7 @@ namespace Server.Services
             try
             {
                 existingUser.Username = user.Username;
+                existingUser.LastOnline = user.LastOnline;
                 if (image != null)
                 {
                     existingUser.ProfileImageFilePath = await SaveProfileImage(id, image);
@@ -118,10 +119,10 @@ namespace Server.Services
         public async Task<List<Chat>> GetUserChatsAsync(int id)
         {
             var chats = await this._messengerContext.Chats
-                .Where(chat => chat.Users.Select(user => user.Id).FirstOrDefault() == id)
                 .Include(chat => chat.Users)
                 .Include(chat => chat.Messages)
                 .ThenInclude(message => message.Sender)
+                .Where(chat => chat.Users.Select(user => user.Id).Contains(id))
                 .AsNoTracking()
                 .ToListAsync();
 

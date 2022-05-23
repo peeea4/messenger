@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Server.Context;
 using Server.Models;
 using Server.Services;
@@ -53,18 +54,9 @@ namespace Server.Hubs
                 return;
             }
 
-            try
-            {
-                this._connections.Add(Context.UserIdentifier, user);
-            }
-            catch(Exception e)
-            {
-
-            }
-            
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
             var chat = await this._service.GetChatByIdAsync(int.Parse(chatId));
-            if (!chat.Users.Contains(user))
+            if (chat.Users.FirstOrDefault(u => user.Id == u.Id) is null)
             {
                 await Clients.Group(chatId).SendAsync(
                     "ReceiveMessage",
@@ -107,6 +99,32 @@ namespace Server.Hubs
                 .Select(c => c.Username);
 
             return Clients.Group(room).SendAsync("UsersInRoom", users);
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            if (this._connections.TryGetValue(Context.UserIdentifier, out User user))
+            {
+                this._connections.Remove(Context.UserIdentifier);
+
+                var tasks = (await _service.GetChatsAsync())
+                    .Select(chat =>
+                 Groups.RemoveFromGroupAsync(Context.ConnectionId, chat.Id.ToString()));
+                await Task.WhenAll(tasks);
+
+                var existingUser = await this._messengerContext.Users.FindAsync(user.Id);
+                existingUser.LastOnline = DateTime.Now;
+                existingUser.IsCurrentlyOnline = false;
+                await this._usersService.UpdateUserAsync(existingUser.Id, existingUser);
+            }
+        }
+
+        public override async Task OnConnectedAsync()
+        {
+            var user = await _usersService.GetUserByIdAsync(int.Parse(Context.UserIdentifier));
+            this._connections.Add(Context.UserIdentifier, user);
+            user.IsCurrentlyOnline = true;
+            await this._usersService.UpdateUserAsync(user.Id, user);
         }
     }
 }

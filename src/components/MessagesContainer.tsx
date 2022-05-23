@@ -11,10 +11,15 @@ export const MessagesContainer:React.FC<MessagesContainerProps> = ({messagesFrom
     const messageRef = React.useRef<HTMLDivElement>(null);
     const finallyArray:any = [];
     finallyArray.push(...messages)
-        if(messagesFromDB?.length) {
-            finallyArray.unshift(...messagesFromDB)
+    if(messagesFromDB?.length) {
+        finallyArray.unshift(...messagesFromDB)
+    }
+    useEffect(() => {
+        if (messageRef && messageRef.current) {
+            const { scrollHeight, clientHeight } = messageRef.current;
+            messageRef.current.scrollTo({ left: 0, top: scrollHeight - clientHeight });
         }
-
+    }, [messagesFromDB])
     useEffect(() => {
         if (messageRef && messageRef.current) {
             const { scrollHeight, clientHeight } = messageRef.current;

@@ -13,8 +13,8 @@ export const Chat:React.FC<ChatProps> = ({ messages, sendMessage }) => {
     const usersFromDB = useTypedSelector(state => state.chatState.currentChat.users);
     return (
         <div className="chat-container">
-            <div className="chat-info">
-                <ConnectedUsers users={usersFromDB}/>
+            <div className="chat-header">
+                <ConnectedUsers messages={messages} users={usersFromDB}/>
             </div>
             <div className="chat">
                 <MessagesContainer messagesFromDB={messagesFromDB} messages={messages} />

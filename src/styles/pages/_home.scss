@@ -47,9 +47,11 @@
         background-color: $second-color;
         color: $main-font-color;
         p {
+            font-size: 14px;
             background-color: $first-color;
             padding: 8px 16px;
             border-radius: 8px;
+            letter-spacing: 0.7px;
         }
     }
 }

@@ -1,19 +1,21 @@
 import { useActions } from "../hooks/useActions";
 import { NavBar } from "../components/NavBar";
 import { CSSTransition } from "react-transition-group";
-import React from "react";
 import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useEffect } from "react";
 
 export const SideBar = () => {
-    const { setNavBarOpened } = useActions();
+    const { setNavBarOpened, getUserById } = useActions();
     const navBarStatus = useTypedSelector(state => state.modalState.navBarIsOpened);
-
+    const user = useTypedSelector(state => state.userState.currentUser.user);
+    useEffect(() => {
+        getUserById(user.id);
+    }, [navBarStatus])
+    
     const navbarHandler = (e:any) => {
-        
         if(e.target.classList.contains("navbar-wrapper")) {
             setNavBarOpened(false);
         }
-        
     }
 
     return (

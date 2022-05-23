@@ -1,14 +1,17 @@
 export interface UserState {
     currentUser: any;
+    currentUserData: any;
     userList: any[];
 }
 
 export enum UserActionTypes {
     CREATE_USER = "CREATE_USER",
-    CREATE_USER_LIST = "CREATE_USER_LIST"
+    CREATE_USER_LIST = "CREATE_USER_LIST", 
+    UPDATE_USER = "UPDATE_USER", 
+    CREATE_USER_DATA = "CREATE_USER_DATA"
 }
 
-interface FetchUserAction {
+interface FetchUseCreateAction {
     type: UserActionTypes.CREATE_USER;
     payload: {};
 }
@@ -18,4 +21,13 @@ interface FetchUserListAction {
     payload: any[];
 }
 
-export type UserAction = FetchUserAction | FetchUserListAction;
+interface FetchUserUpdateAction {
+    type: UserActionTypes.UPDATE_USER;
+}
+
+interface FetchCreateUserDataAction {
+    type: UserActionTypes.CREATE_USER_DATA;
+    payload: {};
+}
+
+export type UserAction = FetchUseCreateAction | FetchUserListAction | FetchUserUpdateAction | FetchCreateUserDataAction;

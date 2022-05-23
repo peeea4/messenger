@@ -1,0 +1,21 @@
+.chat-info-modal-wrapper {
+    z-index: 4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: $third-color-light;
+    .chat-info-modal {
+        z-index: 6;
+        background-color: $first-color;
+        width: 400px;
+        height: 600px;
+        margin-top: 100px;
+        border-radius: 8px;
+        padding: 20px 0px;
+    }
+}

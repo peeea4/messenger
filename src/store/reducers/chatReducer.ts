@@ -1,12 +1,10 @@
-import { ChatAction, ChatActionTypes, ChatState } from "../../types/Chat"
+import { ChatAction, ChatActionTypes, ChatState } from "../../types/Chat";
 
 const initialState: ChatState = {
     chatList: [], 
     chatID: "",
     chatIsOpened: false,
-    currentChat: {
-        lastMessage: null
-    },
+    currentChat: {},
 };
 
 export const chatReducer = (state = initialState, action: ChatAction): ChatState => {
@@ -20,7 +18,7 @@ export const chatReducer = (state = initialState, action: ChatAction): ChatState
                 ...state,
                 chatID: action.payload
             }
-        case ChatActionTypes.GET_USER_CHATS:            
+        case ChatActionTypes.GET_USER_CHATS:      
             return {
                 ...state,
                 chatList: [...action.payload],
@@ -29,17 +27,12 @@ export const chatReducer = (state = initialState, action: ChatAction): ChatState
             return {
                 ...state,
                 chatIsOpened: true
-              }
-        case ChatActionTypes.GET_CHAT_BY_ID:
-        return {
-            ...state,
-            currentChat: {...action.payload}
             }
-        // case ChatActionTypes.SET_LAST_MESSAGE:
-        //     return {
-        //         ...state,
-        //         ...state.currentChat.lastMessage
-        //     }
+        case ChatActionTypes.GET_CHAT_BY_ID:
+            return {
+                ...state,
+                currentChat: {...action.payload}
+            }
 		default: return state
 	}
 }

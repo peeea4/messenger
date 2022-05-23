@@ -8,12 +8,19 @@ import { SignUpForm } from "./components/forms/SignUpForm";
 import { LogInForm } from "./components/forms/LogInForm";
 import { useTypedSelector } from "./hooks/useTypedSelector";
 import { useActions } from "./hooks/useActions";
+import { useEffect } from "react";
 
 export const App = () => {
+    const {getUserById} = useActions();
     const { createUser, getUserListAsync } = useActions();
     const savedUserId = JSON.parse(localStorage.getItem("user") || "false")?.user?.id;
     const trueUserId = useTypedSelector(state => state.userState.currentUser.accessToken);
     let userId;
+    useEffect(() => {
+        if(savedUserId) {
+            getUserById(savedUserId)
+        }
+    }, [])
     if (savedUserId) {
         userId = savedUserId;
         if (!trueUserId) {

@@ -5,7 +5,8 @@ const initialState: UserState = {
         user: {}, 
         accessToken: ""
     },
-    userList: [],
+    currentUserData: {},
+    userList: []
 };
 
 export const userReducer = (state = initialState, action: UserAction): UserState => {
@@ -15,10 +16,19 @@ export const userReducer = (state = initialState, action: UserAction): UserState
                 ...state,
                 currentUser: action.payload 
             }
+        case UserActionTypes.CREATE_USER_DATA:
+            return {
+                ...state,
+                currentUserData: action.payload 
+            }
         case UserActionTypes.CREATE_USER_LIST:
             return {
                 ...state,
                 userList: action.payload
+            }
+        case UserActionTypes.UPDATE_USER:
+            return {
+                ...state,
             }
 		default: return state
 	}

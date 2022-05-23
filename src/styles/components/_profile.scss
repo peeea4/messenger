@@ -1,14 +1,14 @@
 .profile-modal-wrapper {
     z-index: 2;
-    width: 100vw;
-    height: 100vh;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: $third-color-light;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    background-color: $third-color-light;
     .profile-modal {
         background-color: $first-color;
         width: 400px;
@@ -39,10 +39,11 @@
                 align-items: center;
 				.profile-avatar-block {
                     .profile-avatar {
-                        width: 55px;
-                        height: 55px;
+                        width: 60px;
+                        height: 60px;
                         border-radius: 50%;
                         margin-right: 10px;
+                        object-fit: cover;
                     }
 				}
                 .profile-description {
@@ -73,20 +74,21 @@
 		}
     }
 }
+
 .profmodal-enter {
-    transform: translateY(-100%);
+    opacity: 0.01;
 }
 
 .profmodal-enter-active {
-    transform: translateY(0);
-    transition: all 200ms;
+    opacity: 1;
+    transition: all 150ms linear;
 }
 
 .profmodal-exit {
-    transform: translateY(0);
+    opacity: 1;
+    transition: all 150ms linear;
 }
 
 .profmodal-exit-active {
-    transform: translateY(-100%);
-    transition: all 200ms;
+    opacity: 0.01;
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,10 @@ namespace Server.Models
         public string Username { get; set; }
         
         public string ProfileImageFilePath { get; set; }
+
+        public bool IsCurrentlyOnline { get; set; }
+
+        public DateTime? LastOnline { get; set; }
 
         public List<Chat> Chats { get; set; } = new List<Chat>();
 
