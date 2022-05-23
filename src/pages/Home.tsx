@@ -48,8 +48,10 @@ export const Home = () => {
                 getUserChats(user.id);    
             })
 
-            connectionS.on('onlineStatusChanged', () => {
-                getChatById(chatID);    
+            connectionS.on('onlineStatusChanged', (chatId) => {
+                console.log(chatId);
+                
+                getChatById(chatId);    
             })
 
             connectionS.onclose(() => {
