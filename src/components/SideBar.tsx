@@ -4,6 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { useEffect } from "react";
 
+
 export const SideBar = () => {
     const { setNavBarOpened, getUserById } = useActions();
     const navBarStatus = useTypedSelector(state => state.modalState.navBarIsOpened);

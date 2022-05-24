@@ -1,6 +1,6 @@
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-
+const logo = require("../../assets/icons/user.png");
 type ChatBlockProps = {
     joinRoom: (user: {}, chatID: any, chat:any) => void;
     chatID: number;
@@ -8,7 +8,7 @@ type ChatBlockProps = {
 };
 
 export const ChatBlock:React.FC<ChatBlockProps> = ({chat, joinRoom, chatID}) => {
-    
+    console.log(chat);
 	const user = useTypedSelector(state => state.userState.currentUser);
 
     let chatImage;
@@ -16,7 +16,7 @@ export const ChatBlock:React.FC<ChatBlockProps> = ({chat, joinRoom, chatID}) => 
 
     chat.users.forEach((userInChat: any) => {
         if(userInChat.username !== user.user.username) {
-            chatImage = userInChat.profileImageFilePath;
+            userInChat.profileImageFilePath ? chatImage = userInChat.profileImageFilePath : chatImage = logo
             chatName = userInChat.username;
         }
     });
@@ -31,7 +31,7 @@ export const ChatBlock:React.FC<ChatBlockProps> = ({chat, joinRoom, chatID}) => 
             setChatStatus(true);
             setChatID(chatID);
         }}>
-            <div className="user-image-aside"><img src="{chatImage}" alt="" /></div>
+            <div className="user-image-aside"><img src={chatImage} alt="" /></div>
             <div className="user-content">
                 <h4 className="chat-name">{chatName}</h4>
                 <p className="user-last-message">{lastMessage}</p>
