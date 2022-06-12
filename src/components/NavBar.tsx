@@ -1,11 +1,13 @@
 import { useTypedSelector } from "../hooks/useTypedSelector"
 import { useActions } from "../hooks/useActions"
+const logo = require("../assets/icons/user.png");
 
 export const NavBar = () => {
 
     const {setProfileOpened, setNavBarOpened} = useActions();
     const user = useTypedSelector(state => state.userState.currentUser.user);
     const userPhoto = useTypedSelector(state => state.userState.currentUserData.profileImageFilePath);
+    let avatar = userPhoto ? userPhoto : logo
     const wrapperClickHandler = (e:any) => {
         if(e.target.classList.contains("navbar-wrapper")) {
             setNavBarOpened(false);
@@ -21,7 +23,7 @@ export const NavBar = () => {
         <div className="navbar-wrapper" onClick={(e) => wrapperClickHandler(e)}>
             <nav className="navbar">
                 <div className="user-block" onClick={(e) => {avatarClickHandler(e)}}>
-                    <div className="user-avatar"><img src={userPhoto} alt="" /></div>
+                    <div className="user-avatar"><img src={avatar} alt="" /></div>
                     <h3 className="user-name">{user.username}</h3>
                     <h4 className="user-email">{user.email}</h4>
                 </div>
