@@ -11,14 +11,14 @@ export const AddChat:React.FC<AddChatProps> = ({ joinRoom }) => {
     const searchOpened = useTypedSelector(state => state.modalState.searchIsOpened);   
     const [searchUser, setSearchValue] = useState("");
 
-    const filteredUsers = userList?.filter( user => {
+    let filteredUsers = userList?.filter( user => {
         return (user?.username.toLowerCase().includes(searchUser.toLowerCase()) && user.username !== JSON.parse(localStorage.getItem("user") || "").user.username && user.username )
     });
 
     const closeSearch = () => {
         setSearchOpened(false);
     }
-
+    
     return (
 		<div className="add-chat">
             <div 
@@ -32,18 +32,21 @@ export const AddChat:React.FC<AddChatProps> = ({ joinRoom }) => {
                 />
             </div>
             {
-                searchOpened ? 
-                (
-                    <div className="all-users">
-                        {
-                            filteredUsers?.map(friend => <UserBlock joinRoom={joinRoom} friend={friend} key={friend.id} closeSearch={closeSearch}/>)
-                        }
-                    </div>
-                )
-                :
-                (
-                    null
-                )
+                searchOpened ?
+                    filteredUsers.length ?
+                    (
+                        <div className="all-users">
+                            {
+                               filteredUsers?.map(friend => <UserBlock joinRoom={joinRoom} friend={friend} key={friend.id} closeSearch={closeSearch}/>)
+                            }
+                      </div>
+                    )
+                    :
+                    (
+                        <p className="no-users">No users founds</p>
+                    )
+                : null
+
                 
             }
         </div>

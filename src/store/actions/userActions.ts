@@ -16,12 +16,17 @@ export const registrationUserAsync = (userEmail: string, userName: string, userP
 
 export function authorizationUserAsync(userEmail:string, userPass:string) {
 	return async (dispatch: Dispatch<UserAction>) => {
-		const response = await axios.post(`https://localhost:44328/auth/signIn`, {
-            "Email": userEmail,
-            "Password": userPass
-        });
-        localStorage.setItem("user", JSON.stringify(response.data));
-        dispatch({type: UserActionTypes.CREATE_USER, payload: response.data});
+        try {
+            const response = await axios.post(`https://localhost:44328/auth/signIn`, {
+                "Email": userEmail,
+                "Password": userPass
+            });
+            localStorage.setItem("user", JSON.stringify(response.data));
+            dispatch({type: UserActionTypes.CREATE_USER, payload: response.data});
+        } catch (error) {
+            console.log("ошибка", error);
+            
+        }
 	};
 };
 

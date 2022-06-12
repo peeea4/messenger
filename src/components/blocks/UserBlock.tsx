@@ -11,25 +11,30 @@ export const UserBlock:React.FC<UserBlockProps> = ({joinRoom, friend, closeSearc
 
     const chatlist = useTypedSelector(state => state.chatState.chatList);
     const nameList = chatlist.map(chat => chat.users[1].username);
+    console.log(nameList);
+    
     let user: any  = JSON.parse(localStorage.getItem("user") || "");
     const { creatingChat } = useActions();
-    const clickHandler = () => {
+
+    const clickHandler = (e: any) => {
+        console.log(e);
+        
         let count = 0;
         for (let index = 0; index < nameList.length; index++) {
-            if(nameList[index] === friend.username) {
+            if(nameList[index] === e.target.innerHTML) {
                 count++
             }
         }
         if(count > 0) {
             return
-        } else if (count === 0) {
+        } else {
             creatingChat(user.user, friend.id)
         }
         closeSearch();
     }
     
     return (
-        <div onClick={() => {clickHandler()}} className="user-block">
+        <div onClick={(e) => {clickHandler(e)}} className="user-block">
             {
                 friend.username
             }

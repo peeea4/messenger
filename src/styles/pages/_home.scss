@@ -36,6 +36,13 @@
                     cursor: pointer;
                 }
             }
+            .no-users {
+                font-family: "Raleway";
+                color: $main-font-color;
+                font-weight: 200;
+                font-size: 12px;
+                padding: 8px 8px 2px;
+            }
         }
     }
     .choose-chat {
