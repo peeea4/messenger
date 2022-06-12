@@ -37,7 +37,7 @@ namespace Server.Controllers
 
             if (!user.Password.CompareWithHashed(userFromDb.Password))
             {
-                return BadRequest($"User with email '{user.Email}' does not exist.");
+                return BadRequest("Incorrect password.");
             }
 
             var response = GetAuthenticateResponse(userFromDb);
