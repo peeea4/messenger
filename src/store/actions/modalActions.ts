@@ -19,6 +19,15 @@ export const setProfileOpened = (value: boolean) => {
     }
 }
 
+export const setContactsOpened = (value: boolean) => {
+    return async (dispatch: Dispatch<ModalAction>) => {
+        dispatch({
+            type: ModalActionTypes.CHANGE_CONTATS_STATUS,
+            payload: value,
+        })
+    }
+}
+
 export const setChatInfoOpened = (value: boolean) => {
     return async (dispatch: Dispatch<ModalAction>) => {
         dispatch({
@@ -37,11 +46,11 @@ export const setNavBarOpened = (value: boolean) => {
     }
 }
 
-export const showModal = (value: boolean) => {
+export const changeModalStatus = (data: any) => {
     return async (dispatch: Dispatch<ModalAction>) => {
         dispatch({
             type: ModalActionTypes.CHANGE_MODAL_STATUS,
-            payload: value,
+            payload: {...data},
         })
     }
 }

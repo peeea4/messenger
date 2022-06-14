@@ -1,9 +1,13 @@
 export interface ModalState {
     searchIsOpened: boolean;
     profileIsOpened: boolean;
+    contactIsOpened: boolean;
     chatInfoIsOpened: boolean;
     navBarIsOpened: boolean;
-    modalResponseOpened: boolean;
+    modalResponseOpened: {
+        status: boolean,
+        text: string,
+    };
 }
   
 export enum ModalActionTypes {
@@ -11,7 +15,8 @@ export enum ModalActionTypes {
     CHANGE_PROFILE_STATUS = "CHANGE_PROFILE_STATUS",
     CHANGE_CHAT_INFO_STATUS = "CHANGE_CHAT_INFO_STATUS",
     CHANGE_NAVBAR_STATUS = "CHANGE_NAVBAR_STATUS",
-    CHANGE_MODAL_STATUS = "CHANGE_MODAL_STATUS"
+    CHANGE_MODAL_STATUS = "CHANGE_MODAL_STATUS",
+    CHANGE_CONTATS_STATUS = "CHANGE_CONTATS_STATUS",
 }
 
 interface ModalSearchAction {
@@ -21,6 +26,11 @@ interface ModalSearchAction {
 
 interface ModalProfileAction {
     type: ModalActionTypes.CHANGE_PROFILE_STATUS;
+    payload: boolean;
+}
+
+interface ModalContactAction {
+    type: ModalActionTypes.CHANGE_CONTATS_STATUS;
     payload: boolean;
 }
 
@@ -36,7 +46,7 @@ interface ModalNavBarAction {
 
 interface ModalResponseAction {
     type: ModalActionTypes.CHANGE_MODAL_STATUS;
-    payload: boolean;
+    payload: any;
 }
 
-export type ModalAction = ModalSearchAction | ModalProfileAction | ModalChatInfoAction | ModalNavBarAction | ModalResponseAction;
+export type ModalAction = ModalSearchAction | ModalProfileAction | ModalContactAction | ModalChatInfoAction | ModalNavBarAction | ModalResponseAction;

@@ -2,6 +2,7 @@ import { convertOnline } from "../../helpers/onlineConvert";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 const logo = require("../../assets/icons/user.png");
+const closeIcon = require("../../assets/icons/close-cross.png");
 
 type ChatInfoProps = {
     messages: any[];
@@ -12,10 +13,11 @@ export const ChatInfo:React.FC<ChatInfoProps> = ({messages}) => {
     const { setChatInfoOpened } = useActions();
 
     const profileHandler = (e: any) => {
-		if (e.target.classList.contains("chat-info-modal-wrapper")) {
+		if (e.target.classList.contains("chat-info-modal-wrapper") || e.target.classList.contains("close-modal-img")) {
 			setChatInfoOpened(false);
 		}
 	};
+
     const currentChat = useTypedSelector(state => state.chatState.currentChat);
     const currentChatMessages = useTypedSelector(state => state.chatState.currentChat.messages).length + messages.length - 1;
     const user = useTypedSelector(state => state.userState.currentUser);
@@ -38,6 +40,7 @@ export const ChatInfo:React.FC<ChatInfoProps> = ({messages}) => {
             <div className="chat-info-modal">
                 <div className="modal-header">
                     <h2 className="title">Chat Info</h2>
+                    <button className="close-modal"><img className="close-modal-img" src={closeIcon} alt="" /></button>
                 </div>
                 <div className="head-info">
                     <img src={firendImage} alt={`${friendName} avatar`} className="friend-image" />

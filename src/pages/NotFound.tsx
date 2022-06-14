@@ -1,11 +1,9 @@
-import { CustomLink } from "../components/CustomLink";
+import { NavLink } from "react-router-dom";
 
 export const NotFound = () => {
     return (
         <div className="page not-found-page">
-            Not Found
-            <CustomLink to="/">На главную</CustomLink>
+            <NavLink className="link" to="/">На главную</NavLink>
         </div>
     );
 }
-

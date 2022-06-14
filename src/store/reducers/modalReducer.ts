@@ -3,9 +3,13 @@ import { ModalAction, ModalActionTypes, ModalState } from '../../types/Modal'
 const initialState: ModalState = {
     searchIsOpened: false,
     profileIsOpened: false,
+    contactIsOpened: false,
     chatInfoIsOpened: false,
     navBarIsOpened: false,
-    modalResponseOpened: false,
+    modalResponseOpened: {
+        status: false,
+        text: ""
+    },
 }
 
 export const modalReducer = (state = initialState, action: ModalAction): ModalState => {
@@ -19,6 +23,11 @@ export const modalReducer = (state = initialState, action: ModalAction): ModalSt
             return {
                 ...state,
                 profileIsOpened: action.payload,
+            }
+        case ModalActionTypes.CHANGE_CONTATS_STATUS:
+            return {
+                ...state,
+                contactIsOpened: action.payload,
             }
         case ModalActionTypes.CHANGE_CHAT_INFO_STATUS:
             return {

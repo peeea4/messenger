@@ -26,13 +26,20 @@
                 letter-spacing: -1px;
 				padding: 0px 20px;
             }
-            .profile-close {
-
-            }
+            .close-modal {
+                background-color: transparent;
+                border: 0;
+                padding: 0px 20px;
+                cursor: pointer;
+                img {
+                    height: 26px;
+                    background-color: transparent;
+                }
+            }  
         }
         .user-info {
             margin-top: 20px;
-			border-bottom: 8px solid $second-color;
+			border-bottom: 8px solid $third-color;
 			.profile-main-info {
 				display: flex;
 				padding: 0px 20px 20px;
@@ -63,15 +70,29 @@
                 }
 			}
         }
-        .profile-settings {
-
-        }
 		.choose-file {
 			border-bottom: 2px solid $second-color;
 			input {
 				padding: 0;
 			}
 		}
+        .profile-settings {
+            .edit-profile-btn {
+                margin-top: 10px;
+                padding: 8px 0px 8px 20px;
+                color: $main-font-color;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                img {
+                    margin-right: 12px;
+                    width: 24px;
+                }
+                &:hover {
+                    background-color: $third-color;
+                }
+            }
+        }
     }
 }
 

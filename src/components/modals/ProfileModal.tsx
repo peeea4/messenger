@@ -1,83 +1,74 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useActions } from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { EditProfile } from "../EditProfile";
 const logo = require("../../assets/icons/user.png");
+const closeIcon = require("../../assets/icons/close-cross.png");
+const userSettings = require("../../assets/icons/user-settings.png");
 
 export const ProfileModal = () => {
     
-	const { setProfileOpened, updateUser} = useActions();
+	const { setProfileOpened, getUserById } = useActions();
 	const userData = useTypedSelector(state => state.userState.currentUser.user);
     const currentUserData = useTypedSelector(state => state.userState.currentUserData);
-    
+    useEffect(() => {
+        getUserById(userData.id)
+    }, [])
 	const [selectStatus, setSelectStatus] = React.useState<boolean>(false);
-	const [image, setImage] = React.useState<any>(null);
+
 	const [avatar, setAvatar] = React.useState<any>(currentUserData.profileImageFilePath);
+    const [isEdit, setIsEdit] = useState(false)
 
 	const profileHandler = (e: any) => {
-		if (e.target.classList.contains("profile-modal-wrapper")) {
+		if (e.target.classList.contains("profile-modal-wrapper") || e.target.classList.contains("close-modal-img")) {
 			setProfileOpened(false);
 		}
 	};
 
-    const form = useRef<HTMLFormElement | any>(null);
-
-	const sendFile = (e: any) => {
-        e.preventDefault()
-		const data = new FormData(form.current);
-		data.set("image", image);
-        data.set("chats", JSON.stringify(userData.chats));
-        data.set("email", userData.email);
-        data.set("id", userData.id);
-        data.set("messages", JSON.stringify(userData.messages));
-        data.set("password", userData.password);
-        data.set("username", userData.username);
-        updateUser(userData.id, data);     
-	}
-
-    const imageHandler = (filesArray: any) => {
-        setImage(filesArray[0])
-        const reader = new FileReader();
-        reader.onload = () => {
-            if(reader.readyState === 2) {
-                setAvatar(reader.result)
-            }
-        }
-        reader.readAsDataURL(filesArray[0])
-    }
-
 	return (
 		<div className="profile-modal-wrapper" onClick={e => { profileHandler(e) }}>
-			<div className="profile-modal">
-				<div className="profile-modal-header">
-					<h2 className="profile-title">User Profile</h2>
-				</div>
-				<div className="user-info">
-					<div className="profile-main-info">
-						<div className="profile-avatar-block">
-							{
-								avatar
-									? <img onClick={() => { setSelectStatus(!selectStatus) }} className="profile-avatar" src={`${avatar}`} alt="" />
-									: <img onClick={() => { setSelectStatus(!selectStatus) }} className="profile-avatar" src={logo} alt="" />
-							}
-						</div>
-						<div className="profile-description">
-							<h2 className="username">{userData.username}</h2>
-							<h4 className="user-email">{userData.email}</h4>
-						</div>
-					</div>
-					{
-						selectStatus ?
-							(
-								<form ref={form} className="choose-file">
-									<input type="file" onChange={(e) => { imageHandler(e.target.files) }} />
-									<button onClick={(e) => {sendFile(e)}}>Change Photo</button>
-								</form>
-							)
-							: null
-					}
-				</div>
-				<div className="profile-settings"></div>
-			</div>
+			{
+                !isEdit ? 
+                (
+                    <div className="profile-modal">
+                        <div className="profile-modal-header">
+                            <h2 className="profile-title">Settings</h2>
+                            <button className="close-modal"><img className="close-modal-img" src={closeIcon} alt="" /></button>
+                        </div>
+                        <div className="user-info">
+                            <div className="profile-main-info">
+                                <div className="profile-avatar-block">
+                                    {
+                                        avatar
+                                            ? <img className="profile-avatar" src={avatar} alt="" />
+                                            : <img className="profile-avatar" src={logo} alt="" />
+                                    }
+                                </div>
+                                <div className="profile-description">
+                                    <h2 className="username">{userData.username}</h2>
+                                    <h4 className="user-email">{userData.email}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="profile-settings">
+                            <div className="edit-profile-btn" onClick={() => setIsEdit(!isEdit)}>
+                                <img src={userSettings} alt="" />
+                                <p>Edit profile</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+                :
+                (
+                    <EditProfile 
+                        onChangePhoto={setSelectStatus} 
+                        avatar={avatar} 
+                        selectPhotoStatus={selectStatus} 
+                        goBack={setIsEdit}
+                        setAvatar={setAvatar} 
+                    />
+                )
+            }
 		</div>
 	)
 }

@@ -1,0 +1,69 @@
+.edit-profile-modal {
+    background-color: $first-color;
+    width: 400px;
+    height: 600px;
+    margin-top: 100px;
+    border-radius: 8px;
+    padding: 20px 0px;
+    .edit-profile-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 20px;
+        button {
+            background-color: transparent;
+            border: 0;
+            cursor: pointer;
+            img {
+                height: 25px;
+            }
+        }
+        .go-back { 
+        }
+        .profile-title {
+            color: $main-font-color;
+        }
+        .close-modal {
+            color: white;
+        }
+    }
+    .edit-content {
+        .edit-photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .edit-avatar-block {
+                margin-top: 20px;
+                .avatar {
+                    width: 90px;
+                    height: 90px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                    object-fit: cover;
+                }
+            }
+            .nickname {
+                margin-top: 10px;
+                color: $main-font-color;
+            }
+            .online-status-true {
+                color: $main-color;
+            }
+            .online-status-false {
+                color: $main-font-color;
+            }
+        }
+        .edit-bio {
+
+        }
+        .edit-info {
+            img {
+                width: 32px;
+                height: 32px;
+            }
+            .change-age {
+            }
+        }
+    }
+}

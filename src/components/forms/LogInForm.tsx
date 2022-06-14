@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { ModalResponse } from "../modals/ModalResponse";
+
 export const LogInForm: React.FC= () => {
+
     const navigate = useNavigate();
     const modalResponseOpened = useTypedSelector(state => state.modalState.modalResponseOpened);
+    
     const {
         register, 
         formState: {
@@ -30,7 +33,7 @@ export const LogInForm: React.FC= () => {
 
 	return (
         <div className="login auth-container">
-            {modalResponseOpened ? <ModalResponse/> : null}
+            {modalResponseOpened.status ? <ModalResponse errorStatus={modalResponseOpened.status} errorText={modalResponseOpened.text}/> : null}
             <h2 className="login-title auth-title">Log In</h2>
             <form className="form-login form" onSubmit={handleSubmit(submitAuthentication)}>
                 <label className="auth-label">
@@ -63,5 +66,6 @@ export const LogInForm: React.FC= () => {
             </form>
             <p className="redirect">New user?</p>
             <NavLink className="button redirect-button" to="/signup">Create an account</NavLink>
-        </div>)
+        </div>
+    )
 }

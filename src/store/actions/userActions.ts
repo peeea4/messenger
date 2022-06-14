@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "react";
+import { ModalAction, ModalActionTypes } from "../../types/Modal";
 import { UserAction, UserActionTypes } from "../../types/User";
 
 export const registrationUserAsync = (userEmail: string, userName: string, userPass: string) => {
@@ -15,7 +16,7 @@ export const registrationUserAsync = (userEmail: string, userName: string, userP
 };
 
 export function authorizationUserAsync(userEmail:string, userPass:string) {
-	return async (dispatch: Dispatch<UserAction>) => {
+	return async (dispatch: Dispatch<UserAction | ModalAction>) => {
         try {
             const response = await axios.post(`https://localhost:44328/auth/signIn`, {
                 "Email": userEmail,
@@ -23,9 +24,9 @@ export function authorizationUserAsync(userEmail:string, userPass:string) {
             });
             localStorage.setItem("user", JSON.stringify(response.data));
             dispatch({type: UserActionTypes.CREATE_USER, payload: response.data});
-        } catch (error) {
+        } catch (error: any) {
             console.log("ошибка", error);
-            
+            dispatch({type: ModalActionTypes.CHANGE_MODAL_STATUS, payload: {status: true, text: error.response.data}})
         }
 	};
 };
@@ -53,8 +54,14 @@ export function createUser() {
 
 export function updateUser(userId:any, userData:any) {
 	return async (dispatch: Dispatch<UserAction>) => {        
-        const response = await axios.put(`https://localhost:44328/users/${userId}`, userData);
+        await axios.put(`https://localhost:44328/users/${userId}`, userData);
         getUserById(userId);
         dispatch({type: UserActionTypes.UPDATE_USER});
+	};
+};
+
+export function setUserOnline(userOnline: any) {
+	return async (dispatch: Dispatch<UserAction>) => {        
+        dispatch({type: UserActionTypes.SET_USER_ONLINE, payload: userOnline});
 	};
 };

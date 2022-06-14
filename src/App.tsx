@@ -36,8 +36,8 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />
-                        <Route path="*" element={<NotFound />} />
                     </Route>
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             )
             :
@@ -45,6 +45,7 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<Auth />}>
                         <Route index element={<LogInForm />} />
+                        <Route path="login" element={<LogInForm />} />
                         <Route path="signup" element={<SignUpForm />} />
                         <Route path="*" element={<NotFound />} />
                     </Route>

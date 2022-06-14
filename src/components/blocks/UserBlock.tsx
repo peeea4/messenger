@@ -17,7 +17,6 @@ export const UserBlock:React.FC<UserBlockProps> = ({joinRoom, friend, closeSearc
     const { creatingChat } = useActions();
 
     const clickHandler = (e: any) => {
-        console.log(e);
         
         let count = 0;
         for (let index = 0; index < nameList.length; index++) {

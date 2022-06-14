@@ -6,7 +6,8 @@ const initialState: UserState = {
         accessToken: ""
     },
     currentUserData: {},
-    userList: []
+    userList: [], 
+    userOnline: ""
 };
 
 export const userReducer = (state = initialState, action: UserAction): UserState => {
@@ -29,6 +30,11 @@ export const userReducer = (state = initialState, action: UserAction): UserState
         case UserActionTypes.UPDATE_USER:
             return {
                 ...state,
+            }
+        case UserActionTypes.SET_USER_ONLINE:
+            return {
+                ...state,
+                userOnline: action.payload
             }
 		default: return state
 	}

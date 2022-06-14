@@ -7,9 +7,10 @@ import React, { useEffect } from "react";
 import { useActions } from "../hooks/useActions";
 import { ProfileModal } from "../components/modals/ProfileModal";
 import { CSSTransition } from "react-transition-group";
+import { ContactList } from "../components/modals/ContactList";
 export const Home = () => {
 
-    const { getUserChats, setSearchOpened, getChatById } = useActions();
+    const { getUserChats, setSearchOpened, getChatById, setUserOnline } = useActions();
     const [connection, setConnection] = React.useState<any>();
     const [messages, setMessages] = React.useState<Array<any>>([]);
 
@@ -23,6 +24,7 @@ export const Home = () => {
     }    
     const chatStatus = useTypedSelector(state => state.chatState.chatIsOpened);
     const profileStatus = useTypedSelector(state => state.modalState.profileIsOpened);
+    const contactsStatus = useTypedSelector(state => state.modalState.contactIsOpened);
     
     const userId = JSON.parse(localStorage.getItem("user") || "false").user.id
     
@@ -37,35 +39,33 @@ export const Home = () => {
 				.withUrl(`https://localhost:44328/chat`, { accessTokenFactory: () => accessToken })
                 .withAutomaticReconnect()
                 .configureLogging(LogLevel.Information)
-                .build();
+                .build();                
 
                 connectionS.on('ReceiveMessage', (message) => {
                     setMessages((messages) => [...messages,  message ]);
                     getUserChats(user.id);
                 })
 
-            connectionS.on('newChatCreated', () => {
-                getUserChats(user.id);    
-            })
+                connectionS.on('newChatCreated', () => {
+                    getUserChats(user.id);    
+                })
 
-            connectionS.on('onlineStatusChanged', (chatId) => {
-                console.log(chatId);
-                
-                getChatById(chatId);    
-            })
+                connectionS.on('onlineStatusChanged', (chatId) => {
+                    getChatById(chatId);    
+                })
 
-            connectionS.onclose(() => {
-                setConnection({});
-                setMessages([]);
-            })
+                connectionS.onclose(() => {
+                    setConnection({});
+                    setMessages([]);
+                })
 
-            await connectionS.start();
-            setConnection(connectionS);
+                await connectionS.start();
+                setConnection(connectionS);
             } else {
                 await connection.invoke('JoinRoom', user, chatID);
             }
         } catch (e) {
-            console.log(e);
+            console.log("time",e);
         }
     }
 
@@ -95,6 +95,16 @@ export const Home = () => {
             >
                 <ProfileModal/>
             </CSSTransition>
+
+            <CSSTransition
+                in={contactsStatus}
+                timeout={300}
+                classNames="profmodal"
+                unmountOnExit
+            >
+                <ContactList/>
+            </CSSTransition>
+            
             <ChatList joinRoom={joinRoom}/>
 
             {

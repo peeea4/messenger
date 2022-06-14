@@ -7,7 +7,7 @@ const addChat = require("../assets/icons/add-user.png");
 const exit = require("../assets/icons/exit.png");
 export const NavBar = () => {
 
-    const {setProfileOpened, setNavBarOpened} = useActions();
+    const {setProfileOpened, setNavBarOpened, setContactsOpened} = useActions();
     const user = useTypedSelector(state => state.userState.currentUser.user);
     const userPhoto = useTypedSelector(state => state.userState.currentUserData.profileImageFilePath);
     let avatar = userPhoto ? userPhoto : logo
@@ -17,9 +17,19 @@ export const NavBar = () => {
         }
     }
 
-    const settingsClickHandler = (e:any) => {
+    const settingsClickHandler = () => {
         setProfileOpened(true);
         setNavBarOpened(false);
+    }
+
+    const contactButtonHandler = () => {
+        setContactsOpened(true);
+        setNavBarOpened(false);
+    }
+
+    const logOut = () => {
+        localStorage.clear();
+        window.location.reload()
     }
     
     return (
@@ -30,23 +40,19 @@ export const NavBar = () => {
                     <h3 className="user-name">{user.username}</h3>
                     <h4 className="user-email">{user.email}</h4>
                 </div>
-                <div className="settings-block" onClick={(e) => {settingsClickHandler(e)}}>
-                    <div className="settings-tab nav-tab">
+                <div className="settings-block">
+                    <div className="settings-tab nav-tab" onClick={() => {settingsClickHandler()}}>
                         <img src={settings} alt="" />
                         <button className="settings-btn btn">Settings</button>
                     </div>
-                    <div className="contacts-tab nav-tab">
-                        <img src={contacts} alt="" />
+                    <div className="contacts-tab nav-tab" onClick={() => {contactButtonHandler()}}>
+                        <img src={contacts}  alt="" />
                         <button className="contacts-btn btn">Contacts</button>
-                    </div>
-                    <div className="new-chat-tab nav-tab">
-                        <img src={addChat} alt="" />
-                        <button className="new-chat-btn btn">New Chat</button>
                     </div>
                 </div>
                 <div className="exit-tab nav-tab">
                     <img src={exit} alt="" />
-                    <button className="exit-btn">Exit</button>
+                    <button onClick={() => logOut()} className="exit-btn">Exit</button>
                 </div>
             </nav>
         </div>
