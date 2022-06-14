@@ -24,6 +24,10 @@ namespace Server.Models
 
         public DateTime? LastOnline { get; set; }
 
+        public byte Age { get; set; }
+
+        public string About { get; set; }
+
         public List<Chat> Chats { get; set; } = new List<Chat>();
 
         public List<Message> Messages { get; set; } = new List<Message>();

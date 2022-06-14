@@ -96,6 +96,8 @@ namespace Server.Services
             {
                 existingUser.Username = user.Username;
                 existingUser.LastOnline = user.LastOnline;
+                existingUser.About = user.About;
+                existingUser.Age = user.Age;
                 if (image != null)
                 {
                     existingUser.ProfileImageFilePath = await SaveProfileImage(id, image);
