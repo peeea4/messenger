@@ -3,14 +3,15 @@ export interface ModalState {
     profileIsOpened: boolean;
     chatInfoIsOpened: boolean;
     navBarIsOpened: boolean;
+    modalResponseOpened: boolean;
 }
   
 export enum ModalActionTypes {
     CHANGE_SEARCH_STATUS = "CHANGE_SEARCH_STATUS",
     CHANGE_PROFILE_STATUS = "CHANGE_PROFILE_STATUS",
     CHANGE_CHAT_INFO_STATUS = "CHANGE_CHAT_INFO_STATUS",
-    CHANGE_NAVBAR_STATUS = "CHANGE_NAVBAR_STATUS"
-
+    CHANGE_NAVBAR_STATUS = "CHANGE_NAVBAR_STATUS",
+    CHANGE_MODAL_STATUS = "CHANGE_MODAL_STATUS"
 }
 
 interface ModalSearchAction {
@@ -33,4 +34,9 @@ interface ModalNavBarAction {
     payload: boolean;
 }
 
-export type ModalAction = ModalSearchAction | ModalProfileAction | ModalChatInfoAction | ModalNavBarAction;
+interface ModalResponseAction {
+    type: ModalActionTypes.CHANGE_MODAL_STATUS;
+    payload: boolean;
+}
+
+export type ModalAction = ModalSearchAction | ModalProfileAction | ModalChatInfoAction | ModalNavBarAction | ModalResponseAction;

@@ -36,3 +36,12 @@ export const setNavBarOpened = (value: boolean) => {
         })
     }
 }
+
+export const showModal = (value: boolean) => {
+    return async (dispatch: Dispatch<ModalAction>) => {
+        dispatch({
+            type: ModalActionTypes.CHANGE_MODAL_STATUS,
+            payload: value,
+        })
+    }
+}

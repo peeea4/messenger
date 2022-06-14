@@ -5,7 +5,9 @@
     background-color: #252629;
     border-radius: 8px;
     padding: 5px 10px;
+    min-height: 50px;
     cursor: pointer;
+    overflow: hidden;
     .user-image-aside {
         img {
             width: 50px;
@@ -19,6 +21,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+        
         .chat-name {
             color: $main-font-color;
             font-size: 14px;
@@ -26,6 +29,10 @@
         .user-last-message {
             color: $main-font-color-dark;
             font-size: 12px;
+            max-width: 100px;
+            width: 100%;
+            white-space: nowrap;
+            max-width: 100px;
         }
     }
 }

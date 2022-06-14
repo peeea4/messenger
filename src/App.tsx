@@ -16,11 +16,13 @@ export const App = () => {
     const savedUserId = JSON.parse(localStorage.getItem("user") || "false")?.user?.id;
     const trueUserId = useTypedSelector(state => state.userState.currentUser.accessToken);
     let userId;
+    
     useEffect(() => {
         if(savedUserId) {
             getUserById(savedUserId)
         }
     }, [])
+
     if (savedUserId) {
         userId = savedUserId;
         if (!trueUserId) {

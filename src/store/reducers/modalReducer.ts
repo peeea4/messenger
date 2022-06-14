@@ -5,6 +5,7 @@ const initialState: ModalState = {
     profileIsOpened: false,
     chatInfoIsOpened: false,
     navBarIsOpened: false,
+    modalResponseOpened: false,
 }
 
 export const modalReducer = (state = initialState, action: ModalAction): ModalState => {
@@ -29,7 +30,12 @@ export const modalReducer = (state = initialState, action: ModalAction): ModalSt
                 ...state,
                 navBarIsOpened: action.payload,
             }
+        case ModalActionTypes.CHANGE_MODAL_STATUS:
+            return {
+                ...state,
+                modalResponseOpened: action.payload,
+            }
         default:
-        return state
+            return state
     }
 }

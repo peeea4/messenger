@@ -8,7 +8,6 @@ type ChatBlockProps = {
 };
 
 export const ChatBlock:React.FC<ChatBlockProps> = ({chat, joinRoom, chatID}) => {
-    console.log(chat);
 	const user = useTypedSelector(state => state.userState.currentUser);
 
     let chatImage;

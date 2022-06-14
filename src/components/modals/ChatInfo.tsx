@@ -1,3 +1,4 @@
+import { convertOnline } from "../../helpers/onlineConvert";
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 const logo = require("../../assets/icons/user.png");
@@ -24,10 +25,11 @@ export const ChatInfo:React.FC<ChatInfoProps> = ({messages}) => {
     let friendOnline;
 
     currentChat.users.forEach((userInChat: any) => {
-        if(userInChat.username !== user.user.username) {
+        if(userInChat.username !== user.user.username) { 
             firendImage = userInChat.profileImageFilePath ? userInChat.profileImageFilePath : logo
             friendName = userInChat.username;
-            friendOnline = (userInChat.isCurrentlyOnline ? "Online" : userInChat.lastOnline);
+            let lastOnline = convertOnline(userInChat);
+            friendOnline = <h4 className={userInChat.isCurrentlyOnline ? "friend-status online" : "friend-status ofline"}>{lastOnline}</h4>       
         }
     });
     
@@ -35,13 +37,13 @@ export const ChatInfo:React.FC<ChatInfoProps> = ({messages}) => {
         <div className="chat-info-modal-wrapper" onClick={e => profileHandler(e)}>
             <div className="chat-info-modal">
                 <div className="modal-header">
-                    <h2 className="title">User Profile</h2>
+                    <h2 className="title">Chat Info</h2>
                 </div>
                 <div className="head-info">
-                    <img src={firendImage} alt="" className="friend-image" />
+                    <img src={firendImage} alt={`${friendName} avatar`} className="friend-image" />
                     <div className="friend-bio">
                         <h2 className="friend-name">{friendName}</h2>
-                        <h4 className="friend-status">{friendOnline}</h4>
+                        { friendOnline }
                     </div>
                 </div>
                 <div className="stats">
