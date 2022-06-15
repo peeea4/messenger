@@ -36,6 +36,11 @@ export const userReducer = (state = initialState, action: UserAction): UserState
                 ...state,
                 userOnline: action.payload
             }
+        case UserActionTypes.UPDATE_USER_NAME:
+            return {
+                ...state,
+                currentUser: action.payload
+            }
 		default: return state
 	}
 }

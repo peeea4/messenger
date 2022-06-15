@@ -58,14 +58,7 @@ namespace Server.Hubs
             var chat = await this._service.GetChatByIdAsync(int.Parse(chatId));
             if (chat.Users.FirstOrDefault(u => user.Id == u.Id) is null)
             {
-                await Clients.Group(chatId).SendAsync(
-                    "ReceiveMessage",
-                    new Message
-                    {
-                        Text = $"{user.Username} joined the chat!",
-                        Sender = _botUser,
-                        TimeSent = DateTime.Now.ToString("HH:mm")
-                    });
+
             }
         }
 

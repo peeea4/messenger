@@ -38,12 +38,24 @@
             }  
         }
         .contact-list {
+            margin-top: 20px;
             .user {
+                margin-top: 5px;
+                margin-left: 20px;
+                display: flex;
+                align-items: center;
                 .user-photo {
-                    
+                    img {
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
                 }
                 .user-info {
-    
+                    font-size: 18px;
+                    margin-left: 10px;
+                    color:$main-font-color;
                 }
             }
         }

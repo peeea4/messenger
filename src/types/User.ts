@@ -10,7 +10,8 @@ export enum UserActionTypes {
     CREATE_USER_LIST = "CREATE_USER_LIST", 
     UPDATE_USER = "UPDATE_USER", 
     CREATE_USER_DATA = "CREATE_USER_DATA",
-    SET_USER_ONLINE = "SET_USER_ONLINE"
+    SET_USER_ONLINE = "SET_USER_ONLINE",
+    UPDATE_USER_NAME = "UPDATE_USER_NAME"
 }
 
 interface FetchUseCreateAction {
@@ -37,4 +38,9 @@ interface SetUserOnlineAction {
     payload: any;
 }
 
-export type UserAction = FetchUseCreateAction | FetchUserListAction | FetchUserUpdateAction | FetchCreateUserDataAction | SetUserOnlineAction;
+interface FetchUserUpdateNameAction {
+    type: UserActionTypes.UPDATE_USER_NAME;
+    payload: any;
+}
+
+export type UserAction = FetchUseCreateAction | FetchUserListAction | FetchUserUpdateAction | FetchCreateUserDataAction | SetUserOnlineAction | FetchUserUpdateNameAction;

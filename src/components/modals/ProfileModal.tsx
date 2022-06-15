@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useActions } from "../../hooks/useActions"
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { EditProfile } from "../EditProfile";
@@ -45,8 +45,8 @@ export const ProfileModal = () => {
                                     }
                                 </div>
                                 <div className="profile-description">
-                                    <h2 className="username">{userData.username}</h2>
-                                    <h4 className="user-email">{userData.email}</h4>
+                                    <h2 className="username">{currentUserData.username}</h2>
+                                    <h4 className="user-email">{currentUserData.email}</h4>
                                 </div>
                             </div>
                         </div>

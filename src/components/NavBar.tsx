@@ -3,12 +3,11 @@ import { useActions } from "../hooks/useActions"
 const logo = require("../assets/icons/user.png");
 const settings = require("../assets/icons/settings.png");
 const contacts = require("../assets/icons/contacts.png");
-const addChat = require("../assets/icons/add-user.png");
 const exit = require("../assets/icons/exit.png");
 export const NavBar = () => {
 
-    const {setProfileOpened, setNavBarOpened, setContactsOpened} = useActions();
-    const user = useTypedSelector(state => state.userState.currentUser.user);
+    const {setProfileOpened, setNavBarOpened, setContactsOpened, getUserListAsync} = useActions();
+    const user = useTypedSelector(state => state.userState.currentUserData);
     const userPhoto = useTypedSelector(state => state.userState.currentUserData.profileImageFilePath);
     let avatar = userPhoto ? userPhoto : logo
     const wrapperClickHandler = (e:any) => {
@@ -23,6 +22,7 @@ export const NavBar = () => {
     }
 
     const contactButtonHandler = () => {
+        getUserListAsync()
         setContactsOpened(true);
         setNavBarOpened(false);
     }

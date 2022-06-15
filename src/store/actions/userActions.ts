@@ -54,14 +54,30 @@ export function createUser() {
 
 export function updateUser(userId:any, userData:any) {
 	return async (dispatch: Dispatch<UserAction>) => {        
-        await axios.put(`https://localhost:44328/users/${userId}`, userData);
+        const res = await axios.put(`https://localhost:44328/users/${userId}`, userData);
+        const userToken = JSON.parse(localStorage.getItem("user") || "").accessToken
+        localStorage.setItem("user", JSON.stringify({user: {...res.data}, accessToken: userToken}));
         getUserById(userId);
         dispatch({type: UserActionTypes.UPDATE_USER});
+        const response = await axios.get(`https://localhost:44328/users`);
+        dispatch({type: UserActionTypes.CREATE_USER_LIST, payload: response.data});
 	};
 };
 
-export function setUserOnline(userOnline: any) {
+export function setUserOnline(userOnline: string | boolean) {
 	return async (dispatch: Dispatch<UserAction>) => {        
         dispatch({type: UserActionTypes.SET_USER_ONLINE, payload: userOnline});
 	};
 };
+
+// export function updateUserName(userId: any, userData: any, userName: string) {
+// 	return async (dispatch: Dispatch<UserAction | ModalAction>) => {
+//         const response = await axios.post(`https://localhost:44328/users/${userId}`, {
+//             ...userData,
+//             userName
+//         });
+//         console.log(response);
+        
+//         // dispatch({type: UserActionTypes.CREATE_USER, payload: response.data});
+// 	};
+// }
